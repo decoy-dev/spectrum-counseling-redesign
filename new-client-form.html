@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>New Client Form | Spectrum Counseling | Dr. Marie Haddox, Ph.D.</title>
+  <meta name="description" content="Complete the new client intake form for Spectrum Counseling. Dr. Marie Haddox, Ph.D. — Licensed psychologist in Gilbert, AZ." />
+  <link rel="canonical" href="https://decoy-dev.github.io/spectrum-counseling-redesign/new-client-form.html" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-container": "#445362",
+            "surface-container-low": "#f1f4f5",
+            "primary-dim": "#365671",
+            "surface-variant": "#dee3e6",
+            "primary-fixed-dim": "#a7c7e7",
+            "primary": "#43627e",
+            "primary-fixed": "#b5d5f6",
+            "background": "#f8f9fa",
+            "surface": "#f8f9fa",
+            "outline-variant": "#adb3b5",
+            "surface-container-high": "#e5e9eb",
+            "on-background": "#2d3335",
+            "secondary-fixed": "#d4e4f6",
+            "on-surface": "#2d3335",
+            "surface-container": "#ebeef0",
+            "on-surface-variant": "#5a6062",
+            "secondary": "#526170",
+            "outline": "#767c7e",
+            "on-primary": "#f6f9ff",
+            "secondary-container": "#d4e4f6",
+            "surface-container-lowest": "#ffffff",
+            "primary-container": "#b5d5f6",
+            "surface-container-highest": "#dee3e6",
+            "on-primary-container": "#2a4a65",
+            "error": "#a83836"
+          },
+          fontFamily: {
+            headline: ["Noto Serif", "serif"],
+            body: ["Manrope", "sans-serif"]
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background-color: #f8f9fa;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Noto Serif', serif;
+    }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 6rem;
+    }
+    @media (min-width: 640px) {
+      html { scroll-padding-top: 7rem; }
+    }
+    .mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .mobile-menu.open {
+      max-height: 400px;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Form styling */
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: #f1f4f5;
+      border: 2px solid transparent;
+      border-radius: 0.75rem;
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.9375rem;
+      color: #2d3335;
+      transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #a7c7e7;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(167, 199, 231, 0.3);
+    }
+    .form-input::placeholder {
+      color: #adb3b5;
+    }
+    textarea.form-input {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #5a6062;
+      margin-bottom: 0.375rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .checkbox-item {
+      cursor: pointer;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      transition: background-color 0.15s ease;
+      font-size: 0.875rem;
+      color: #5a6062;
+    }
+    .checkbox-item:hover {
+      background-color: #e5e9eb;
+    }
+    .checkbox-item input:checked + span {
+      color: #2d3335;
+      font-weight: 600;
+    }
+    /* Success state */
+    .form-success {
+      display: none;
+    }
+    .form-success.show {
+      display: block;
+    }
+  </style>
+</head>
+<body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
+
+  <!-- Navigation -->
+  <nav id="main-nav" class="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 bg-white/85 backdrop-blur-xl shadow-lg border border-white/30 rounded-[1.25rem] md:rounded-full w-[92%] max-w-6xl">
+    <div class="flex justify-between items-center px-4 sm:px-6 py-3">
+      <div class="flex items-center">
+        <a href="index.html">
+          <img alt="Spectrum Counseling Logo" class="h-10 md:h-12 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uiW71XvAti9pL6jbcsFAEaEdxhEePuv-rOZTr6grA3JVq0o4yVm2564eUC0zhMuqTmNQnH8vyXhu6j2EW8M4TYVgeF1FysXk3qODXbu0pa646_rwmxb1BNONrpLOWd0EoZ4TBnyFoYAo6Ovn0yn6dQGkhYAkIHj0jwDcdPsOG_7fTvpxPsQGCLfWTthc4Dd2G4pgNs0HlkoNihV-Hnu8xUiNkVDc0_HAeFtuDPwiQQgKJuZNjDpb2gRzVhRfV8MG1wW6_9nxUNU" />
+        </a>
+      </div>
+      <div class="hidden md:flex flex-1 justify-center gap-6 lg:gap-8 items-center">
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="index.html#about">About</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="index.html#services">Services</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="index.html#specializations">Specializations</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="index.html#testimonials">Testimonials</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="index.html#location">Location</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="index.html#faq">FAQ</a>
+      </div>
+      <div class="hidden md:flex items-center gap-2">
+        <a href="contact.html" class="bg-white text-on-surface-variant hover:text-primary hover:bg-primary-container hover:border-primary/30 hover:-translate-y-0.5 hover:shadow-md px-4 py-2 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200">
+          Contact
+        </a>
+        <a href="new-client-form.html" class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dim hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/25 transition-all duration-200 active:scale-95 shadow-md shadow-primary/10">
+          New Client Form
+        </a>
+      </div>
+      <button id="mobile-menu-btn" class="md:hidden flex items-center text-on-surface-variant" aria-label="Toggle menu">
+        <span class="material-symbols-outlined text-2xl">menu</span>
+      </button>
+    </div>
+    <div id="mobile-menu" class="mobile-menu md:hidden px-6">
+      <div class="flex flex-col gap-4 pb-6 pt-2">
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm" href="index.html#about">About</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm" href="index.html#services">Services</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm" href="index.html#specializations">Specializations</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm" href="index.html#testimonials">Testimonials</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm" href="index.html#location">Location</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm" href="index.html#faq">FAQ</a>
+        <a href="contact.html" class="bg-white text-on-surface-variant hover:text-primary hover:bg-primary-container px-5 py-2.5 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200 w-full text-center">Contact</a>
+        <a href="new-client-form.html" class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dim transition-all duration-200 shadow-md shadow-primary/10 w-full text-center">New Client Form</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="pt-32 sm:pt-36 md:pt-40 pb-12 sm:pb-16 bg-surface-container-low">
+    <div class="max-w-4xl mx-auto px-5 sm:px-8">
+      <a href="index.html" class="inline-flex items-center gap-1 text-sm text-on-surface-variant hover:text-primary transition-colors mb-6">
+        <span class="material-symbols-outlined text-lg">arrow_back</span>
+        Back to Home
+      </a>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-on-surface mb-4">New Client Form</h1>
+      <p class="text-base sm:text-lg text-on-surface-variant max-w-2xl">Complete the information below to begin your journey with Spectrum Counseling. All information is kept strictly confidential.</p>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <section class="py-12 sm:py-16 md:py-20 bg-surface">
+    <div class="max-w-4xl mx-auto px-5 sm:px-8">
+      <form id="client-form" action="https://formsubmit.co/mhaddox@spectrumcounseling.net" method="POST" class="fade-in">
+        <!-- FormSubmit config -->
+        <input type="hidden" name="_subject" value="New Client Intake Form Submission" />
+        <input type="hidden" name="_captcha" value="true" />
+        <input type="hidden" name="_next" value="https://decoy-dev.github.io/spectrum-counseling-redesign/new-client-form.html?submitted=true" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="text" name="_honey" style="display:none" />
+
+        <!-- Section 1: Client Information -->
+        <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm mb-6">
+          <div class="flex items-center gap-3 mb-6 sm:mb-8">
+            <span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-on-surface">Client Information</h2>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            <div>
+              <label class="form-label" for="client-last">Last Name <span class="text-error">*</span></label>
+              <input class="form-input" type="text" id="client-last" name="Client Last Name" required />
+            </div>
+            <div>
+              <label class="form-label" for="client-first">First Name <span class="text-error">*</span></label>
+              <input class="form-input" type="text" id="client-first" name="Client First Name" required />
+            </div>
+            <div>
+              <label class="form-label" for="client-preferred">Preferred Name</label>
+              <input class="form-input" type="text" id="client-preferred" name="Client Preferred Name" />
+            </div>
+            <div>
+              <label class="form-label" for="client-pronouns">Pronouns</label>
+              <input class="form-input" type="text" id="client-pronouns" name="Client Pronouns" placeholder="e.g. she/her, he/him, they/them" />
+            </div>
+            <div>
+              <label class="form-label" for="client-dob">Date of Birth <span class="text-error">*</span></label>
+              <input class="form-input" type="date" id="client-dob" name="Client Date of Birth" required />
+            </div>
+            <div>
+              <label class="form-label" for="client-email">Email <span class="text-error">*</span></label>
+              <input class="form-input" type="email" id="client-email" name="Client Email" required />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="form-label" for="client-phone">Phone Number <span class="text-error">*</span></label>
+              <input class="form-input" type="tel" id="client-phone" name="Client Phone" required />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="form-label" for="client-address">Address <span class="text-error">*</span></label>
+              <input class="form-input" type="text" id="client-address" name="Client Address" required />
+            </div>
+            <div>
+              <label class="form-label" for="client-employer">Employer</label>
+              <input class="form-input" type="text" id="client-employer" name="Employer" />
+            </div>
+            <div>
+              <label class="form-label" for="client-occupation">Occupation</label>
+              <input class="form-input" type="text" id="client-occupation" name="Occupation" />
+            </div>
+            <div>
+              <label class="form-label" for="client-school">School (if applicable)</label>
+              <input class="form-input" type="text" id="client-school" name="School" />
+            </div>
+            <div>
+              <label class="form-label" for="client-grade">Grade</label>
+              <input class="form-input" type="text" id="client-grade" name="Grade" />
+            </div>
+          </div>
+          <p class="text-xs text-on-surface-variant mt-4">By submitting this form, you agree to receive SMS from Spectrum Counseling, LLC. Carrier and data rates may apply. Reply STOP to end or HELP for info.</p>
+        </div>
+
+        <!-- Section 2: Partner Info (optional) -->
+        <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm mb-6">
+          <div class="flex items-center gap-3 mb-2 sm:mb-3">
+            <span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-on-surface">Partner / Minor Information</h2>
+          </div>
+          <p class="text-sm text-on-surface-variant mb-6 ml-11">Optional — complete if seeking couples therapy or if client is a minor.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            <div>
+              <label class="form-label" for="partner-last">Partner Last Name</label>
+              <input class="form-input" type="text" id="partner-last" name="Partner Last Name" />
+            </div>
+            <div>
+              <label class="form-label" for="partner-first">Partner First Name</label>
+              <input class="form-input" type="text" id="partner-first" name="Partner First Name" />
+            </div>
+            <div>
+              <label class="form-label" for="partner-preferred">Preferred Name</label>
+              <input class="form-input" type="text" id="partner-preferred" name="Partner Preferred Name" />
+            </div>
+            <div>
+              <label class="form-label" for="partner-pronouns">Pronouns</label>
+              <input class="form-input" type="text" id="partner-pronouns" name="Partner Pronouns" />
+            </div>
+            <div>
+              <label class="form-label" for="partner-dob">Partner Date of Birth</label>
+              <input class="form-input" type="date" id="partner-dob" name="Partner Date of Birth" />
+            </div>
+            <div>
+              <label class="form-label" for="partner-email">Partner Email</label>
+              <input class="form-input" type="email" id="partner-email" name="Partner Email" />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="form-label" for="parent-names">Parent/Guardian Names (for minor clients)</label>
+              <input class="form-input" type="text" id="parent-names" name="Parent Guardian Names" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Personal / Clinical Information -->
+        <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm mb-6">
+          <div class="flex items-center gap-3 mb-6 sm:mb-8">
+            <span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-on-surface">Clinical Background</h2>
+          </div>
+          <div class="space-y-4 sm:space-y-5">
+            <div>
+              <label class="form-label" for="reason">Reason for Counseling <span class="text-error">*</span></label>
+              <textarea class="form-input" id="reason" name="Reason for Counseling" rows="3" required></textarea>
+            </div>
+            <div>
+              <label class="form-label" for="referred-by">Referred By</label>
+              <input class="form-input" type="text" id="referred-by" name="Referred By" />
+            </div>
+            <div>
+              <label class="form-label" for="previous-counseling">Previous Counseling Experience</label>
+              <textarea class="form-input" id="previous-counseling" name="Previous Counseling" rows="2"></textarea>
+            </div>
+            <div>
+              <label class="form-label" for="medications">Current Medications &amp; Reasons</label>
+              <textarea class="form-input" id="medications" name="Current Medications" rows="2"></textarea>
+            </div>
+            <div>
+              <label class="form-label" for="medical-concerns">Medical Problems / Concerns</label>
+              <textarea class="form-input" id="medical-concerns" name="Medical Problems" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Problem Checklist -->
+        <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm mb-6">
+          <div class="flex items-center gap-3 mb-2 sm:mb-3">
+            <span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-on-surface">Areas of Concern</h2>
+          </div>
+          <p class="text-sm text-on-surface-variant mb-6 ml-11">Select all that apply to you.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1">
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Nervousness" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Nervousness</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Anxiety" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Anxiety</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Depression" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Depressed Mood</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Stress" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Stress</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Anger" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Anger</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Sleep Issues" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Sleep Issues</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Hopelessness" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Hopelessness</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Low Self-Esteem" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Low Self-Esteem</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Irritability" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Irritability</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Loneliness" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Loneliness</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Relationship Issues" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Relationship Issues</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Sexual Difficulties" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Sexual Difficulties</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Excessive Worry" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Excessive Worry</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Excessive Fears" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Excessive Fears</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Obsessive Thoughts" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Obsessive Thoughts</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Racing Thoughts" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Racing Thoughts</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Suicidal Thoughts" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Suicidal Thoughts</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Lack of Motivation" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Lack of Motivation</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Loss of Energy" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Loss of Energy</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Poor Concentration" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Poor Concentration</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Memory Loss" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Memory Loss</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Impulsivity" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Impulsivity</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Drug Use" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Drug Use</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Alcohol Use" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Alcohol Use</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Appetite Changes" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Appetite Changes</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Weight Changes" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Weight Changes</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Social Difficulties" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Social Difficulties</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Job Difficulties" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Job Difficulties</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Shyness" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Shyness</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Nightmares" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Nightmares</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Stomach Problems" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Stomach Problems</span></label>
+            <label class="checkbox-item flex items-center gap-2"><input type="checkbox" name="Concerns" value="Muscle Tension" class="rounded text-primary focus:ring-primary-fixed-dim" /><span>Muscle Tension</span></label>
+          </div>
+        </div>
+
+        <!-- Section 5: Payment Preference -->
+        <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm mb-6">
+          <div class="flex items-center gap-3 mb-2 sm:mb-3">
+            <span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-on-surface">Payment &amp; Insurance</h2>
+          </div>
+          <p class="text-sm text-on-surface-variant mb-6 ml-11">Dr. Haddox does not accept insurance directly. Please select your preference below.</p>
+          <div class="space-y-3 ml-11">
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="radio" name="Payment Preference" value="Self-pay, no insurance benefits" class="mt-1 text-primary focus:ring-primary-fixed-dim" required />
+              <span class="text-on-surface-variant">I will <strong class="text-on-surface">not</strong> be utilizing any healthcare benefits (self-pay).</span>
+            </label>
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="radio" name="Payment Preference" value="Would like Good Faith Estimate" class="mt-1 text-primary focus:ring-primary-fixed-dim" />
+              <span class="text-on-surface-variant">I would like a <strong class="text-on-surface">Good Faith Estimate</strong>.</span>
+            </label>
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="radio" name="Payment Preference" value="Applying for out-of-network reimbursement" class="mt-1 text-primary focus:ring-primary-fixed-dim" />
+              <span class="text-on-surface-variant">I will be applying for <strong class="text-on-surface">out-of-network reimbursement</strong> and do not require a Good Faith Estimate.</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Section 6: Acknowledgment -->
+        <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm mb-8">
+          <div class="flex items-center gap-3 mb-6 sm:mb-8">
+            <span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-on-surface">Acknowledgment</h2>
+          </div>
+          <div class="space-y-4 text-sm text-on-surface-variant leading-relaxed ml-11">
+            <p>By submitting this form, I acknowledge that:</p>
+            <ul class="space-y-2 list-disc list-inside">
+              <li>I understand Dr. Haddox does not accept any health insurance and will not submit claims for reimbursement.</li>
+              <li>I am responsible for payment of professional services at the time they are rendered.</li>
+              <li>I voluntarily agree to receive mental health assessment, care, treatment, or services.</li>
+              <li>I understand I may stop care at any time.</li>
+            </ul>
+            <label class="flex items-start gap-3 cursor-pointer pt-4">
+              <input type="checkbox" name="Acknowledgment" value="Acknowledged" class="mt-1 rounded text-primary focus:ring-primary-fixed-dim" required />
+              <span class="text-on-surface font-semibold">I have read and agree to the above terms. <span class="text-error">*</span></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="text-center">
+          <button type="submit" class="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-10 sm:px-14 py-4 rounded-full text-lg font-bold shadow-xl shadow-primary/10 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 hover:brightness-110 transition-all duration-200 active:scale-95">
+            Submit Client Form
+          </button>
+          <p class="text-xs text-on-surface-variant mt-4">Your information is transmitted securely and kept confidential.</p>
+        </div>
+      </form>
+
+      <!-- Success Message (shown after redirect back) -->
+      <div id="form-success" class="form-success fade-in visible text-center py-20">
+        <span class="material-symbols-outlined text-6xl text-primary mb-6 block">check_circle</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-on-surface mb-4">Form Submitted Successfully</h2>
+        <p class="text-on-surface-variant mb-8 max-w-lg mx-auto">Thank you for submitting your new client information. Dr. Haddox will review your form and contact you to schedule your first session.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="index.html" class="bg-primary text-on-primary px-8 py-3.5 rounded-full text-base font-bold hover:bg-primary-dim hover:-translate-y-1 transition-all duration-200 shadow-lg shadow-primary/20">
+            Return Home
+          </a>
+          <a href="contact.html" class="bg-secondary-container text-on-secondary-container px-8 py-3.5 rounded-full text-base font-bold hover:bg-secondary-fixed hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
+            Contact Info
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="w-full py-10 sm:py-16 px-5 sm:px-8 bg-primary text-on-primary">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6 sm:gap-8 max-w-7xl mx-auto">
+      <div class="flex flex-col items-center md:items-start">
+        <a href="index.html">
+          <img alt="Spectrum Counseling Logo" class="h-10 sm:h-12 w-auto object-contain brightness-0 invert mb-2" src="https://lh3.googleusercontent.com/aida/ADBb0uiW71XvAti9pL6jbcsFAEaEdxhEePuv-rOZTr6grA3JVq0o4yVm2564eUC0zhMuqTmNQnH8vyXhu6j2EW8M4TYVgeF1FysXk3qODXbu0pa646_rwmxb1BNONrpLOWd0EoZ4TBnyFoYAo6Ovn0yn6dQGkhYAkIHj0jwDcdPsOG_7fTvpxPsQGCLfWTthc4Dd2G4pgNs0HlkoNihV-Hnu8xUiNkVDc0_HAeFtuDPwiQQgKJuZNjDpb2gRzVhRfV8MG1wW6_9nxUNU" />
+        </a>
+        <p class="text-on-primary/70 text-xs sm:text-sm tracking-wide">&copy; 2026 Spectrum Counseling | Marie Haddox, Ph.D.</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4 sm:gap-8">
+        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="contact.html">Contact</a>
+        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="#">Privacy Policy</a>
+        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="#">Terms of Service</a>
+      </div>
+      <div class="flex gap-4">
+        <span class="material-symbols-outlined text-on-primary/60">diversity_3</span>
+        <span class="material-symbols-outlined text-on-primary/60">spa</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Show success state if redirected back after submission
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('submitted') === 'true') {
+        document.getElementById('client-form').style.display = 'none';
+        document.getElementById('form-success').classList.add('show');
+      } else {
+        document.getElementById('form-success').style.display = 'none';
+      }
+    })();
+
+    // Mobile menu
+    var menuBtn = document.getElementById('mobile-menu-btn');
+    var mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', function() {
+      mobileMenu.classList.toggle('open');
+      menuBtn.querySelector('.material-symbols-outlined').textContent = mobileMenu.classList.contains('open') ? 'close' : 'menu';
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        mobileMenu.classList.remove('open');
+        menuBtn.querySelector('.material-symbols-outlined').textContent = 'menu';
+      });
+    });
+    // Fade-in
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+  </script>
+</body>
+</html>
