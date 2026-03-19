@@ -117,6 +117,12 @@
     .faq-icon {
       transition: transform 0.3s ease;
     }
+    .faq-item:hover {
+      background-color: #e8ecee;
+    }
+    .faq-item {
+      transition: background-color 0.2s ease;
+    }
     /* Mobile menu */
     .mobile-menu {
       max-height: 0;
@@ -147,17 +153,17 @@
         <img alt="Spectrum Counseling Logo" class="h-10 md:h-12 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uiW71XvAti9pL6jbcsFAEaEdxhEePuv-rOZTr6grA3JVq0o4yVm2564eUC0zhMuqTmNQnH8vyXhu6j2EW8M4TYVgeF1FysXk3qODXbu0pa646_rwmxb1BNONrpLOWd0EoZ4TBnyFoYAo6Ovn0yn6dQGkhYAkIHj0jwDcdPsOG_7fTvpxPsQGCLfWTthc4Dd2G4pgNs0HlkoNihV-Hnu8xUiNkVDc0_HAeFtuDPwiQQgKJuZNjDpb2gRzVhRfV8MG1wW6_9nxUNU" />
       </div>
       <div class="hidden md:flex flex-1 justify-center gap-8 items-center">
-        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#about">About</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#services">Services</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#testimonials">Testimonials</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#faq">FAQ</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#about">About</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#services">Services</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#testimonials">Testimonials</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#faq">FAQ</a>
       </div>
       <div class="hidden md:flex items-center gap-2">
-        <a href="mailto:info@spectrumcounseling.com" class="flex items-center gap-1.5 bg-white text-on-surface-variant hover:text-primary px-4 py-2 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all" aria-label="Email us">
+        <a href="mailto:info@spectrumcounseling.com" class="flex items-center gap-1.5 bg-white text-on-surface-variant hover:text-primary hover:bg-primary-container hover:border-primary/30 hover:-translate-y-0.5 hover:shadow-md px-4 py-2 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200" aria-label="Email us">
           <span class="material-symbols-outlined text-lg">mail</span>
           Email
         </a>
-        <button class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dim transition-all active:scale-95 shadow-md shadow-primary/10">
+        <button class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dim hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/25 transition-all duration-200 active:scale-95 shadow-md shadow-primary/10">
           New Client Form
         </button>
       </div>
@@ -169,15 +175,15 @@
     <!-- Mobile menu -->
     <div id="mobile-menu" class="mobile-menu md:hidden px-6">
       <div class="flex flex-col gap-4 pb-6 pt-2">
-        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#about">About</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#services">Services</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#testimonials">Testimonials</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#faq">FAQ</a>
-        <a href="mailto:info@spectrumcounseling.com" class="flex items-center justify-center gap-2 bg-white text-on-surface-variant hover:text-primary px-5 py-2.5 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all w-full">
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#about">About</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#services">Services</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#testimonials">Testimonials</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#faq">FAQ</a>
+        <a href="mailto:info@spectrumcounseling.com" class="flex items-center justify-center gap-2 bg-white text-on-surface-variant hover:text-primary hover:bg-primary-container hover:border-primary/30 hover:shadow-md px-5 py-2.5 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200 w-full">
           <span class="material-symbols-outlined text-lg">mail</span>
           Email Us
         </a>
-        <button class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dim transition-all active:scale-95 shadow-md shadow-primary/10 w-full">
+        <button class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dim hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/25 transition-all duration-200 active:scale-95 shadow-md shadow-primary/10 w-full">
           New Client Form
         </button>
       </div>
@@ -202,10 +208,10 @@
           Experience a digital sanctuary for mental wellness. Dr. Marie Haddox, Ph.D. offers a compassionate, holistic approach to LGBTQ+ care, couples counseling, and individual therapy.
         </p>
         <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <button class="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-semibold shadow-xl shadow-primary/10 hover:shadow-primary/20 transition-all active:scale-95">
+          <button class="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-semibold shadow-xl shadow-primary/10 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 hover:brightness-110 transition-all duration-200 active:scale-95">
             Start New Client Form
           </button>
-          <a class="bg-surface-container-highest/80 backdrop-blur-sm text-on-primary-container px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-semibold hover:bg-surface-variant transition-all text-center" href="#services">
+          <a class="bg-surface-container-highest/80 backdrop-blur-sm text-on-primary-container px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-semibold hover:bg-surface-variant hover:-translate-y-1 hover:shadow-lg transition-all duration-200 text-center" href="#services">
             Our Services
           </a>
         </div>
@@ -288,19 +294,19 @@
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8 mb-8">
         <!-- Service 1 -->
-        <div class="group p-7 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] bg-surface-container-lowest hover:bg-primary transition-all duration-500 shadow-sm fade-in">
+        <div class="group p-7 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] bg-surface-container-lowest hover:bg-primary hover:scale-[1.03] hover:shadow-xl transition-all duration-300 shadow-sm fade-in">
           <span class="material-symbols-outlined text-3xl sm:text-4xl text-primary group-hover:text-on-primary mb-5 sm:mb-8 block transition-colors">person_4</span>
           <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-on-surface group-hover:text-on-primary transition-colors">Individual Counseling</h3>
           <p class="text-sm sm:text-base text-on-surface-variant group-hover:text-on-primary/80 transition-colors leading-relaxed">Personalized support for anxiety, depression, and personal growth through a trauma-informed lens.</p>
         </div>
         <!-- Service 2 -->
-        <div class="group p-7 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] bg-surface-container-lowest hover:bg-primary transition-all duration-500 shadow-sm fade-in">
+        <div class="group p-7 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] bg-surface-container-lowest hover:bg-primary hover:scale-[1.03] hover:shadow-xl transition-all duration-300 shadow-sm fade-in">
           <span class="material-symbols-outlined text-3xl sm:text-4xl text-primary group-hover:text-on-primary mb-5 sm:mb-8 block transition-colors">favorite</span>
           <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-on-surface group-hover:text-on-primary transition-colors">Couples &amp; Marriage</h3>
           <p class="text-sm sm:text-base text-on-surface-variant group-hover:text-on-primary/80 transition-colors leading-relaxed">Strengthening connections, resolving conflict, and rebuilding intimacy through effective communication.</p>
         </div>
         <!-- Service 3 -->
-        <div class="group p-7 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] bg-surface-container-lowest hover:bg-primary transition-all duration-500 shadow-sm fade-in sm:last:col-span-2 lg:last:col-span-1">
+        <div class="group p-7 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] bg-surface-container-lowest hover:bg-primary hover:scale-[1.03] hover:shadow-xl transition-all duration-300 shadow-sm fade-in sm:last:col-span-2 lg:last:col-span-1">
           <span class="material-symbols-outlined text-3xl sm:text-4xl text-primary group-hover:text-on-primary mb-5 sm:mb-8 block transition-colors">groups</span>
           <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-on-surface group-hover:text-on-primary transition-colors">Family Systems</h3>
           <p class="text-sm sm:text-base text-on-surface-variant group-hover:text-on-primary/80 transition-colors leading-relaxed">Navigating transitional periods and improving dynamics within the nuclear or extended family unit.</p>
@@ -317,7 +323,7 @@
           <p class="text-base sm:text-lg md:text-xl leading-relaxed mb-8 sm:mb-10 text-on-primary/90">
             We provide a deeply affirming space for the LGBTQ+ community. Dr. Haddox specializes in gender identity, transitioning support, and the unique challenges faced by queer individuals and couples. You don't have to explain your identity here—you are celebrated for it.
           </p>
-          <button class="bg-white text-primary px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-sm sm:text-base hover:bg-primary-container transition-all">
+          <button class="bg-white text-primary px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-sm sm:text-base hover:bg-primary-container hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
             Learn More About LGBTQ+ Care
           </button>
         </div>
@@ -411,10 +417,10 @@
         Take the first step toward a more balanced and authentic life. We're here to walk alongside you in a safe, therapeutic environment.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
-        <button class="bg-primary text-on-primary px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-bold hover:bg-primary-dim transition-all active:scale-95 shadow-lg shadow-primary/20">
+        <button class="bg-primary text-on-primary px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-bold hover:bg-primary-dim hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/30 hover:brightness-110 transition-all duration-200 active:scale-95 shadow-lg shadow-primary/20">
           New Client Form
         </button>
-        <button class="bg-secondary-container text-on-secondary-container px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-bold hover:bg-secondary-fixed transition-all">
+        <button class="bg-secondary-container text-on-secondary-container px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-bold hover:bg-secondary-fixed hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
           Get in Touch
         </button>
       </div>
@@ -429,9 +435,9 @@
         <p class="text-on-primary/70 text-xs sm:text-sm tracking-wide">&copy; 2026 Spectrum Counseling | Marie Haddox, Ph.D.</p>
       </div>
       <div class="flex flex-wrap justify-center gap-4 sm:gap-8">
-        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/80 hover:text-white underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Contact</a>
-        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/80 hover:text-white underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Privacy Policy</a>
-        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/80 hover:text-white underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Terms of Service</a>
+        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="#">Contact</a>
+        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="#">Privacy Policy</a>
+        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="#">Terms of Service</a>
       </div>
       <div class="flex gap-4">
         <span class="material-symbols-outlined text-on-primary/60">diversity_3</span>
