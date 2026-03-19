@@ -400,9 +400,9 @@
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-on-surface mb-4 sm:mb-6">Areas of Specialization</h2>
         <p class="text-base sm:text-lg md:text-xl text-on-surface-variant max-w-2xl">Deep clinical expertise across the issues that matter most to your wellbeing.</p>
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
         <!-- Image block with crossfade -->
-        <div id="spec-image-container" class="rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[480px] fade-in relative">
+        <div id="spec-image-container" class="rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden aspect-[4/3] lg:aspect-auto lg:h-[520px] fade-in relative">
           <img alt="Depression therapy" class="spec-img active w-full h-full object-cover" data-spec="0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
           <img alt="Anxiety support" class="spec-img w-full h-full object-cover" data-spec="1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYgVLahFRggwgGGMSEQ2UB-mXpYsrWpQhMVzu-Cu3X5bYrzq8LMHdmL9ATDjOYLVYLhbJoj6Pi-qnnWfOTLB2j2uFPzCdqA5uhpQvF7mHf8D86YMa-W1fkkcI8mPHoi4JMXRsT359ByAD12-oo1jWKtFCzKuJX-Og4om9vZZg2GRrVSu4yxmqZo68H4pwLDHIU1IbJD0qPv55usKyXwKSYN1amp9s_NuyzimhzdrPcEkhwDpQLX5jfgo1Sk29w8GqaZrar9NABs6M" />
           <img alt="Relationship counseling" class="spec-img w-full h-full object-cover" data-spec="2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCksBsDn2YNAqEZoqn2XMaooqK8MleiQHzxuYm4BAjlXHO_058N44W0kMPdIxnXA6hCyBPS6nCdZujz9-z8wyhoFferTl_Zil87GV6CX2w8gCdVdIUQQLR8o7edVKJhsnip7S93_FHSE6_8L1JDM4tBCk_Xli9aXKHKX6RuIUG3YLebCN-UjsoO5rCyRXnXCy7f41SmMy9SygQr6BAG7fS5vTFri8RQCktkp7MpsmkVPwQ9rxZb3pPQrRiCr-I0hi5Gr2LShk-vQLQ" />
@@ -566,7 +566,7 @@
             class="w-full h-full border-0 grayscale-[40%] contrast-[1.1]"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.5!2d-111.7891!3d33.3484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDIwJzU0LjIiTiAxMTHCsDQ3JzIwLjgiVw!5e0!3m2!1sen!2sus!4v1"
+            src="https://maps.google.com/maps?q=33.341638,-111.790467&z=16&output=embed"
             allowfullscreen>
           </iframe>
         </div>
@@ -722,7 +722,20 @@
       specItems.forEach(function(item, idx) {
         item.querySelector('.spec-toggle').addEventListener('click', function() {
           var wasOpen = item.classList.contains('open');
-          if (!wasOpen) {
+          if (wasOpen) {
+            // Close the open item
+            item.classList.remove('open');
+            var bar = item.querySelector('.spec-timer-bar');
+            bar.classList.remove('running');
+            bar.style.width = '0%';
+            stopCycle();
+            // Auto-advance to next after a short pause
+            timer = setTimeout(function() {
+              var next = (idx + 1) % specItems.length;
+              openSpec(next, true);
+              startCycle();
+            }, 2000);
+          } else {
             openSpec(idx, true);
             // Restart timer from this item
             userPaused = false;
