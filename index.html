@@ -150,6 +150,39 @@
     .spec-item.open {
       background-color: #ffffff;
     }
+    /* Spec image crossfade */
+    .spec-img {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .spec-img.active {
+      opacity: 1;
+    }
+    /* Timer progress bar */
+    .spec-timer-track {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: rgba(67, 98, 126, 0.15);
+      overflow: hidden;
+    }
+    .spec-timer-bar {
+      height: 100%;
+      background: #43627e;
+      width: 0%;
+      transition: none;
+    }
+    .spec-timer-bar.running {
+      width: 100%;
+      transition: width linear;
+    }
+    .spec-item.open .spec-timer-track {
+      display: block;
+    }
     /* Mobile menu */
     .mobile-menu {
       max-height: 0;
@@ -174,21 +207,22 @@
 <body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
 
   <!-- Top Navigation Bar -->
-  <nav id="main-nav" class="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 bg-white/70 backdrop-blur-xl shadow-lg border border-white/20 rounded-[1.25rem] md:rounded-full w-[92%] max-w-5xl">
+  <nav id="main-nav" class="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 bg-white/70 backdrop-blur-xl shadow-lg border border-white/20 rounded-[1.25rem] md:rounded-full w-[92%] max-w-6xl">
     <div class="flex justify-between items-center px-4 sm:px-6 py-3">
       <div class="flex items-center">
         <img alt="Spectrum Counseling Logo" class="h-10 md:h-12 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uiW71XvAti9pL6jbcsFAEaEdxhEePuv-rOZTr6grA3JVq0o4yVm2564eUC0zhMuqTmNQnH8vyXhu6j2EW8M4TYVgeF1FysXk3qODXbu0pa646_rwmxb1BNONrpLOWd0EoZ4TBnyFoYAo6Ovn0yn6dQGkhYAkIHj0jwDcdPsOG_7fTvpxPsQGCLfWTthc4Dd2G4pgNs0HlkoNihV-Hnu8xUiNkVDc0_HAeFtuDPwiQQgKJuZNjDpb2gRzVhRfV8MG1wW6_9nxUNU" />
       </div>
-      <div class="hidden md:flex flex-1 justify-center gap-8 items-center">
+      <div class="hidden md:flex flex-1 justify-center gap-6 lg:gap-8 items-center">
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#about">About</a>
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#services">Services</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#specializations">Specializations</a>
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#testimonials">Testimonials</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#location">Location</a>
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#faq">FAQ</a>
       </div>
       <div class="hidden md:flex items-center gap-2">
-        <a href="mailto:info@spectrumcounseling.com" class="flex items-center gap-1.5 bg-white text-on-surface-variant hover:text-primary hover:bg-primary-container hover:border-primary/30 hover:-translate-y-0.5 hover:shadow-md px-4 py-2 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200" aria-label="Email us">
-          <span class="material-symbols-outlined text-lg">mail</span>
-          Email
+        <a href="mailto:info@spectrumcounseling.com" class="bg-white text-on-surface-variant hover:text-primary hover:bg-primary-container hover:border-primary/30 hover:-translate-y-0.5 hover:shadow-md px-4 py-2 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200">
+          Contact
         </a>
         <button class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dim hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/25 transition-all duration-200 active:scale-95 shadow-md shadow-primary/10">
           New Client Form
@@ -204,11 +238,12 @@
       <div class="flex flex-col gap-4 pb-6 pt-2">
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#about">About</a>
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#services">Services</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#specializations">Specializations</a>
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#testimonials">Testimonials</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#location">Location</a>
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#faq">FAQ</a>
-        <a href="mailto:info@spectrumcounseling.com" class="flex items-center justify-center gap-2 bg-white text-on-surface-variant hover:text-primary hover:bg-primary-container hover:border-primary/30 hover:shadow-md px-5 py-2.5 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200 w-full">
-          <span class="material-symbols-outlined text-lg">mail</span>
-          Email Us
+        <a href="mailto:info@spectrumcounseling.com" class="bg-white text-on-surface-variant hover:text-primary hover:bg-primary-container hover:border-primary/30 hover:shadow-md px-5 py-2.5 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200 w-full text-center">
+          Contact
         </a>
         <button class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dim hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/25 transition-all duration-200 active:scale-95 shadow-md shadow-primary/10 w-full">
           New Client Form
@@ -366,14 +401,18 @@
         <p class="text-base sm:text-lg md:text-xl text-on-surface-variant max-w-2xl">Deep clinical expertise across the issues that matter most to your wellbeing.</p>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start">
-        <!-- Image block -->
-        <div class="rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[480px] fade-in">
-          <img alt="Peaceful therapy environment" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
+        <!-- Image block with crossfade -->
+        <div id="spec-image-container" class="rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[480px] fade-in relative">
+          <img alt="Depression therapy" class="spec-img active w-full h-full object-cover" data-spec="0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
+          <img alt="Anxiety support" class="spec-img w-full h-full object-cover" data-spec="1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYgVLahFRggwgGGMSEQ2UB-mXpYsrWpQhMVzu-Cu3X5bYrzq8LMHdmL9ATDjOYLVYLhbJoj6Pi-qnnWfOTLB2j2uFPzCdqA5uhpQvF7mHf8D86YMa-W1fkkcI8mPHoi4JMXRsT359ByAD12-oo1jWKtFCzKuJX-Og4om9vZZg2GRrVSu4yxmqZo68H4pwLDHIU1IbJD0qPv55usKyXwKSYN1amp9s_NuyzimhzdrPcEkhwDpQLX5jfgo1Sk29w8GqaZrar9NABs6M" />
+          <img alt="Relationship counseling" class="spec-img w-full h-full object-cover" data-spec="2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCksBsDn2YNAqEZoqn2XMaooqK8MleiQHzxuYm4BAjlXHO_058N44W0kMPdIxnXA6hCyBPS6nCdZujz9-z8wyhoFferTl_Zil87GV6CX2w8gCdVdIUQQLR8o7edVKJhsnip7S93_FHSE6_8L1JDM4tBCk_Xli9aXKHKX6RuIUG3YLebCN-UjsoO5rCyRXnXCy7f41SmMy9SygQr6BAG7fS5vTFri8RQCktkp7MpsmkVPwQ9rxZb3pPQrRiCr-I0hi5Gr2LShk-vQLQ" />
+          <img alt="Sexuality exploration" class="spec-img w-full h-full object-cover" data-spec="3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrupQdzHvRlqnj5DU2WfwFI3zeKffUXUnvJsix97Kkn8AMEMXLnAYPlkLnSig71Ix8TDyQoBfukYTHA94W3L3KisGLt76r1PUTYkg-PUp_R6lkRZQPo58y0kTCFHB7g6yckAGBmXYbFvvaRh9mfomLgL5f-BVSr8NIcKDDaZYTyWU5YvNpkmlkVhin__Nt2RclRX_JiMa17HnM7ebpjcdtWMrjT7TBfzzNvYKHnV3sLTXCfMx6hCyu_Sx4e2XdWbrORSVqaCHsAEw" />
+          <img alt="Gender identity support" class="spec-img w-full h-full object-cover" data-spec="4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
         </div>
         <!-- Accordion -->
         <div class="space-y-3 sm:space-y-4 fade-in" id="spec-list">
           <!-- Depression -->
-          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden">
+          <div class="spec-item open bg-surface-container-low rounded-2xl overflow-hidden relative" data-spec="0">
             <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
               <div class="flex items-center gap-3 sm:gap-4">
                 <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">cloud</span>
@@ -385,9 +424,10 @@
               <p class="mb-3">We work with individuals experiencing persistent sadness, loss of motivation, and emotional numbness. Dr. Haddox uses a combination of cognitive-behavioral and psychodynamic approaches to help clients uncover root causes and develop sustainable coping strategies.</p>
               <p>Treatment is tailored to each person's unique experience — whether navigating a major life transition, processing grief, or managing chronic depressive episodes.</p>
             </div>
+            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
           </div>
           <!-- Anxiety -->
-          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden">
+          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden relative" data-spec="1">
             <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
               <div class="flex items-center gap-3 sm:gap-4">
                 <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">psychology</span>
@@ -399,9 +439,10 @@
               <p class="mb-3">From generalized anxiety to panic disorders and social anxiety, we provide evidence-based treatment to help you regain a sense of control. Our approach integrates mindfulness techniques with traditional therapeutic methods.</p>
               <p>We focus on understanding your anxiety triggers, building resilience, and creating practical tools you can use in your daily life.</p>
             </div>
+            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
           </div>
           <!-- Relationships -->
-          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden">
+          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden relative" data-spec="2">
             <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
               <div class="flex items-center gap-3 sm:gap-4">
                 <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">handshake</span>
@@ -413,9 +454,10 @@
               <p class="mb-3">Healthy relationships require ongoing work. We help couples and individuals navigate communication breakdowns, trust issues, codependency, and attachment patterns that may be holding them back.</p>
               <p>Whether you're strengthening a partnership, recovering from betrayal, or learning to set boundaries, we provide a structured yet compassionate framework for growth.</p>
             </div>
+            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
           </div>
           <!-- Sexuality -->
-          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden">
+          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden relative" data-spec="3">
             <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
               <div class="flex items-center gap-3 sm:gap-4">
                 <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">spa</span>
@@ -427,9 +469,10 @@
               <p class="mb-3">Exploring and understanding your sexuality is a deeply personal journey. We offer a judgment-free space to discuss sexual orientation, intimacy concerns, and the intersection of identity and desire.</p>
               <p>Dr. Haddox brings specialized training in sexual health to support clients through questions of identity, coming out, and building fulfilling intimate connections.</p>
             </div>
+            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
           </div>
           <!-- Gender -->
-          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden">
+          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden relative" data-spec="4">
             <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
               <div class="flex items-center gap-3 sm:gap-4">
                 <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">diversity_1</span>
@@ -441,6 +484,7 @@
               <p class="mb-3">Gender identity is complex and deeply personal. We support clients who are questioning, exploring, or affirming their gender — including those considering or undergoing transition.</p>
               <p>Our practice provides letters of support, guidance through social and medical transitions, and a safe space to process the emotional dimensions of gender exploration at any stage.</p>
             </div>
+            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
           </div>
         </div>
       </div>
@@ -481,6 +525,50 @@
               <p class="text-xs sm:text-sm text-on-surface-variant">Individual Support</p>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location Section -->
+  <section class="py-16 sm:py-20 md:py-24 bg-surface" id="location">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
+        <div class="fade-in">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-on-surface mb-4 sm:mb-6">Visit Our Office</h2>
+          <p class="text-base sm:text-lg text-on-surface-variant leading-relaxed mb-6 sm:mb-8">
+            Our practice is located in the heart of Gilbert, Arizona. We offer a warm, private setting designed to put you at ease from the moment you arrive.
+          </p>
+          <div class="space-y-4 mb-8">
+            <div class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary text-2xl mt-0.5">location_on</span>
+              <div>
+                <p class="font-bold text-on-surface">428 S Gilbert Rd. Ste. #105 (Bldg. 3)</p>
+                <p class="text-on-surface-variant">Gilbert, AZ 85296</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary text-2xl mt-0.5">schedule</span>
+              <div>
+                <p class="font-bold text-on-surface">Office Hours</p>
+                <p class="text-on-surface-variant">Monday – Friday, 9:00 AM – 5:00 PM</p>
+              </div>
+            </div>
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&query=428+S+Gilbert+Rd+Suite+105+Gilbert+AZ+85296" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold text-sm sm:text-base hover:bg-primary-dim hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/25 transition-all duration-200 active:scale-95 shadow-md shadow-primary/10">
+            <span class="material-symbols-outlined text-lg">open_in_new</span>
+            Open in Google Maps
+          </a>
+        </div>
+        <div class="rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden aspect-[4/3] shadow-lg fade-in">
+          <iframe
+            title="Spectrum Counseling location map"
+            class="w-full h-full border-0 grayscale-[40%] contrast-[1.1]"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.5!2d-111.7891!3d33.3484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDIwJzU0LjIiTiAxMTHCsDQ3JzIwLjgiVw!5e0!3m2!1sen!2sus!4v1"
+            allowfullscreen>
+          </iframe>
         </div>
       </div>
     </div>
@@ -581,21 +669,102 @@
       });
     });
 
-    // Specialization Accordion
-    document.querySelectorAll('.spec-toggle').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var item = btn.closest('.spec-item');
-        var isOpen = item.classList.contains('open');
-        // Close all
-        document.querySelectorAll('.spec-item').forEach(function(el) {
-          el.classList.remove('open');
+    // Specialization Accordion with auto-cycle timer
+    (function() {
+      var CYCLE_MS = 8000;
+      var specItems = document.querySelectorAll('.spec-item');
+      var specImages = document.querySelectorAll('.spec-img');
+      var currentIndex = 0;
+      var timer = null;
+      var userPaused = false;
+
+      function openSpec(index, animate) {
+        specItems.forEach(function(el) { el.classList.remove('open'); });
+        specImages.forEach(function(el) { el.classList.remove('active'); });
+        // Reset all timer bars
+        specItems.forEach(function(el) {
+          var bar = el.querySelector('.spec-timer-bar');
+          bar.classList.remove('running');
+          bar.style.width = '0%';
+          bar.style.transitionDuration = '';
         });
-        // Open clicked if it was closed
-        if (!isOpen) {
-          item.classList.add('open');
-        }
+
+        currentIndex = index;
+        var item = specItems[index];
+        item.classList.add('open');
+
+        // Show corresponding image
+        var img = document.querySelector('.spec-img[data-spec="' + index + '"]');
+        if (img) img.classList.add('active');
+
+        // Start timer bar
+        var bar = item.querySelector('.spec-timer-bar');
+        // Force reflow
+        void bar.offsetWidth;
+        bar.style.transitionDuration = CYCLE_MS + 'ms';
+        bar.classList.add('running');
+      }
+
+      function startCycle() {
+        stopCycle();
+        timer = setTimeout(function advance() {
+          var next = (currentIndex + 1) % specItems.length;
+          openSpec(next, true);
+          timer = setTimeout(advance, CYCLE_MS);
+        }, CYCLE_MS);
+      }
+
+      function stopCycle() {
+        if (timer) { clearTimeout(timer); timer = null; }
+      }
+
+      // Click handlers
+      specItems.forEach(function(item, idx) {
+        item.querySelector('.spec-toggle').addEventListener('click', function() {
+          var wasOpen = item.classList.contains('open');
+          if (!wasOpen) {
+            openSpec(idx, true);
+            // Restart timer from this item
+            userPaused = false;
+            startCycle();
+          }
+        });
       });
-    });
+
+      // Pause on hover over the section
+      var specSection = document.getElementById('spec-list');
+      specSection.addEventListener('mouseenter', function() {
+        userPaused = true;
+        stopCycle();
+        // Pause the timer bar animation
+        var bar = specItems[currentIndex].querySelector('.spec-timer-bar');
+        var computed = getComputedStyle(bar);
+        bar.style.width = computed.width;
+        bar.classList.remove('running');
+      });
+      specSection.addEventListener('mouseleave', function() {
+        userPaused = false;
+        // Resume timer bar from where it was
+        var bar = specItems[currentIndex].querySelector('.spec-timer-bar');
+        var currentWidth = parseFloat(bar.style.width) || 0;
+        var parentWidth = bar.parentElement.offsetWidth;
+        var pct = parentWidth > 0 ? (currentWidth / parentWidth) * 100 : 0;
+        var remaining = CYCLE_MS * (1 - pct / 100);
+        bar.style.transitionDuration = remaining + 'ms';
+        void bar.offsetWidth;
+        bar.classList.add('running');
+        stopCycle();
+        timer = setTimeout(function() {
+          var next = (currentIndex + 1) % specItems.length;
+          openSpec(next, true);
+          startCycle();
+        }, remaining);
+      });
+
+      // Initialize first item open
+      openSpec(0, false);
+      startCycle();
+    })();
 
     // Mobile menu toggle
     var menuBtn = document.getElementById('mobile-menu-btn');
