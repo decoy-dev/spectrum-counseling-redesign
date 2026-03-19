@@ -4,7 +4,53 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Spectrum Counseling | Marie Haddox, Ph.D.</title>
-  <meta name="description" content="Dr. Marie Haddox, Ph.D. offers compassionate, holistic counseling — LGBTQ+ affirming therapy, couples counseling, and individual therapy in Phoenix, AZ." />
+  <meta name="description" content="Dr. Marie Haddox, Ph.D. offers compassionate, holistic LGBTQ+ affirming therapy, couples counseling, and individual therapy in Gilbert, AZ. Serving Gilbert, Mesa, Chandler, and the East Valley." />
+  <meta name="geo.region" content="US-AZ" />
+  <meta name="geo.placename" content="Gilbert, Arizona" />
+  <meta name="geo.position" content="33.341638;-111.790467" />
+  <meta name="ICBM" content="33.341638, -111.790467" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Spectrum Counseling",
+    "description": "Compassionate, holistic LGBTQ+ affirming therapy, couples counseling, and individual therapy in Gilbert, AZ.",
+    "url": "https://decoy-dev.github.io/spectrum-counseling-redesign/",
+    "telephone": "",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "428 S Gilbert Rd. Ste. #105 (Bldg. 3)",
+      "addressLocality": "Gilbert",
+      "addressRegion": "AZ",
+      "postalCode": "85296",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 33.341638,
+      "longitude": -111.790467
+    },
+    "openingHours": "Mo-Fr 09:00-17:00",
+    "priceRange": "$$",
+    "areaServed": ["Gilbert", "Mesa", "Chandler", "Tempe", "Phoenix", "East Valley"],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Counseling Services",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Individual Counseling"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Couples & Marriage Counseling"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Family Systems Therapy"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "LGBTQ+ Affirming Therapy"}}
+      ]
+    },
+    "founder": {
+      "@type": "Person",
+      "name": "Dr. Marie Haddox",
+      "honorificSuffix": "Ph.D.",
+      "jobTitle": "Licensed Psychologist"
+    }
+  }
+  </script>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
@@ -99,56 +145,61 @@
     @media (min-width: 640px) {
       html { scroll-padding-top: 7rem; }
     }
-    /* FAQ accordion */
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease, padding 0.35s ease;
-      padding-top: 0;
-      padding-bottom: 0;
+    /* FAQ side panel */
+    .faq-btn {
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
-    .faq-item.open .faq-answer {
-      max-height: 200px;
-      padding-bottom: 1.5rem;
-    }
-    .faq-item.open .faq-icon {
-      transform: rotate(45deg);
-    }
-    .faq-icon {
-      transition: transform 0.3s ease;
-    }
-    .faq-item:hover {
+    .faq-btn:hover {
       background-color: #e8ecee;
     }
-    .faq-item {
-      transition: background-color 0.2s ease;
+    .faq-btn.active {
+      background-color: #43627e;
+      color: #f6f9ff;
+    }
+    .faq-btn.active .faq-icon-btn {
+      color: #b5d5f6;
+    }
+    .faq-panel {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .faq-panel.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
     }
     /* Specialization accordion */
-    .spec-item {
+    .spec-btn {
       transition: background-color 0.2s ease;
     }
-    .spec-item:hover {
+    .spec-btn:hover {
       background-color: #e8ecee;
     }
-    .spec-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease, padding 0.4s ease;
-      padding-top: 0;
-      padding-bottom: 0;
+    .spec-btn.active {
+      background-color: #ffffff;
     }
-    .spec-item.open .spec-answer {
-      max-height: 300px;
-      padding-bottom: 1.5rem;
-    }
-    .spec-item.open .spec-icon {
+    .spec-btn.active .spec-icon {
       transform: rotate(45deg);
     }
     .spec-icon {
       transition: transform 0.3s ease;
     }
-    .spec-item.open {
-      background-color: #ffffff;
+    .spec-detail {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      pointer-events: none;
+    }
+    .spec-detail.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
     }
     /* Spec image crossfade */
     .spec-img {
@@ -159,15 +210,6 @@
     }
     .spec-img.active {
       opacity: 1;
-    }
-    /* Spec accordion fixed height on desktop */
-    @media (min-width: 1024px) {
-      #spec-list {
-        height: 520px;
-        overflow-y: auto;
-        scrollbar-width: none;
-      }
-      #spec-list::-webkit-scrollbar { display: none; }
     }
     /* Timer progress bar */
     .spec-timer-track {
@@ -190,9 +232,6 @@
       width: 100%;
       transition: width linear;
     }
-    .spec-item.open .spec-timer-track {
-      display: block;
-    }
     /* Mobile menu */
     .mobile-menu {
       max-height: 0;
@@ -201,6 +240,30 @@
     }
     .mobile-menu.open {
       max-height: 400px;
+    }
+    /* Gradient wave animation on "Spectrum" */
+    @keyframes spectrumWave {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    .spectrum-wave {
+      background: linear-gradient(
+        90deg,
+        #43627e 0%,
+        #b5d5f6 15%,
+        #43627e 30%,
+        #6a8fae 45%,
+        #b5d5f6 55%,
+        #365671 70%,
+        #a7c7e7 85%,
+        #43627e 100%
+      );
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: spectrumWave 6s ease-in-out infinite;
+      font-style: italic;
     }
     /* Fade-in on scroll */
     .fade-in {
@@ -274,7 +337,7 @@
           Professional Care for Every Identity
         </span>
         <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-on-surface leading-[1.15] sm:leading-[1.1] mb-6 sm:mb-8">
-          Finding healing in the <span class="text-primary italic">Spectrum</span> of human experience.
+          Finding healing in the <span class="spectrum-wave">Spectrum</span> of human experience.
         </h1>
         <p class="text-base sm:text-lg md:text-xl text-on-surface-variant leading-relaxed mb-8 sm:mb-10 max-w-2xl">
           Experience a digital sanctuary for mental wellness. Dr. Marie Haddox, Ph.D. offers a compassionate, holistic approach to LGBTQ+ care, couples counseling, and individual therapy.
@@ -419,82 +482,73 @@
           <img alt="Sexuality exploration" class="spec-img w-full h-full object-cover" data-spec="3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrupQdzHvRlqnj5DU2WfwFI3zeKffUXUnvJsix97Kkn8AMEMXLnAYPlkLnSig71Ix8TDyQoBfukYTHA94W3L3KisGLt76r1PUTYkg-PUp_R6lkRZQPo58y0kTCFHB7g6yckAGBmXYbFvvaRh9mfomLgL5f-BVSr8NIcKDDaZYTyWU5YvNpkmlkVhin__Nt2RclRX_JiMa17HnM7ebpjcdtWMrjT7TBfzzNvYKHnV3sLTXCfMx6hCyu_Sx4e2XdWbrORSVqaCHsAEw" />
           <img alt="Gender identity support" class="spec-img w-full h-full object-cover" data-spec="4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
         </div>
-        <!-- Accordion -->
-        <div class="space-y-3 sm:space-y-4 fade-in" id="spec-list">
-          <!-- Depression -->
-          <div class="spec-item open bg-surface-container-low rounded-2xl overflow-hidden relative" data-spec="0">
-            <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
+        <!-- Buttons + detail panel (fixed layout, no resize) -->
+        <div class="fade-in" id="spec-list">
+          <!-- Topic buttons -->
+          <div class="space-y-2 sm:space-y-3 mb-6">
+            <button class="spec-btn active w-full px-5 sm:px-8 py-4 sm:py-5 text-left flex justify-between items-center gap-4 bg-surface-container-low rounded-2xl relative" data-spec="0">
               <div class="flex items-center gap-3 sm:gap-4">
                 <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">cloud</span>
                 <span class="text-base sm:text-lg font-bold text-on-surface">Depression</span>
               </div>
               <span class="material-symbols-outlined text-primary spec-icon flex-shrink-0">add</span>
+              <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
             </button>
-            <div class="spec-answer px-5 sm:px-8 text-sm sm:text-base text-on-surface-variant leading-relaxed">
-              <p class="mb-3">We work with individuals experiencing persistent sadness, loss of motivation, and emotional numbness. Dr. Haddox uses a combination of cognitive-behavioral and psychodynamic approaches to help clients uncover root causes and develop sustainable coping strategies.</p>
-              <p>Treatment is tailored to each person's unique experience — whether navigating a major life transition, processing grief, or managing chronic depressive episodes.</p>
-            </div>
-            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-          </div>
-          <!-- Anxiety -->
-          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden relative" data-spec="1">
-            <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
+            <button class="spec-btn w-full px-5 sm:px-8 py-4 sm:py-5 text-left flex justify-between items-center gap-4 bg-surface-container-low rounded-2xl relative" data-spec="1">
               <div class="flex items-center gap-3 sm:gap-4">
                 <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">psychology</span>
                 <span class="text-base sm:text-lg font-bold text-on-surface">Anxiety</span>
               </div>
               <span class="material-symbols-outlined text-primary spec-icon flex-shrink-0">add</span>
+              <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
             </button>
-            <div class="spec-answer px-5 sm:px-8 text-sm sm:text-base text-on-surface-variant leading-relaxed">
-              <p class="mb-3">From generalized anxiety to panic disorders and social anxiety, we provide evidence-based treatment to help you regain a sense of control. Our approach integrates mindfulness techniques with traditional therapeutic methods.</p>
-              <p>We focus on understanding your anxiety triggers, building resilience, and creating practical tools you can use in your daily life.</p>
-            </div>
-            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-          </div>
-          <!-- Relationships -->
-          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden relative" data-spec="2">
-            <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
+            <button class="spec-btn w-full px-5 sm:px-8 py-4 sm:py-5 text-left flex justify-between items-center gap-4 bg-surface-container-low rounded-2xl relative" data-spec="2">
               <div class="flex items-center gap-3 sm:gap-4">
                 <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">handshake</span>
                 <span class="text-base sm:text-lg font-bold text-on-surface">Relationships</span>
               </div>
               <span class="material-symbols-outlined text-primary spec-icon flex-shrink-0">add</span>
+              <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
             </button>
-            <div class="spec-answer px-5 sm:px-8 text-sm sm:text-base text-on-surface-variant leading-relaxed">
-              <p class="mb-3">Healthy relationships require ongoing work. We help couples and individuals navigate communication breakdowns, trust issues, codependency, and attachment patterns that may be holding them back.</p>
-              <p>Whether you're strengthening a partnership, recovering from betrayal, or learning to set boundaries, we provide a structured yet compassionate framework for growth.</p>
-            </div>
-            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-          </div>
-          <!-- Sexuality -->
-          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden relative" data-spec="3">
-            <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
+            <button class="spec-btn w-full px-5 sm:px-8 py-4 sm:py-5 text-left flex justify-between items-center gap-4 bg-surface-container-low rounded-2xl relative" data-spec="3">
               <div class="flex items-center gap-3 sm:gap-4">
                 <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">spa</span>
                 <span class="text-base sm:text-lg font-bold text-on-surface">Sexuality</span>
               </div>
               <span class="material-symbols-outlined text-primary spec-icon flex-shrink-0">add</span>
+              <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
             </button>
-            <div class="spec-answer px-5 sm:px-8 text-sm sm:text-base text-on-surface-variant leading-relaxed">
-              <p class="mb-3">Exploring and understanding your sexuality is a deeply personal journey. We offer a judgment-free space to discuss sexual orientation, intimacy concerns, and the intersection of identity and desire.</p>
-              <p>Dr. Haddox brings specialized training in sexual health to support clients through questions of identity, coming out, and building fulfilling intimate connections.</p>
-            </div>
-            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-          </div>
-          <!-- Gender -->
-          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden relative" data-spec="4">
-            <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
+            <button class="spec-btn w-full px-5 sm:px-8 py-4 sm:py-5 text-left flex justify-between items-center gap-4 bg-surface-container-low rounded-2xl relative" data-spec="4">
               <div class="flex items-center gap-3 sm:gap-4">
                 <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">diversity_1</span>
                 <span class="text-base sm:text-lg font-bold text-on-surface">Gender</span>
               </div>
               <span class="material-symbols-outlined text-primary spec-icon flex-shrink-0">add</span>
+              <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
             </button>
-            <div class="spec-answer px-5 sm:px-8 text-sm sm:text-base text-on-surface-variant leading-relaxed">
-              <p class="mb-3">Gender identity is complex and deeply personal. We support clients who are questioning, exploring, or affirming their gender — including those considering or undergoing transition.</p>
-              <p>Our practice provides letters of support, guidance through social and medical transitions, and a safe space to process the emotional dimensions of gender exploration at any stage.</p>
+          </div>
+          <!-- Detail panel (fixed height, content swaps) -->
+          <div class="relative h-[140px] sm:h-[120px]">
+            <div class="spec-detail active px-2 text-sm sm:text-base text-on-surface-variant leading-relaxed" data-spec="0">
+              <p class="mb-2">We work with individuals experiencing persistent sadness, loss of motivation, and emotional numbness. Dr. Haddox uses cognitive-behavioral and psychodynamic approaches to uncover root causes and develop sustainable coping strategies.</p>
+              <p>Treatment is tailored to each person — whether navigating a major life transition, processing grief, or managing chronic depressive episodes.</p>
             </div>
-            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+            <div class="spec-detail px-2 text-sm sm:text-base text-on-surface-variant leading-relaxed" data-spec="1">
+              <p class="mb-2">From generalized anxiety to panic disorders and social anxiety, we provide evidence-based treatment to help you regain control. Our approach integrates mindfulness techniques with traditional therapeutic methods.</p>
+              <p>We focus on understanding your triggers, building resilience, and creating practical tools for daily life.</p>
+            </div>
+            <div class="spec-detail px-2 text-sm sm:text-base text-on-surface-variant leading-relaxed" data-spec="2">
+              <p class="mb-2">We help couples and individuals navigate communication breakdowns, trust issues, codependency, and attachment patterns. Whether strengthening a partnership or learning to set boundaries, we provide a compassionate framework.</p>
+              <p>Recovery from betrayal, improving family dynamics, and building healthier connections are all areas of deep expertise.</p>
+            </div>
+            <div class="spec-detail px-2 text-sm sm:text-base text-on-surface-variant leading-relaxed" data-spec="3">
+              <p class="mb-2">We offer a judgment-free space to discuss sexual orientation, intimacy concerns, and the intersection of identity and desire. Dr. Haddox brings specialized training in sexual health.</p>
+              <p>Support includes questions of identity, coming out, and building fulfilling intimate connections.</p>
+            </div>
+            <div class="spec-detail px-2 text-sm sm:text-base text-on-surface-variant leading-relaxed" data-spec="4">
+              <p class="mb-2">We support clients questioning, exploring, or affirming their gender — including those considering or undergoing transition. Our practice provides letters of support and guidance through social and medical transitions.</p>
+              <p>A safe space to process the emotional dimensions of gender exploration at any stage of your journey.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -552,7 +606,7 @@
           <p class="text-base sm:text-lg text-on-surface-variant leading-relaxed mb-6 sm:mb-8">
             Our practice is located in the heart of Gilbert, Arizona. We offer a warm, private setting designed to put you at ease from the moment you arrive.
           </p>
-          <div class="space-y-4 mb-8">
+          <address class="not-italic space-y-4 mb-8">
             <div class="flex items-start gap-3">
               <span class="material-symbols-outlined text-primary text-2xl mt-0.5">location_on</span>
               <div>
@@ -567,7 +621,7 @@
                 <p class="text-on-surface-variant">Monday – Friday, 9:00 AM – 5:00 PM</p>
               </div>
             </div>
-          </div>
+          </address>
           <a href="https://www.google.com/maps/search/?api=1&query=428+S+Gilbert+Rd+Suite+105+Gilbert+AZ+85296" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold text-sm sm:text-base hover:bg-primary-dim hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/25 transition-all duration-200 active:scale-95 shadow-md shadow-primary/10">
             <span class="material-symbols-outlined text-lg">open_in_new</span>
             Open in Google Maps
@@ -592,37 +646,56 @@
 
   <!-- FAQ Section -->
   <section class="py-16 sm:py-20 md:py-24 bg-surface" id="faq">
-    <div class="max-w-4xl mx-auto px-5 sm:px-8">
-      <div class="text-center mb-10 sm:mb-16 fade-in">
-        <h2 class="text-3xl sm:text-4xl font-bold mb-4">Common Questions</h2>
-        <p class="text-on-surface-variant">Everything you need to know about starting your journey with us.</p>
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="mb-10 sm:mb-16 fade-in">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Common Questions</h2>
+        <p class="text-on-surface-variant text-base sm:text-lg">Everything you need to know about starting your journey with us.</p>
       </div>
-      <div class="space-y-3 sm:space-y-4" id="faq-list">
-        <div class="faq-item bg-surface-container-low rounded-2xl overflow-hidden fade-in">
-          <button class="faq-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center group" aria-expanded="false">
-            <span class="text-base sm:text-lg font-bold text-on-surface">Do you take insurance?</span>
-            <span class="material-symbols-outlined text-primary faq-icon">add</span>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 fade-in" id="faq-list">
+        <!-- Question buttons -->
+        <div class="space-y-2 sm:space-y-3">
+          <button class="faq-btn active w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex justify-between items-center gap-3 rounded-2xl bg-surface-container-low" data-faq="0">
+            <span class="text-sm sm:text-base font-bold">Do you take insurance?</span>
+            <span class="material-symbols-outlined text-primary faq-icon-btn flex-shrink-0">chevron_right</span>
           </button>
-          <div class="faq-answer px-5 sm:px-8 text-sm sm:text-base text-on-surface-variant leading-relaxed">
-            We are currently in-network with Blue Cross Blue Shield and Aetna. For other providers, we can provide a "superbill" for potential out-of-network reimbursement.
-          </div>
+          <button class="faq-btn w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex justify-between items-center gap-3 rounded-2xl bg-surface-container-low" data-faq="1">
+            <span class="text-sm sm:text-base font-bold">What should I expect in my first session?</span>
+            <span class="material-symbols-outlined text-primary faq-icon-btn flex-shrink-0">chevron_right</span>
+          </button>
+          <button class="faq-btn w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex justify-between items-center gap-3 rounded-2xl bg-surface-container-low" data-faq="2">
+            <span class="text-sm sm:text-base font-bold">How long are the sessions?</span>
+            <span class="material-symbols-outlined text-primary faq-icon-btn flex-shrink-0">chevron_right</span>
+          </button>
+          <button class="faq-btn w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex justify-between items-center gap-3 rounded-2xl bg-surface-container-low" data-faq="3">
+            <span class="text-sm sm:text-base font-bold">Do you offer telehealth sessions?</span>
+            <span class="material-symbols-outlined text-primary faq-icon-btn flex-shrink-0">chevron_right</span>
+          </button>
+          <button class="faq-btn w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex justify-between items-center gap-3 rounded-2xl bg-surface-container-low" data-faq="4">
+            <span class="text-sm sm:text-base font-bold">What is your cancellation policy?</span>
+            <span class="material-symbols-outlined text-primary faq-icon-btn flex-shrink-0">chevron_right</span>
+          </button>
         </div>
-        <div class="faq-item bg-surface-container-low rounded-2xl overflow-hidden fade-in">
-          <button class="faq-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center group" aria-expanded="false">
-            <span class="text-base sm:text-lg font-bold text-on-surface">What should I expect in my first session?</span>
-            <span class="material-symbols-outlined text-primary faq-icon">add</span>
-          </button>
-          <div class="faq-answer px-5 sm:px-8 text-sm sm:text-base text-on-surface-variant leading-relaxed">
-            The initial consultation is an intake session where we discuss your history, goals, and determine if our practice is the right fit for your needs.
+        <!-- Answer panel (fixed height, content swaps) -->
+        <div class="relative min-h-[200px] sm:min-h-[240px] bg-surface-container-low rounded-2xl p-6 sm:p-8">
+          <div class="faq-panel active" data-faq="0">
+            <h3 class="text-lg sm:text-xl font-bold text-on-surface mb-3">Insurance Coverage</h3>
+            <p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">We are currently in-network with Blue Cross Blue Shield and Aetna. For other providers, we can provide a "superbill" for potential out-of-network reimbursement. We're happy to help you navigate your benefits before your first appointment.</p>
           </div>
-        </div>
-        <div class="faq-item bg-surface-container-low rounded-2xl overflow-hidden fade-in">
-          <button class="faq-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center group" aria-expanded="false">
-            <span class="text-base sm:text-lg font-bold text-on-surface">How long are the sessions?</span>
-            <span class="material-symbols-outlined text-primary faq-icon">add</span>
-          </button>
-          <div class="faq-answer px-5 sm:px-8 text-sm sm:text-base text-on-surface-variant leading-relaxed">
-            Standard individual sessions are 50 minutes. Couples and family sessions are typically 60-75 minutes depending on the complexity of the dynamic.
+          <div class="faq-panel" data-faq="1">
+            <h3 class="text-lg sm:text-xl font-bold text-on-surface mb-3">Your First Session</h3>
+            <p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">The initial consultation is an intake session where we discuss your history, goals, and determine if our practice is the right fit for your needs. This session typically lasts 60 minutes, and there's no pressure — it's a conversation to help us both understand how we can work together.</p>
+          </div>
+          <div class="faq-panel" data-faq="2">
+            <h3 class="text-lg sm:text-xl font-bold text-on-surface mb-3">Session Length</h3>
+            <p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">Standard individual sessions are 50 minutes. Couples and family sessions are typically 60–75 minutes depending on the complexity of the dynamic. Extended sessions can be arranged for intensive work when needed.</p>
+          </div>
+          <div class="faq-panel" data-faq="3">
+            <h3 class="text-lg sm:text-xl font-bold text-on-surface mb-3">Telehealth Options</h3>
+            <p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">Yes, we offer secure telehealth sessions for clients throughout Arizona. Virtual sessions follow the same structure as in-person appointments and are conducted through a HIPAA-compliant platform. Many clients find the flexibility of telehealth helpful for maintaining consistency in their care.</p>
+          </div>
+          <div class="faq-panel" data-faq="4">
+            <h3 class="text-lg sm:text-xl font-bold text-on-surface mb-3">Cancellation Policy</h3>
+            <p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">We ask for at least 24 hours' notice if you need to cancel or reschedule your appointment. Late cancellations or no-shows may be subject to a fee. We understand that life happens and will always work with you when unexpected circumstances arise.</p>
           </div>
         </div>
       </div>
@@ -670,55 +743,56 @@
   </footer>
 
   <script>
-    // FAQ Accordion
-    document.querySelectorAll('.faq-toggle').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var item = btn.closest('.faq-item');
-        var isOpen = item.classList.contains('open');
-        // Close all
-        document.querySelectorAll('.faq-item').forEach(function(el) {
-          el.classList.remove('open');
-          el.querySelector('.faq-toggle').setAttribute('aria-expanded', 'false');
-        });
-        // Open clicked if it was closed
-        if (!isOpen) {
-          item.classList.add('open');
-          btn.setAttribute('aria-expanded', 'true');
-        }
-      });
-    });
+    // === FAQ Side Panel ===
+    (function() {
+      var faqBtns = document.querySelectorAll('.faq-btn');
+      var faqPanels = document.querySelectorAll('.faq-panel');
 
-    // Specialization Accordion with auto-cycle timer
+      function activateFaq(index) {
+        faqBtns.forEach(function(b) { b.classList.remove('active'); });
+        faqPanels.forEach(function(p) { p.classList.remove('active'); });
+        faqBtns[index].classList.add('active');
+        faqPanels[index].classList.add('active');
+      }
+
+      faqBtns.forEach(function(btn, idx) {
+        btn.addEventListener('click', function() { activateFaq(idx); });
+      });
+
+      activateFaq(0);
+    })();
+
+    // === Specializations with auto-cycle timer ===
     (function() {
       var CYCLE_MS = 8000;
-      var specItems = document.querySelectorAll('.spec-item');
+      var specBtns = document.querySelectorAll('.spec-btn');
+      var specDetails = document.querySelectorAll('.spec-detail');
       var specImages = document.querySelectorAll('.spec-img');
       var currentIndex = 0;
       var timer = null;
-      var userPaused = false;
 
-      function openSpec(index, animate) {
-        specItems.forEach(function(el) { el.classList.remove('open'); });
-        specImages.forEach(function(el) { el.classList.remove('active'); });
+      function openSpec(index) {
+        specBtns.forEach(function(b) { b.classList.remove('active'); });
+        specDetails.forEach(function(d) { d.classList.remove('active'); });
+        specImages.forEach(function(i) { i.classList.remove('active'); });
+
         // Reset all timer bars
-        specItems.forEach(function(el) {
-          var bar = el.querySelector('.spec-timer-bar');
+        specBtns.forEach(function(b) {
+          var bar = b.querySelector('.spec-timer-bar');
           bar.classList.remove('running');
           bar.style.width = '0%';
           bar.style.transitionDuration = '';
         });
 
         currentIndex = index;
-        var item = specItems[index];
-        item.classList.add('open');
+        specBtns[index].classList.add('active');
+        specDetails[index].classList.add('active');
 
-        // Show corresponding image
         var img = document.querySelector('.spec-img[data-spec="' + index + '"]');
         if (img) img.classList.add('active');
 
         // Start timer bar
-        var bar = item.querySelector('.spec-timer-bar');
-        // Force reflow
+        var bar = specBtns[index].querySelector('.spec-timer-bar');
         void bar.offsetWidth;
         bar.style.transitionDuration = CYCLE_MS + 'ms';
         bar.classList.add('running');
@@ -727,8 +801,8 @@
       function startCycle() {
         stopCycle();
         timer = setTimeout(function advance() {
-          var next = (currentIndex + 1) % specItems.length;
-          openSpec(next, true);
+          var next = (currentIndex + 1) % specBtns.length;
+          openSpec(next);
           timer = setTimeout(advance, CYCLE_MS);
         }, CYCLE_MS);
       }
@@ -738,46 +812,40 @@
       }
 
       // Click handlers
-      specItems.forEach(function(item, idx) {
-        item.querySelector('.spec-toggle').addEventListener('click', function() {
-          var wasOpen = item.classList.contains('open');
-          if (wasOpen) {
-            // Close the open item
-            item.classList.remove('open');
-            var bar = item.querySelector('.spec-timer-bar');
+      specBtns.forEach(function(btn, idx) {
+        btn.addEventListener('click', function() {
+          var wasActive = btn.classList.contains('active');
+          if (wasActive) {
+            // Close current, auto-advance after pause
+            btn.classList.remove('active');
+            specDetails[idx].classList.remove('active');
+            var bar = btn.querySelector('.spec-timer-bar');
             bar.classList.remove('running');
             bar.style.width = '0%';
             stopCycle();
-            // Auto-advance to next after a short pause
             timer = setTimeout(function() {
-              var next = (idx + 1) % specItems.length;
-              openSpec(next, true);
+              var next = (idx + 1) % specBtns.length;
+              openSpec(next);
               startCycle();
             }, 2000);
           } else {
-            openSpec(idx, true);
-            // Restart timer from this item
-            userPaused = false;
+            openSpec(idx);
             startCycle();
           }
         });
       });
 
-      // Pause on hover over the section
+      // Pause on hover
       var specSection = document.getElementById('spec-list');
       specSection.addEventListener('mouseenter', function() {
-        userPaused = true;
         stopCycle();
-        // Pause the timer bar animation
-        var bar = specItems[currentIndex].querySelector('.spec-timer-bar');
+        var bar = specBtns[currentIndex].querySelector('.spec-timer-bar');
         var computed = getComputedStyle(bar);
         bar.style.width = computed.width;
         bar.classList.remove('running');
       });
       specSection.addEventListener('mouseleave', function() {
-        userPaused = false;
-        // Resume timer bar from where it was
-        var bar = specItems[currentIndex].querySelector('.spec-timer-bar');
+        var bar = specBtns[currentIndex].querySelector('.spec-timer-bar');
         var currentWidth = parseFloat(bar.style.width) || 0;
         var parentWidth = bar.parentElement.offsetWidth;
         var pct = parentWidth > 0 ? (currentWidth / parentWidth) * 100 : 0;
@@ -787,18 +855,18 @@
         bar.classList.add('running');
         stopCycle();
         timer = setTimeout(function() {
-          var next = (currentIndex + 1) % specItems.length;
-          openSpec(next, true);
+          var next = (currentIndex + 1) % specBtns.length;
+          openSpec(next);
           startCycle();
         }, remaining);
       });
 
-      // Initialize first item open
-      openSpec(0, false);
+      // Initialize
+      openSpec(0);
       startCycle();
     })();
 
-    // Mobile menu toggle
+    // === Mobile menu toggle ===
     var menuBtn = document.getElementById('mobile-menu-btn');
     var mobileMenu = document.getElementById('mobile-menu');
     menuBtn.addEventListener('click', function() {
@@ -806,7 +874,6 @@
       var icon = menuBtn.querySelector('.material-symbols-outlined');
       icon.textContent = mobileMenu.classList.contains('open') ? 'close' : 'menu';
     });
-    // Close mobile menu on link click
     mobileMenu.querySelectorAll('a').forEach(function(link) {
       link.addEventListener('click', function() {
         mobileMenu.classList.remove('open');
@@ -814,7 +881,7 @@
       });
     });
 
-    // Scroll fade-in animation
+    // === Scroll fade-in ===
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
