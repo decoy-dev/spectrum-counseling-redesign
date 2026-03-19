@@ -271,29 +271,51 @@
     .spec-indicator.active .spec-ind-icon {
       color: #b5d5f6;
     }
-    /* Timer progress bar */
+    .spec-indicator.paused .spec-timer-bar {
+      background: rgba(255, 255, 255, 0.5);
+    }
+    /* Vertical timer bar on right edge of active button */
     .spec-timer-track {
       position: absolute;
-      bottom: 0;
-      left: 0;
+      top: 0;
       right: 0;
-      height: 3px;
-      background: rgba(67, 98, 126, 0.08);
+      width: 3px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
       overflow: hidden;
-      border-radius: 0 0 0.75rem 0.75rem;
+      border-radius: 0 0.75rem 0.75rem 0;
+      opacity: 0;
     }
     .spec-indicator.active .spec-timer-track {
-      background: rgba(255, 255, 255, 0.2);
+      opacity: 1;
     }
     .spec-timer-bar {
-      height: 100%;
-      background: linear-gradient(90deg, #b5d5f6, #fff);
-      width: 0%;
+      width: 100%;
+      height: 0%;
+      background: linear-gradient(180deg, #b5d5f6, #fff);
       transition: none;
     }
     .spec-timer-bar.running {
-      width: 100%;
-      transition: width linear;
+      height: 100%;
+      transition: height linear;
+    }
+    /* Nav link underline fade */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: currentColor;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .nav-link:hover::after {
+      opacity: 1;
     }
     /* Mobile menu */
     .mobile-menu {
@@ -351,12 +373,12 @@
         </a>
       </div>
       <div class="hidden lg:flex flex-1 justify-center gap-6 xl:gap-8 items-center">
-        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#about">About</a>
-        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#services">Services</a>
-        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#specializations">Specializations</a>
-        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#testimonials">Testimonials</a>
-        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#location">Location</a>
-        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#faq">FAQ</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="#about">About</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="#services">Services</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="#specializations">Specializations</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="#testimonials">Testimonials</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="#location">Location</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="#faq">FAQ</a>
       </div>
       <div class="hidden lg:flex items-center gap-2">
         <a href="contact.html" class="bg-white text-on-surface-variant hover:text-primary hover:bg-primary-container hover:border-primary/30 hover:-translate-y-0.5 hover:shadow-md px-4 py-2 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200">
@@ -843,37 +865,47 @@
 
     // === Specializations Feature Slider with auto-cycle timer ===
     (function() {
-      var CYCLE_MS = 8000;
+      var CYCLE_MS = 5000;
       var slides = document.querySelectorAll('.spec-slide');
       var indicators = document.querySelectorAll('.spec-indicator');
       var currentIndex = 0;
       var timer = null;
+      var paused = false; // manual click pause
 
-      function openSpec(index) {
+      function openSpec(index, animate) {
         slides.forEach(function(s) { s.classList.remove('active'); });
         indicators.forEach(function(ind) {
-          ind.classList.remove('active');
+          ind.classList.remove('active', 'paused');
           var bar = ind.querySelector('.spec-timer-bar');
           bar.classList.remove('running');
-          bar.style.width = '0%';
+          bar.style.height = '0%';
           bar.style.transitionDuration = '';
         });
 
         currentIndex = index;
         slides[index].classList.add('active');
         indicators[index].classList.add('active');
+        if (paused) indicators[index].classList.add('paused');
 
-        var bar = indicators[index].querySelector('.spec-timer-bar');
-        void bar.offsetWidth;
-        bar.style.transitionDuration = CYCLE_MS + 'ms';
-        bar.classList.add('running');
+        if (animate) {
+          var bar = indicators[index].querySelector('.spec-timer-bar');
+          void bar.offsetWidth;
+          bar.style.transitionDuration = CYCLE_MS + 'ms';
+          bar.classList.add('running');
+        }
       }
 
       function startCycle() {
         stopCycle();
+        paused = false;
+        indicators[currentIndex].classList.remove('paused');
+        var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
+        void bar.offsetWidth;
+        bar.style.transitionDuration = CYCLE_MS + 'ms';
+        bar.classList.add('running');
         timer = setTimeout(function advance() {
           var next = (currentIndex + 1) % slides.length;
-          openSpec(next);
+          openSpec(next, true);
           timer = setTimeout(advance, CYCLE_MS);
         }, CYCLE_MS);
       }
@@ -882,30 +914,44 @@
         if (timer) { clearTimeout(timer); timer = null; }
       }
 
+      function pauseBar() {
+        var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
+        var computed = getComputedStyle(bar);
+        bar.style.height = computed.height;
+        bar.classList.remove('running');
+      }
+
+      // Click: switch slide and pause
       indicators.forEach(function(ind, idx) {
         ind.addEventListener('click', function() {
-          openSpec(idx);
-          startCycle();
+          stopCycle();
+          paused = true;
+          openSpec(idx, false);
+          indicators[idx].classList.add('paused');
+          // Fill bar fully to show selected state
+          var bar = indicators[idx].querySelector('.spec-timer-bar');
+          bar.style.height = '100%';
+          bar.style.transitionDuration = '0.3s';
+          bar.classList.add('running');
         });
       });
 
-      // Pause on hover over both slider and indicators
+      // Hover: pause/resume only if not manually paused
       var slider = document.getElementById('spec-slider');
       var specList = document.getElementById('spec-list');
 
       function handleMouseEnter() {
+        if (paused) return;
         stopCycle();
-        var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
-        var computed = getComputedStyle(bar);
-        bar.style.width = computed.width;
-        bar.classList.remove('running');
+        pauseBar();
       }
 
       function handleMouseLeave() {
+        if (paused) return;
         var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
-        var currentWidth = parseFloat(bar.style.width) || 0;
-        var parentWidth = bar.parentElement.offsetWidth;
-        var pct = parentWidth > 0 ? (currentWidth / parentWidth) * 100 : 0;
+        var currentHeight = parseFloat(bar.style.height) || 0;
+        var parentHeight = bar.parentElement.offsetHeight;
+        var pct = parentHeight > 0 ? (currentHeight / parentHeight) * 100 : 0;
         var remaining = CYCLE_MS * (1 - pct / 100);
         bar.style.transitionDuration = remaining + 'ms';
         void bar.offsetWidth;
@@ -913,7 +959,7 @@
         stopCycle();
         timer = setTimeout(function() {
           var next = (currentIndex + 1) % slides.length;
-          openSpec(next);
+          openSpec(next, true);
           startCycle();
         }, remaining);
       }
@@ -923,7 +969,16 @@
       specList.addEventListener('mouseenter', handleMouseEnter);
       specList.addEventListener('mouseleave', handleMouseLeave);
 
-      openSpec(0);
+      // Double-click or click on active paused button resumes
+      indicators.forEach(function(ind, idx) {
+        ind.addEventListener('dblclick', function() {
+          if (paused && currentIndex === idx) {
+            startCycle();
+          }
+        });
+      });
+
+      openSpec(0, true);
       startCycle();
     })();
 

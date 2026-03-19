@@ -97,6 +97,9 @@
       opacity: 1;
       transform: translateY(0);
     }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: currentColor; opacity: 0; transition: opacity 0.25s ease; }
+    .nav-link:hover::after { opacity: 1; }
   </style>
 </head>
 <body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
@@ -110,12 +113,12 @@
         </a>
       </div>
       <div class="hidden lg:flex flex-1 justify-center gap-6 xl:gap-8 items-center">
-        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="index.html#about">About</a>
-        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="index.html#services">Services</a>
-        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="index.html#specializations">Specializations</a>
-        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="index.html#testimonials">Testimonials</a>
-        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="index.html#location">Location</a>
-        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="index.html#faq">FAQ</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="index.html#about">About</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="index.html#services">Services</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="index.html#specializations">Specializations</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="index.html#testimonials">Testimonials</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="index.html#location">Location</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="index.html#faq">FAQ</a>
       </div>
       <div class="hidden lg:flex items-center gap-2">
         <a href="contact.html" class="bg-white text-on-surface-variant hover:text-primary hover:bg-primary-container hover:border-primary/30 hover:-translate-y-0.5 hover:shadow-md px-4 py-2 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200">
