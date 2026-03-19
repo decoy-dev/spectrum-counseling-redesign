@@ -94,6 +94,10 @@
     }
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 6rem;
+    }
+    @media (min-width: 640px) {
+      html { scroll-padding-top: 7rem; }
     }
     /* FAQ accordion */
     .faq-answer {
@@ -171,7 +175,7 @@
   </nav>
 
   <!-- Hero Section -->
-  <section class="relative min-h-[75vh] sm:min-h-[80vh] md:min-h-[85vh] flex items-center pt-24 sm:pt-20 overflow-hidden">
+  <section class="relative min-h-[85vh] sm:min-h-[80vh] md:min-h-[85vh] flex items-center pt-28 sm:pt-32 md:pt-28 pb-16 sm:pb-14 md:pb-10 overflow-hidden">
     <div class="absolute inset-0 -z-10">
       <img alt="Calm landscape" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrupQdzHvRlqnj5DU2WfwFI3zeKffUXUnvJsix97Kkn8AMEMXLnAYPlkLnSig71Ix8TDyQoBfukYTHA94W3L3KisGLt76r1PUTYkg-PUp_R6lkRZQPo58y0kTCFHB7g6yckAGBmXYbFvvaRh9mfomLgL5f-BVSr8NIcKDDaZYTyWU5YvNpkmlkVhin__Nt2RclRX_JiMa17HnM7ebpjcdtWMrjT7TBfzzNvYKHnV3sLTXCfMx6hCyu_Sx4e2XdWbrORSVqaCHsAEw" />
       <div class="absolute inset-0 bg-white/60 sm:bg-white/40 backdrop-blur-[2px] bg-gradient-to-b sm:bg-gradient-to-r from-white via-white/80 to-transparent"></div>
@@ -209,14 +213,14 @@
               <div class="aspect-[3/4] rounded-2xl bg-primary-container/30 overflow-hidden">
                 <img alt="Calm office" class="w-full h-full object-cover grayscale-[30%]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
               </div>
-              <div class="aspect-square rounded-2xl bg-primary shadow-lg overflow-hidden flex items-center justify-center p-8 text-on-primary">
+              <div class="aspect-square rounded-2xl bg-primary shadow-lg overflow-hidden flex items-center justify-center p-6 sm:p-8 text-on-primary">
                 <div class="text-center">
-                  <div class="text-4xl font-bold mb-1" style="font-family: 'Noto Serif', serif;">20+</div>
-                  <div class="text-sm font-medium uppercase tracking-wider opacity-80">Years of Experience</div>
+                  <div class="text-3xl sm:text-4xl font-bold mb-1" style="font-family: 'Noto Serif', serif;">20+</div>
+                  <div class="text-xs sm:text-sm font-medium uppercase tracking-wider opacity-80">Years of Experience</div>
                 </div>
               </div>
             </div>
-            <div class="pt-12 space-y-4">
+            <div class="pt-8 sm:pt-12 space-y-4">
               <div class="aspect-square rounded-2xl bg-tertiary-container shadow-sm overflow-hidden">
                 <img alt="Serene textures" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYgVLahFRggwgGGMSEQ2UB-mXpYsrWpQhMVzu-Cu3X5bYrzq8LMHdmL9ATDjOYLVYLhbJoj6Pi-qnnWfOTLB2j2uFPzCdqA5uhpQvF7mHf8D86YMa-W1fkkcI8mPHoi4JMXRsT359ByAD12-oo1jWKtFCzKuJX-Og4om9vZZg2GRrVSu4yxmqZo68H4pwLDHIU1IbJD0qPv55usKyXwKSYN1amp9s_NuyzimhzdrPcEkhwDpQLX5jfgo1Sk29w8GqaZrar9NABs6M" />
               </div>
@@ -277,19 +281,19 @@
         <div class="group p-7 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] bg-surface-container-lowest hover:bg-primary transition-all duration-500 shadow-sm fade-in">
           <span class="material-symbols-outlined text-3xl sm:text-4xl text-primary group-hover:text-on-primary mb-5 sm:mb-8 block transition-colors">person_4</span>
           <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-on-surface group-hover:text-on-primary transition-colors">Individual Counseling</h3>
-          <p class="text-on-surface-variant group-hover:text-on-primary/80 transition-colors leading-relaxed">Personalized support for anxiety, depression, and personal growth through a trauma-informed lens.</p>
+          <p class="text-sm sm:text-base text-on-surface-variant group-hover:text-on-primary/80 transition-colors leading-relaxed">Personalized support for anxiety, depression, and personal growth through a trauma-informed lens.</p>
         </div>
         <!-- Service 2 -->
         <div class="group p-7 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] bg-surface-container-lowest hover:bg-primary transition-all duration-500 shadow-sm fade-in">
           <span class="material-symbols-outlined text-3xl sm:text-4xl text-primary group-hover:text-on-primary mb-5 sm:mb-8 block transition-colors">favorite</span>
           <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-on-surface group-hover:text-on-primary transition-colors">Couples &amp; Marriage</h3>
-          <p class="text-on-surface-variant group-hover:text-on-primary/80 transition-colors leading-relaxed">Strengthening connections, resolving conflict, and rebuilding intimacy through effective communication.</p>
+          <p class="text-sm sm:text-base text-on-surface-variant group-hover:text-on-primary/80 transition-colors leading-relaxed">Strengthening connections, resolving conflict, and rebuilding intimacy through effective communication.</p>
         </div>
         <!-- Service 3 -->
         <div class="group p-7 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] bg-surface-container-lowest hover:bg-primary transition-all duration-500 shadow-sm fade-in sm:last:col-span-2 lg:last:col-span-1">
           <span class="material-symbols-outlined text-3xl sm:text-4xl text-primary group-hover:text-on-primary mb-5 sm:mb-8 block transition-colors">groups</span>
           <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-on-surface group-hover:text-on-primary transition-colors">Family Systems</h3>
-          <p class="text-on-surface-variant group-hover:text-on-primary/80 transition-colors leading-relaxed">Navigating transitional periods and improving dynamics within the nuclear or extended family unit.</p>
+          <p class="text-sm sm:text-base text-on-surface-variant group-hover:text-on-primary/80 transition-colors leading-relaxed">Navigating transitional periods and improving dynamics within the nuclear or extended family unit.</p>
         </div>
       </div>
       <!-- LGBTQ Specialization Highlight -->
@@ -318,31 +322,31 @@
       <div class="flex flex-col md:flex-row gap-6 sm:gap-8">
         <!-- Reflection Card 1 -->
         <div class="flex-1 bg-surface-container-lowest/70 backdrop-blur-md p-7 sm:p-10 rounded-2xl sm:rounded-3xl relative shadow-sm border border-white/40 fade-in">
-          <div class="absolute -top-4 left-10 w-8 h-8 bg-primary rounded-full"></div>
+          <div class="absolute -top-3 sm:-top-4 left-8 sm:left-10 w-6 h-6 sm:w-8 sm:h-8 bg-primary rounded-full"></div>
           <span class="material-symbols-outlined text-primary-container text-4xl sm:text-5xl mb-4 sm:mb-6">format_quote</span>
           <p class="text-base sm:text-lg md:text-xl italic text-on-surface-variant leading-relaxed mb-6 sm:mb-8">
             "Dr. Haddox provided a level of insight into our marriage that we hadn't found in years of searching. Her approach is gentle but firm when it needs to be."
           </p>
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-secondary-fixed"></div>
+          <div class="flex items-center gap-3 sm:gap-4">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary-fixed flex-shrink-0"></div>
             <div>
-              <p class="font-bold text-on-surface">Anonymous Client</p>
-              <p class="text-sm text-on-surface-variant">Couples Therapy</p>
+              <p class="font-bold text-sm sm:text-base text-on-surface">Anonymous Client</p>
+              <p class="text-xs sm:text-sm text-on-surface-variant">Couples Therapy</p>
             </div>
           </div>
         </div>
         <!-- Reflection Card 2 -->
         <div class="flex-1 bg-surface-container-lowest/70 backdrop-blur-md p-7 sm:p-10 rounded-2xl sm:rounded-3xl relative shadow-sm border border-white/40 fade-in">
-          <div class="absolute -top-4 left-10 w-8 h-8 bg-tertiary rounded-full"></div>
+          <div class="absolute -top-3 sm:-top-4 left-8 sm:left-10 w-6 h-6 sm:w-8 sm:h-8 bg-tertiary rounded-full"></div>
           <span class="material-symbols-outlined text-primary-container text-4xl sm:text-5xl mb-4 sm:mb-6">format_quote</span>
           <p class="text-base sm:text-lg md:text-xl italic text-on-surface-variant leading-relaxed mb-6 sm:mb-8">
             "As a trans person, finding a therapist who actually understood my experience without me having to educate them was a life-saver. Truly inclusive care."
           </p>
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-primary-fixed"></div>
+          <div class="flex items-center gap-3 sm:gap-4">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary-fixed flex-shrink-0"></div>
             <div>
-              <p class="font-bold text-on-surface">Anonymous Client</p>
-              <p class="text-sm text-on-surface-variant">Individual Support</p>
+              <p class="font-bold text-sm sm:text-base text-on-surface">Anonymous Client</p>
+              <p class="text-xs sm:text-sm text-on-surface-variant">Individual Support</p>
             </div>
           </div>
         </div>
@@ -357,7 +361,7 @@
         <h2 class="text-3xl sm:text-4xl font-bold mb-4">Common Questions</h2>
         <p class="text-on-surface-variant">Everything you need to know about starting your journey with us.</p>
       </div>
-      <div class="space-y-4" id="faq-list">
+      <div class="space-y-3 sm:space-y-4" id="faq-list">
         <div class="faq-item bg-surface-container-low rounded-2xl overflow-hidden fade-in">
           <button class="faq-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center group" aria-expanded="false">
             <span class="text-base sm:text-lg font-bold text-on-surface">Do you take insurance?</span>
@@ -415,9 +419,9 @@
         <p class="text-on-surface-variant text-xs sm:text-sm tracking-wide">&copy; 2025 Spectrum Counseling | Marie Haddox, Ph.D.</p>
       </div>
       <div class="flex flex-wrap justify-center gap-4 sm:gap-8">
-        <a class="text-sm tracking-wide uppercase font-medium text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Contact</a>
-        <a class="text-sm tracking-wide uppercase font-medium text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Privacy Policy</a>
-        <a class="text-sm tracking-wide uppercase font-medium text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Terms of Service</a>
+        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Contact</a>
+        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Privacy Policy</a>
+        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Terms of Service</a>
       </div>
       <div class="flex gap-4">
         <span class="material-symbols-outlined text-primary">diversity_3</span>
