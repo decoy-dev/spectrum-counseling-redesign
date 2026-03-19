@@ -160,19 +160,29 @@
     .spec-img.active {
       opacity: 1;
     }
+    /* Spec accordion fixed height on desktop */
+    @media (min-width: 1024px) {
+      #spec-list {
+        height: 520px;
+        overflow-y: auto;
+        scrollbar-width: none;
+      }
+      #spec-list::-webkit-scrollbar { display: none; }
+    }
     /* Timer progress bar */
     .spec-timer-track {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 3px;
-      background: rgba(67, 98, 126, 0.15);
+      height: 4px;
+      background: rgba(67, 98, 126, 0.12);
       overflow: hidden;
+      border-radius: 0 0 1rem 1rem;
     }
     .spec-timer-bar {
       height: 100%;
-      background: #43627e;
+      background: linear-gradient(90deg, #43627e, #b5d5f6);
       width: 0%;
       transition: none;
     }
@@ -256,7 +266,7 @@
   <section class="relative min-h-[85vh] sm:min-h-[80vh] md:min-h-[85vh] flex items-center pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-14 md:pb-10 overflow-hidden">
     <div class="absolute inset-0 -z-10">
       <img alt="Water lilies on a serene pond" class="w-full h-full object-cover" src="assets/hero.jpg" />
-      <div class="absolute inset-0 bg-white/60 sm:bg-white/40 backdrop-blur-[2px] bg-gradient-to-b sm:bg-gradient-to-r from-white via-white/80 to-transparent"></div>
+      <div class="absolute inset-0 bg-white/60 sm:bg-white/40 bg-gradient-to-b sm:bg-gradient-to-r from-white via-white/80 to-transparent"></div>
     </div>
     <div class="max-w-7xl mx-auto px-5 sm:px-8 w-full">
       <div class="max-w-3xl">
@@ -491,6 +501,9 @@
     </div>
   </section>
 
+  <!-- Divider -->
+  <div class="max-w-7xl mx-auto px-5 sm:px-8"><div class="h-px bg-outline-variant/30"></div></div>
+
   <!-- Testimonials Section -->
   <section class="py-16 sm:py-20 md:py-24 bg-surface-container-low overflow-hidden" id="testimonials">
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
@@ -574,6 +587,9 @@
     </div>
   </section>
 
+  <!-- Divider -->
+  <div class="max-w-7xl mx-auto px-5 sm:px-8"><div class="h-px bg-outline-variant/30"></div></div>
+
   <!-- FAQ Section -->
   <section class="py-16 sm:py-20 md:py-24 bg-surface" id="faq">
     <div class="max-w-4xl mx-auto px-5 sm:px-8">
@@ -612,6 +628,9 @@
       </div>
     </div>
   </section>
+
+  <!-- Divider -->
+  <div class="max-w-4xl mx-auto px-5 sm:px-8"><div class="h-px bg-outline-variant/30"></div></div>
 
   <!-- Final CTA Section -->
   <section class="py-12 sm:py-14 md:py-16 px-5 sm:px-8">
