@@ -123,6 +123,33 @@
     .faq-item {
       transition: background-color 0.2s ease;
     }
+    /* Specialization accordion */
+    .spec-item {
+      transition: background-color 0.2s ease;
+    }
+    .spec-item:hover {
+      background-color: #e8ecee;
+    }
+    .spec-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .spec-item.open .spec-answer {
+      max-height: 300px;
+      padding-bottom: 1.5rem;
+    }
+    .spec-item.open .spec-icon {
+      transform: rotate(45deg);
+    }
+    .spec-icon {
+      transition: transform 0.3s ease;
+    }
+    .spec-item.open {
+      background-color: #ffffff;
+    }
     /* Mobile menu */
     .mobile-menu {
       max-height: 0;
@@ -331,6 +358,95 @@
     </div>
   </section>
 
+  <!-- Specializations Section -->
+  <section class="py-16 sm:py-20 md:py-24 bg-surface-container-low" id="specializations">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="mb-10 sm:mb-16 fade-in">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-on-surface mb-4 sm:mb-6">Areas of Specialization</h2>
+        <p class="text-base sm:text-lg md:text-xl text-on-surface-variant max-w-2xl">Deep clinical expertise across the issues that matter most to your wellbeing.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start">
+        <!-- Image block -->
+        <div class="rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[480px] fade-in">
+          <img alt="Peaceful therapy environment" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
+        </div>
+        <!-- Accordion -->
+        <div class="space-y-3 sm:space-y-4 fade-in" id="spec-list">
+          <!-- Depression -->
+          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden">
+            <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
+              <div class="flex items-center gap-3 sm:gap-4">
+                <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">cloud</span>
+                <span class="text-base sm:text-lg font-bold text-on-surface">Depression</span>
+              </div>
+              <span class="material-symbols-outlined text-primary spec-icon flex-shrink-0">add</span>
+            </button>
+            <div class="spec-answer px-5 sm:px-8 text-sm sm:text-base text-on-surface-variant leading-relaxed">
+              <p class="mb-3">We work with individuals experiencing persistent sadness, loss of motivation, and emotional numbness. Dr. Haddox uses a combination of cognitive-behavioral and psychodynamic approaches to help clients uncover root causes and develop sustainable coping strategies.</p>
+              <p>Treatment is tailored to each person's unique experience — whether navigating a major life transition, processing grief, or managing chronic depressive episodes.</p>
+            </div>
+          </div>
+          <!-- Anxiety -->
+          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden">
+            <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
+              <div class="flex items-center gap-3 sm:gap-4">
+                <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">psychology</span>
+                <span class="text-base sm:text-lg font-bold text-on-surface">Anxiety</span>
+              </div>
+              <span class="material-symbols-outlined text-primary spec-icon flex-shrink-0">add</span>
+            </button>
+            <div class="spec-answer px-5 sm:px-8 text-sm sm:text-base text-on-surface-variant leading-relaxed">
+              <p class="mb-3">From generalized anxiety to panic disorders and social anxiety, we provide evidence-based treatment to help you regain a sense of control. Our approach integrates mindfulness techniques with traditional therapeutic methods.</p>
+              <p>We focus on understanding your anxiety triggers, building resilience, and creating practical tools you can use in your daily life.</p>
+            </div>
+          </div>
+          <!-- Relationships -->
+          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden">
+            <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
+              <div class="flex items-center gap-3 sm:gap-4">
+                <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">handshake</span>
+                <span class="text-base sm:text-lg font-bold text-on-surface">Relationships</span>
+              </div>
+              <span class="material-symbols-outlined text-primary spec-icon flex-shrink-0">add</span>
+            </button>
+            <div class="spec-answer px-5 sm:px-8 text-sm sm:text-base text-on-surface-variant leading-relaxed">
+              <p class="mb-3">Healthy relationships require ongoing work. We help couples and individuals navigate communication breakdowns, trust issues, codependency, and attachment patterns that may be holding them back.</p>
+              <p>Whether you're strengthening a partnership, recovering from betrayal, or learning to set boundaries, we provide a structured yet compassionate framework for growth.</p>
+            </div>
+          </div>
+          <!-- Sexuality -->
+          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden">
+            <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
+              <div class="flex items-center gap-3 sm:gap-4">
+                <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">spa</span>
+                <span class="text-base sm:text-lg font-bold text-on-surface">Sexuality</span>
+              </div>
+              <span class="material-symbols-outlined text-primary spec-icon flex-shrink-0">add</span>
+            </button>
+            <div class="spec-answer px-5 sm:px-8 text-sm sm:text-base text-on-surface-variant leading-relaxed">
+              <p class="mb-3">Exploring and understanding your sexuality is a deeply personal journey. We offer a judgment-free space to discuss sexual orientation, intimacy concerns, and the intersection of identity and desire.</p>
+              <p>Dr. Haddox brings specialized training in sexual health to support clients through questions of identity, coming out, and building fulfilling intimate connections.</p>
+            </div>
+          </div>
+          <!-- Gender -->
+          <div class="spec-item bg-surface-container-low rounded-2xl overflow-hidden">
+            <button class="spec-toggle w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex justify-between items-center gap-4">
+              <div class="flex items-center gap-3 sm:gap-4">
+                <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">diversity_1</span>
+                <span class="text-base sm:text-lg font-bold text-on-surface">Gender</span>
+              </div>
+              <span class="material-symbols-outlined text-primary spec-icon flex-shrink-0">add</span>
+            </button>
+            <div class="spec-answer px-5 sm:px-8 text-sm sm:text-base text-on-surface-variant leading-relaxed">
+              <p class="mb-3">Gender identity is complex and deeply personal. We support clients who are questioning, exploring, or affirming their gender — including those considering or undergoing transition.</p>
+              <p>Our practice provides letters of support, guidance through social and medical transitions, and a safe space to process the emotional dimensions of gender exploration at any stage.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Testimonials Section -->
   <section class="py-16 sm:py-20 md:py-24 bg-surface-container-low overflow-hidden" id="testimonials">
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
@@ -461,6 +577,22 @@
         if (!isOpen) {
           item.classList.add('open');
           btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // Specialization Accordion
+    document.querySelectorAll('.spec-toggle').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.spec-item');
+        var isOpen = item.classList.contains('open');
+        // Close all
+        document.querySelectorAll('.spec-item').forEach(function(el) {
+          el.classList.remove('open');
+        });
+        // Open clicked if it was closed
+        if (!isOpen) {
+          item.classList.add('open');
         }
       });
     });
