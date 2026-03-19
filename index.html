@@ -254,17 +254,19 @@
       object-fit: cover;
     }
     .spec-indicator {
-      transition: background-color 0.25s ease, color 0.25s ease;
+      transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
       position: relative;
-      background-color: transparent;
+      background-color: #fff;
       color: #5a6a72;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     }
     .spec-indicator:hover {
-      background-color: #e5e9eb;
+      background-color: #edf0f2;
     }
     .spec-indicator.active {
       background-color: #43627e;
       color: #fff;
+      box-shadow: 0 2px 8px rgba(67, 98, 126, 0.25);
     }
     .spec-indicator.active .spec-ind-icon {
       color: #b5d5f6;
@@ -276,8 +278,9 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: rgba(67, 98, 126, 0.1);
+      background: rgba(67, 98, 126, 0.08);
       overflow: hidden;
+      border-radius: 0 0 0.75rem 0.75rem;
     }
     .spec-indicator.active .spec-timer-track {
       background: rgba(255, 255, 255, 0.2);
@@ -543,37 +546,37 @@
       </div>
 
       <!-- Feature slider with side buttons -->
-      <div class="flex flex-col sm:flex-row h-auto sm:h-[420px] lg:h-[480px] rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden fade-in">
+      <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-5 h-auto sm:h-[420px] lg:h-[480px] fade-in">
         <!-- Button column -->
-        <div class="flex flex-row sm:flex-col bg-surface-container-lowest sm:w-[200px] lg:w-[220px] flex-shrink-0" id="spec-list">
-          <button class="spec-indicator active flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="0">
+        <div class="flex flex-row sm:flex-col gap-2 sm:gap-2.5 sm:w-[190px] lg:w-[210px] flex-shrink-0" id="spec-list">
+          <button class="spec-indicator active flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="0">
             <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">cloud</span>
             <span class="hidden sm:inline">Depression</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
           </button>
-          <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="1">
+          <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="1">
             <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">psychology</span>
             <span class="hidden sm:inline">Anxiety</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
           </button>
-          <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="2">
+          <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="2">
             <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">handshake</span>
             <span class="hidden sm:inline">Relationships</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
           </button>
-          <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="3">
+          <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="3">
             <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">spa</span>
             <span class="hidden sm:inline">Sexuality</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
           </button>
-          <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="4">
+          <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="4">
             <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">diversity_1</span>
             <span class="hidden sm:inline">Gender</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
           </button>
         </div>
         <!-- Image slider -->
-        <div class="relative h-[300px] sm:h-full flex-1" id="spec-slider">
+        <div class="relative h-[300px] sm:h-full flex-1 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden" id="spec-slider">
           <!-- Slide 0: Depression -->
           <div class="spec-slide active" data-spec="0">
             <img alt="Depression therapy — calming office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
