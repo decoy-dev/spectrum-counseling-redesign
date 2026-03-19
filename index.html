@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Spectrum Counseling | Marie Haddox, Ph.D.</title>
+  <meta name="description" content="Dr. Marie Haddox, Ph.D. offers compassionate, holistic counseling — LGBTQ+ affirming therapy, couples counseling, and individual therapy in Phoenix, AZ." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-container": "#445362",
+            "on-tertiary": "#fbf7ff",
+            "surface-container-low": "#f1f4f5",
+            "error-dim": "#67040d",
+            "primary-dim": "#365671",
+            "tertiary-fixed-dim": "#bcbae9",
+            "on-error-container": "#6e0a12",
+            "on-tertiary-fixed": "#2d2c53",
+            "surface-variant": "#dee3e6",
+            "error": "#a83836",
+            "inverse-primary": "#b5d5f6",
+            "primary-fixed-dim": "#a7c7e7",
+            "primary": "#43627e",
+            "on-secondary": "#f6f9ff",
+            "on-secondary-fixed-variant": "#4e5d6c",
+            "on-tertiary-fixed-variant": "#4a4971",
+            "primary-fixed": "#b5d5f6",
+            "tertiary": "#5c5b85",
+            "background": "#f8f9fa",
+            "on-tertiary-container": "#404068",
+            "surface": "#f8f9fa",
+            "surface-dim": "#d5dbdd",
+            "on-primary-fixed": "#143751",
+            "secondary-dim": "#465563",
+            "outline-variant": "#adb3b5",
+            "surface-container-high": "#e5e9eb",
+            "on-background": "#2d3335",
+            "surface-bright": "#f8f9fa",
+            "secondary-fixed": "#d4e4f6",
+            "on-surface": "#2d3335",
+            "surface-container": "#ebeef0",
+            "on-surface-variant": "#5a6062",
+            "on-error": "#fff7f6",
+            "secondary": "#526170",
+            "secondary-fixed-dim": "#c6d6e8",
+            "tertiary-fixed": "#cac7f8",
+            "outline": "#767c7e",
+            "on-secondary-fixed": "#32414f",
+            "on-primary": "#f6f9ff",
+            "tertiary-dim": "#504f78",
+            "on-primary-fixed-variant": "#34536f",
+            "secondary-container": "#d4e4f6",
+            "tertiary-container": "#cac7f8",
+            "surface-container-lowest": "#ffffff",
+            "primary-container": "#b5d5f6",
+            "inverse-on-surface": "#9b9d9e",
+            "surface-tint": "#43627e",
+            "surface-container-highest": "#dee3e6",
+            "inverse-surface": "#0c0f10",
+            "error-container": "#fa746f",
+            "on-primary-container": "#2a4a65"
+          },
+          fontFamily: {
+            headline: ["Noto Serif", "serif"],
+            body: ["Manrope", "sans-serif"],
+            label: ["Manrope", "sans-serif"]
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background-color: #f8f9fa;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Noto Serif', serif;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    /* FAQ accordion */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+      padding-bottom: 1.5rem;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+    .faq-icon {
+      transition: transform 0.3s ease;
+    }
+    /* Mobile menu */
+    .mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .mobile-menu.open {
+      max-height: 400px;
+    }
+    /* Fade-in on scroll */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
+
+  <!-- Top Navigation Bar -->
+  <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white/70 backdrop-blur-xl shadow-lg border border-white/20 rounded-full w-[95%] max-w-5xl">
+    <div class="flex justify-between items-center px-6 py-3">
+      <div class="flex items-center">
+        <img alt="Spectrum Counseling Logo" class="h-10 md:h-12 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uiW71XvAti9pL6jbcsFAEaEdxhEePuv-rOZTr6grA3JVq0o4yVm2564eUC0zhMuqTmNQnH8vyXhu6j2EW8M4TYVgeF1FysXk3qODXbu0pa646_rwmxb1BNONrpLOWd0EoZ4TBnyFoYAo6Ovn0yn6dQGkhYAkIHj0jwDcdPsOG_7fTvpxPsQGCLfWTthc4Dd2G4pgNs0HlkoNihV-Hnu8xUiNkVDc0_HAeFtuDPwiQQgKJuZNjDpb2gRzVhRfV8MG1wW6_9nxUNU" />
+      </div>
+      <div class="hidden md:flex gap-8 items-center">
+        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#about">About</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#services">Services</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#testimonials">Testimonials</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#faq">FAQ</a>
+        <button class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dim transition-all active:scale-95 shadow-md shadow-primary/10">
+          Schedule Consultation
+        </button>
+      </div>
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden flex items-center text-on-surface-variant" aria-label="Toggle menu">
+        <span class="material-symbols-outlined text-2xl">menu</span>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="mobile-menu md:hidden px-6">
+      <div class="flex flex-col gap-4 pb-6 pt-2">
+        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#about">About</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#services">Services</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#testimonials">Testimonials</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors font-medium text-sm tracking-wide" href="#faq">FAQ</a>
+        <button class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dim transition-all active:scale-95 shadow-md shadow-primary/10 w-full">
+          Schedule Consultation
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-[85vh] flex items-center pt-20 overflow-hidden">
+    <div class="absolute inset-0 -z-10">
+      <img alt="Calm landscape" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrupQdzHvRlqnj5DU2WfwFI3zeKffUXUnvJsix97Kkn8AMEMXLnAYPlkLnSig71Ix8TDyQoBfukYTHA94W3L3KisGLt76r1PUTYkg-PUp_R6lkRZQPo58y0kTCFHB7g6yckAGBmXYbFvvaRh9mfomLgL5f-BVSr8NIcKDDaZYTyWU5YvNpkmlkVhin__Nt2RclRX_JiMa17HnM7ebpjcdtWMrjT7TBfzzNvYKHnV3sLTXCfMx6hCyu_Sx4e2XdWbrORSVqaCHsAEw" />
+      <div class="absolute inset-0 bg-white/40 backdrop-blur-[2px] bg-gradient-to-r from-white via-white/80 to-transparent"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-8 w-full">
+      <div class="max-w-3xl">
+        <span class="inline-block px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold tracking-widest uppercase mb-6">
+          Professional Care for Every Identity
+        </span>
+        <h1 class="text-5xl md:text-7xl font-bold text-on-surface leading-[1.1] mb-8">
+          Finding healing in the <span class="text-primary italic">Spectrum</span> of human experience.
+        </h1>
+        <p class="text-xl text-on-surface-variant leading-relaxed mb-10 max-w-2xl">
+          Experience a digital sanctuary for mental wellness. Dr. Marie Haddox, Ph.D. offers a compassionate, holistic approach to LGBTQ+ care, couples counseling, and individual therapy.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button class="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-8 py-4 rounded-full text-lg font-semibold shadow-xl shadow-primary/10 hover:shadow-primary/20 transition-all active:scale-95">
+            Start New Client Form
+          </button>
+          <a class="bg-surface-container-highest/80 backdrop-blur-sm text-on-primary-container px-8 py-4 rounded-full text-lg font-semibold hover:bg-surface-variant transition-all text-center" href="#services">
+            Our Services
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="py-24 bg-surface-container-low" id="about">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div class="order-2 md:order-1 fade-in">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-4">
+              <div class="aspect-[3/4] rounded-2xl bg-primary-container/30 overflow-hidden">
+                <img alt="Calm office" class="w-full h-full object-cover grayscale-[30%]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
+              </div>
+              <div class="aspect-square rounded-2xl bg-primary shadow-lg overflow-hidden flex items-center justify-center p-8 text-on-primary">
+                <div class="text-center">
+                  <div class="text-4xl font-bold mb-1" style="font-family: 'Noto Serif', serif;">20+</div>
+                  <div class="text-sm font-medium uppercase tracking-wider opacity-80">Years of Experience</div>
+                </div>
+              </div>
+            </div>
+            <div class="pt-12 space-y-4">
+              <div class="aspect-square rounded-2xl bg-tertiary-container shadow-sm overflow-hidden">
+                <img alt="Serene textures" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYgVLahFRggwgGGMSEQ2UB-mXpYsrWpQhMVzu-Cu3X5bYrzq8LMHdmL9ATDjOYLVYLhbJoj6Pi-qnnWfOTLB2j2uFPzCdqA5uhpQvF7mHf8D86YMa-W1fkkcI8mPHoi4JMXRsT359ByAD12-oo1jWKtFCzKuJX-Og4om9vZZg2GRrVSu4yxmqZo68H4pwLDHIU1IbJD0qPv55usKyXwKSYN1amp9s_NuyzimhzdrPcEkhwDpQLX5jfgo1Sk29w8GqaZrar9NABs6M" />
+              </div>
+              <div class="aspect-[3/4] rounded-2xl bg-surface-container-high overflow-hidden">
+                <img alt="Healing space" class="w-full h-full object-cover opacity-70" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCksBsDn2YNAqEZoqn2XMaooqK8MleiQHzxuYm4BAjlXHO_058N44W0kMPdIxnXA6hCyBPS6nCdZujz9-z8wyhoFferTl_Zil87GV6CX2w8gCdVdIUQQLR8o7edVKJhsnip7S93_FHSE6_8L1JDM4tBCk_Xli9aXKHKX6RuIUG3YLebCN-UjsoO5rCyRXnXCy7f41SmMy9SygQr6BAG7fS5vTFri8RQCktkp7MpsmkVPwQ9rxZb3pPQrRiCr-I0hi5Gr2LShk-vQLQ" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="order-1 md:order-2 fade-in">
+          <h2 class="text-4xl font-bold mb-8 text-on-surface">A Compassionate Path to Understanding</h2>
+          <div class="space-y-6 text-lg text-on-surface-variant leading-relaxed">
+            <p>
+              With over 20 years of clinical experience, Dr. Marie Haddox, Ph.D. has dedicated her practice to creating a holistic sanctuary where clients feel seen, heard, and deeply understood. Her commitment is rooted in the belief that a safe, therapeutic relationship is the foundation of all meaningful healing.
+            </p>
+            <p>
+              Dr. Haddox brings a wealth of expertise from her tenure at Banner Desert Medical Center and her advanced clinical training. She earned her Bachelor of Science from Arizona State University, followed by her Master's and Ph.D. from USIU San Diego.
+            </p>
+            <p>
+              At Spectrum Counseling, we navigate the complexities of modern identity, relationship dynamics, and family structures with an evidence-based yet intuitive approach.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+              <div class="flex items-center gap-3 text-primary font-bold">
+                <span class="material-symbols-outlined text-primary-dim">school</span>
+                <span class="text-sm">PhD &amp; MA from USIU San Diego</span>
+              </div>
+              <div class="flex items-center gap-3 text-primary font-bold">
+                <span class="material-symbols-outlined text-primary-dim">history_edu</span>
+                <span class="text-sm">BS from Arizona State University</span>
+              </div>
+              <div class="flex items-center gap-3 text-primary font-bold">
+                <span class="material-symbols-outlined text-primary-dim">health_and_safety</span>
+                <span class="text-sm">Banner Desert Medical Center Exp.</span>
+              </div>
+              <div class="flex items-center gap-3 text-primary font-bold">
+                <span class="material-symbols-outlined text-primary-dim">diversity_1</span>
+                <span class="text-sm">Holistic &amp; Affirming Care</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="py-32 bg-surface" id="services">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 fade-in">
+        <div class="max-w-2xl">
+          <h2 class="text-4xl md:text-5xl font-bold text-on-surface mb-6">Expertise Across the Spectrum</h2>
+          <p class="text-xl text-on-surface-variant">Specialized care tailored to your unique life circumstances and identity.</p>
+        </div>
+        <div class="h-px bg-outline-variant/30 flex-grow mx-8 hidden md:block mb-6"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <!-- Service 1 -->
+        <div class="group p-10 rounded-[2rem] bg-surface-container-lowest hover:bg-primary transition-all duration-500 shadow-sm fade-in">
+          <span class="material-symbols-outlined text-4xl text-primary group-hover:text-on-primary mb-8 block transition-colors">person_4</span>
+          <h3 class="text-2xl font-bold mb-4 text-on-surface group-hover:text-on-primary transition-colors">Individual Counseling</h3>
+          <p class="text-on-surface-variant group-hover:text-on-primary/80 transition-colors leading-relaxed">Personalized support for anxiety, depression, and personal growth through a trauma-informed lens.</p>
+        </div>
+        <!-- Service 2 -->
+        <div class="group p-10 rounded-[2rem] bg-surface-container-lowest hover:bg-primary transition-all duration-500 shadow-sm fade-in">
+          <span class="material-symbols-outlined text-4xl text-primary group-hover:text-on-primary mb-8 block transition-colors">favorite</span>
+          <h3 class="text-2xl font-bold mb-4 text-on-surface group-hover:text-on-primary transition-colors">Couples &amp; Marriage</h3>
+          <p class="text-on-surface-variant group-hover:text-on-primary/80 transition-colors leading-relaxed">Strengthening connections, resolving conflict, and rebuilding intimacy through effective communication.</p>
+        </div>
+        <!-- Service 3 -->
+        <div class="group p-10 rounded-[2rem] bg-surface-container-lowest hover:bg-primary transition-all duration-500 shadow-sm fade-in">
+          <span class="material-symbols-outlined text-4xl text-primary group-hover:text-on-primary mb-8 block transition-colors">groups</span>
+          <h3 class="text-2xl font-bold mb-4 text-on-surface group-hover:text-on-primary transition-colors">Family Systems</h3>
+          <p class="text-on-surface-variant group-hover:text-on-primary/80 transition-colors leading-relaxed">Navigating transitional periods and improving dynamics within the nuclear or extended family unit.</p>
+        </div>
+      </div>
+      <!-- LGBTQ Specialization Highlight -->
+      <div class="relative overflow-hidden rounded-[3rem] bg-gradient-to-r from-primary to-primary-dim p-12 md:p-20 text-on-primary mt-12 fade-in">
+        <div class="absolute top-0 right-0 w-1/3 h-full opacity-10">
+          <span class="material-symbols-outlined text-[20rem] translate-x-1/2 translate-y-1/4">diversity_1</span>
+        </div>
+        <div class="max-w-3xl relative z-10">
+          <span class="inline-block px-4 py-1 bg-white/20 rounded-full text-xs font-bold tracking-widest uppercase mb-6">Expert Specialization</span>
+          <h3 class="text-4xl md:text-5xl font-bold mb-8">LGBTQ+ Affirming Therapy</h3>
+          <p class="text-xl leading-relaxed mb-10 text-on-primary/90">
+            We provide a deeply affirming space for the LGBTQ+ community. Dr. Haddox specializes in gender identity, transitioning support, and the unique challenges faced by queer individuals and couples. You don't have to explain your identity here—you are celebrated for it.
+          </p>
+          <button class="bg-white text-primary px-8 py-4 rounded-full font-bold hover:bg-primary-container transition-all">
+            Learn More About LGBTQ+ Care
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="py-24 bg-surface-container-low overflow-hidden" id="testimonials">
+    <div class="max-w-7xl mx-auto px-8">
+      <h2 class="text-4xl font-bold text-center mb-20 text-on-surface fade-in">Voices of Healing</h2>
+      <div class="flex flex-col md:flex-row gap-8">
+        <!-- Reflection Card 1 -->
+        <div class="flex-1 bg-surface-container-lowest/70 backdrop-blur-md p-10 rounded-3xl relative shadow-sm border border-white/40 fade-in">
+          <div class="absolute -top-4 left-10 w-8 h-8 bg-primary rounded-full"></div>
+          <span class="material-symbols-outlined text-primary-container text-5xl mb-6">format_quote</span>
+          <p class="text-xl italic text-on-surface-variant leading-relaxed mb-8">
+            "Dr. Haddox provided a level of insight into our marriage that we hadn't found in years of searching. Her approach is gentle but firm when it needs to be."
+          </p>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-secondary-fixed"></div>
+            <div>
+              <p class="font-bold text-on-surface">Anonymous Client</p>
+              <p class="text-sm text-on-surface-variant">Couples Therapy</p>
+            </div>
+          </div>
+        </div>
+        <!-- Reflection Card 2 -->
+        <div class="flex-1 bg-surface-container-lowest/70 backdrop-blur-md p-10 rounded-3xl relative shadow-sm border border-white/40 mt-12 md:mt-0 fade-in">
+          <div class="absolute -top-4 left-10 w-8 h-8 bg-tertiary rounded-full"></div>
+          <span class="material-symbols-outlined text-primary-container text-5xl mb-6">format_quote</span>
+          <p class="text-xl italic text-on-surface-variant leading-relaxed mb-8">
+            "As a trans person, finding a therapist who actually understood my experience without me having to educate them was a life-saver. Truly inclusive care."
+          </p>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-primary-fixed"></div>
+            <div>
+              <p class="font-bold text-on-surface">Anonymous Client</p>
+              <p class="text-sm text-on-surface-variant">Individual Support</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-32 bg-surface" id="faq">
+    <div class="max-w-4xl mx-auto px-8">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-4xl font-bold mb-4">Common Questions</h2>
+        <p class="text-on-surface-variant">Everything you need to know about starting your journey with us.</p>
+      </div>
+      <div class="space-y-4" id="faq-list">
+        <div class="faq-item bg-surface-container-low rounded-2xl overflow-hidden fade-in">
+          <button class="faq-toggle w-full px-8 py-6 text-left flex justify-between items-center group" aria-expanded="false">
+            <span class="text-lg font-bold text-on-surface">Do you take insurance?</span>
+            <span class="material-symbols-outlined text-primary faq-icon">add</span>
+          </button>
+          <div class="faq-answer px-8 text-on-surface-variant leading-relaxed">
+            We are currently in-network with Blue Cross Blue Shield and Aetna. For other providers, we can provide a "superbill" for potential out-of-network reimbursement.
+          </div>
+        </div>
+        <div class="faq-item bg-surface-container-low rounded-2xl overflow-hidden fade-in">
+          <button class="faq-toggle w-full px-8 py-6 text-left flex justify-between items-center group" aria-expanded="false">
+            <span class="text-lg font-bold text-on-surface">What should I expect in my first session?</span>
+            <span class="material-symbols-outlined text-primary faq-icon">add</span>
+          </button>
+          <div class="faq-answer px-8 text-on-surface-variant leading-relaxed">
+            The initial consultation is an intake session where we discuss your history, goals, and determine if our practice is the right fit for your needs.
+          </div>
+        </div>
+        <div class="faq-item bg-surface-container-low rounded-2xl overflow-hidden fade-in">
+          <button class="faq-toggle w-full px-8 py-6 text-left flex justify-between items-center group" aria-expanded="false">
+            <span class="text-lg font-bold text-on-surface">How long are the sessions?</span>
+            <span class="material-symbols-outlined text-primary faq-icon">add</span>
+          </button>
+          <div class="faq-answer px-8 text-on-surface-variant leading-relaxed">
+            Standard individual sessions are 50 minutes. Couples and family sessions are typically 60-75 minutes depending on the complexity of the dynamic.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Section -->
+  <section class="py-24 px-8">
+    <div class="max-w-5xl mx-auto rounded-[3rem] bg-surface-container-lowest border border-outline-variant/10 shadow-xl p-12 md:p-24 text-center fade-in">
+      <h2 class="text-4xl md:text-5xl font-bold mb-8 text-on-surface">Ready to start your journey?</h2>
+      <p class="text-xl text-on-surface-variant mb-12 max-w-2xl mx-auto">
+        Take the first step toward a more balanced and authentic life. We're here to walk alongside you in a safe, therapeutic environment.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-6 justify-center">
+        <button class="bg-primary text-on-primary px-10 py-4 rounded-full text-lg font-bold hover:bg-primary-dim transition-all active:scale-95 shadow-lg shadow-primary/20">
+          Schedule a Consultation
+        </button>
+        <button class="bg-secondary-container text-on-secondary-container px-10 py-4 rounded-full text-lg font-bold hover:bg-secondary-fixed transition-all">
+          Get in Touch
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="w-full py-16 px-8 bg-surface-container-low border-t border-outline-variant/15">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-8 max-w-7xl mx-auto">
+      <div class="flex flex-col items-center md:items-start">
+        <span class="font-headline text-xl font-bold text-on-surface mb-2">Spectrum Counseling</span>
+        <p class="text-on-surface-variant text-sm tracking-wide">&copy; 2025 Spectrum Counseling | Marie Haddox, Ph.D.</p>
+      </div>
+      <div class="flex gap-8">
+        <a class="text-sm tracking-wide uppercase font-medium text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Contact</a>
+        <a class="text-sm tracking-wide uppercase font-medium text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Privacy Policy</a>
+        <a class="text-sm tracking-wide uppercase font-medium text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Terms of Service</a>
+      </div>
+      <div class="flex gap-4">
+        <span class="material-symbols-outlined text-primary">diversity_3</span>
+        <span class="material-symbols-outlined text-primary">spa</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ Accordion
+    document.querySelectorAll('.faq-toggle').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var isOpen = item.classList.contains('open');
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(function(el) {
+          el.classList.remove('open');
+          el.querySelector('.faq-toggle').setAttribute('aria-expanded', 'false');
+        });
+        // Open clicked if it was closed
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // Mobile menu toggle
+    var menuBtn = document.getElementById('mobile-menu-btn');
+    var mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', function() {
+      mobileMenu.classList.toggle('open');
+      var icon = menuBtn.querySelector('.material-symbols-outlined');
+      icon.textContent = mobileMenu.classList.contains('open') ? 'close' : 'menu';
+    });
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        mobileMenu.classList.remove('open');
+        menuBtn.querySelector('.material-symbols-outlined').textContent = 'menu';
+      });
+    });
+
+    // Scroll fade-in animation
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(function(el) {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
