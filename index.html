@@ -271,33 +271,53 @@
     .spec-indicator.active .spec-ind-icon {
       color: #b5d5f6;
     }
-    .spec-indicator.paused .spec-timer-bar {
-      background: rgba(255, 255, 255, 0.5);
-    }
     /* Vertical timer bar on right edge of active button */
     .spec-timer-track {
       position: absolute;
       top: 0;
       right: 0;
-      width: 3px;
+      width: 5px;
       height: 100%;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       overflow: hidden;
       border-radius: 0 0.75rem 0.75rem 0;
-      opacity: 0;
+      display: none;
     }
     .spec-indicator.active .spec-timer-track {
-      opacity: 1;
+      display: block;
     }
     .spec-timer-bar {
       width: 100%;
       height: 0%;
-      background: linear-gradient(180deg, #b5d5f6, #fff);
+      background: #b5d5f6;
       transition: none;
     }
     .spec-timer-bar.running {
       height: 100%;
       transition: height linear;
+    }
+    /* Pause/play icon overlay */
+    .spec-state-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.8);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+    .spec-indicator.paused .spec-state-icon.icon-pause {
+      opacity: 1;
+    }
+    .spec-indicator.resuming .spec-state-icon.icon-play {
+      animation: flashPlay 0.6s ease forwards;
+    }
+    @keyframes flashPlay {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      100% { opacity: 0; }
     }
     /* Nav link underline fade */
     .nav-link {
@@ -577,26 +597,36 @@
             <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">cloud</span>
             <span class="hidden sm:inline">Depression</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+            <span class="material-symbols-outlined spec-state-icon icon-pause">pause</span>
+            <span class="material-symbols-outlined spec-state-icon icon-play">play_arrow</span>
           </button>
           <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="1">
             <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">psychology</span>
             <span class="hidden sm:inline">Anxiety</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+            <span class="material-symbols-outlined spec-state-icon icon-pause">pause</span>
+            <span class="material-symbols-outlined spec-state-icon icon-play">play_arrow</span>
           </button>
           <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="2">
             <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">handshake</span>
             <span class="hidden sm:inline">Relationships</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+            <span class="material-symbols-outlined spec-state-icon icon-pause">pause</span>
+            <span class="material-symbols-outlined spec-state-icon icon-play">play_arrow</span>
           </button>
           <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="3">
             <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">spa</span>
             <span class="hidden sm:inline">Sexuality</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+            <span class="material-symbols-outlined spec-state-icon icon-pause">pause</span>
+            <span class="material-symbols-outlined spec-state-icon icon-play">play_arrow</span>
           </button>
           <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="4">
             <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">diversity_1</span>
             <span class="hidden sm:inline">Gender</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+            <span class="material-symbols-outlined spec-state-icon icon-pause">pause</span>
+            <span class="material-symbols-outlined spec-state-icon icon-play">play_arrow</span>
           </button>
         </div>
         <!-- Image slider -->
@@ -870,42 +900,44 @@
       var indicators = document.querySelectorAll('.spec-indicator');
       var currentIndex = 0;
       var timer = null;
-      var paused = false; // manual click pause
+      var paused = false;
 
-      function openSpec(index, animate) {
-        slides.forEach(function(s) { s.classList.remove('active'); });
+      function resetAllBars() {
         indicators.forEach(function(ind) {
-          ind.classList.remove('active', 'paused');
+          ind.classList.remove('active', 'paused', 'resuming');
           var bar = ind.querySelector('.spec-timer-bar');
           bar.classList.remove('running');
           bar.style.height = '0%';
-          bar.style.transitionDuration = '';
+          bar.style.transitionDuration = '0ms';
         });
+      }
 
+      function animateBar(index, duration) {
+        var bar = indicators[index].querySelector('.spec-timer-bar');
+        bar.style.height = '0%';
+        bar.style.transitionDuration = '0ms';
+        void bar.offsetWidth; // force reflow
+        bar.style.transitionDuration = duration + 'ms';
+        bar.style.height = '100%';
+        bar.classList.add('running');
+      }
+
+      function openSpec(index) {
+        slides.forEach(function(s) { s.classList.remove('active'); });
+        resetAllBars();
         currentIndex = index;
         slides[index].classList.add('active');
         indicators[index].classList.add('active');
-        if (paused) indicators[index].classList.add('paused');
-
-        if (animate) {
-          var bar = indicators[index].querySelector('.spec-timer-bar');
-          void bar.offsetWidth;
-          bar.style.transitionDuration = CYCLE_MS + 'ms';
-          bar.classList.add('running');
-        }
       }
 
       function startCycle() {
         stopCycle();
         paused = false;
         indicators[currentIndex].classList.remove('paused');
-        var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
-        void bar.offsetWidth;
-        bar.style.transitionDuration = CYCLE_MS + 'ms';
-        bar.classList.add('running');
+        animateBar(currentIndex, CYCLE_MS);
         timer = setTimeout(function advance() {
-          var next = (currentIndex + 1) % slides.length;
-          openSpec(next, true);
+          openSpec((currentIndex + 1) % slides.length);
+          animateBar(currentIndex, CYCLE_MS);
           timer = setTimeout(advance, CYCLE_MS);
         }, CYCLE_MS);
       }
@@ -914,24 +946,34 @@
         if (timer) { clearTimeout(timer); timer = null; }
       }
 
-      function pauseBar() {
+      function freezeBar() {
         var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
         var computed = getComputedStyle(bar);
-        bar.style.height = computed.height;
+        var h = computed.height;
         bar.classList.remove('running');
+        bar.style.transitionDuration = '0ms';
+        bar.style.height = h;
       }
 
-      // Click: switch slide and pause
+      // Click: switch and pause
       indicators.forEach(function(ind, idx) {
         ind.addEventListener('click', function() {
+          if (paused && currentIndex === idx) {
+            // Resume
+            indicators[idx].classList.remove('paused');
+            indicators[idx].classList.add('resuming');
+            setTimeout(function() { indicators[idx].classList.remove('resuming'); }, 600);
+            startCycle();
+            return;
+          }
           stopCycle();
           paused = true;
-          openSpec(idx, false);
+          openSpec(idx);
           indicators[idx].classList.add('paused');
-          // Fill bar fully to show selected state
+          // Fill bar instantly
           var bar = indicators[idx].querySelector('.spec-timer-bar');
+          bar.style.transitionDuration = '300ms';
           bar.style.height = '100%';
-          bar.style.transitionDuration = '0.3s';
           bar.classList.add('running');
         });
       });
@@ -943,24 +985,27 @@
       function handleMouseEnter() {
         if (paused) return;
         stopCycle();
-        pauseBar();
+        freezeBar();
       }
 
       function handleMouseLeave() {
         if (paused) return;
         var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
-        var currentHeight = parseFloat(bar.style.height) || 0;
-        var parentHeight = bar.parentElement.offsetHeight;
-        var pct = parentHeight > 0 ? (currentHeight / parentHeight) * 100 : 0;
+        var currentH = parseFloat(bar.style.height) || 0;
+        var parentH = bar.parentElement.offsetHeight;
+        var pct = parentH > 0 ? (currentH / parentH) * 100 : 0;
         var remaining = CYCLE_MS * (1 - pct / 100);
         bar.style.transitionDuration = remaining + 'ms';
-        void bar.offsetWidth;
+        bar.style.height = '100%';
         bar.classList.add('running');
-        stopCycle();
         timer = setTimeout(function() {
-          var next = (currentIndex + 1) % slides.length;
-          openSpec(next, true);
-          startCycle();
+          openSpec((currentIndex + 1) % slides.length);
+          animateBar(currentIndex, CYCLE_MS);
+          timer = setTimeout(function advance() {
+            openSpec((currentIndex + 1) % slides.length);
+            animateBar(currentIndex, CYCLE_MS);
+            timer = setTimeout(advance, CYCLE_MS);
+          }, CYCLE_MS);
         }, remaining);
       }
 
@@ -969,17 +1014,13 @@
       specList.addEventListener('mouseenter', handleMouseEnter);
       specList.addEventListener('mouseleave', handleMouseLeave);
 
-      // Double-click or click on active paused button resumes
-      indicators.forEach(function(ind, idx) {
-        ind.addEventListener('dblclick', function() {
-          if (paused && currentIndex === idx) {
-            startCycle();
-          }
-        });
-      });
-
-      openSpec(0, true);
-      startCycle();
+      openSpec(0);
+      animateBar(0, CYCLE_MS);
+      timer = setTimeout(function advance() {
+        openSpec((currentIndex + 1) % slides.length);
+        animateBar(currentIndex, CYCLE_MS);
+        timer = setTimeout(advance, CYCLE_MS);
+      }, CYCLE_MS);
     })();
 
     // === Mobile menu toggle ===
