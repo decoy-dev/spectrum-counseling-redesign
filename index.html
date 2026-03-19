@@ -238,44 +238,35 @@
       transform: translateY(0);
       pointer-events: auto;
     }
-    /* Specialization accordion */
-    .spec-btn {
-      transition: background-color 0.2s ease;
-    }
-    .spec-btn:hover {
-      background-color: #e8ecee;
-    }
-    .spec-btn.active {
-      background-color: #ffffff;
-    }
-    .spec-btn.active .spec-icon {
-      transform: rotate(45deg);
-    }
-    .spec-icon {
-      transition: transform 0.3s ease;
-    }
-    .spec-detail {
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      pointer-events: none;
-    }
-    .spec-detail.active {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-    /* Spec image crossfade */
-    .spec-img {
+    /* Specialization slider */
+    .spec-slide {
       position: absolute;
       inset: 0;
       opacity: 0;
-      transition: opacity 0.6s ease;
+      transition: opacity 0.7s ease;
     }
-    .spec-img.active {
+    .spec-slide.active {
       opacity: 1;
+    }
+    .spec-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .spec-indicator {
+      transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+    .spec-indicator:hover {
+      background-color: #e5e9eb;
+    }
+    .spec-indicator.active {
+      background-color: #43627e;
+      color: #f6f9ff;
+      box-shadow: 0 4px 12px rgba(67, 98, 126, 0.2);
+    }
+    .spec-indicator.active .spec-ind-icon {
+      color: #b5d5f6;
     }
     /* Timer progress bar */
     .spec-timer-track {
@@ -542,68 +533,83 @@
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-on-surface mb-4 sm:mb-6">Therapy Specializations</h2>
         <p class="text-base sm:text-lg md:text-xl text-on-surface-variant max-w-2xl">Deep clinical expertise in depression, anxiety, relationships, sexuality, and gender identity counseling in Gilbert, AZ.</p>
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
-        <!-- Left: Image + description -->
-        <div class="fade-in">
-          <div id="spec-image-container" class="rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden aspect-[4/3] relative mb-6">
-            <img alt="Depression therapy" class="spec-img active w-full h-full object-cover" data-spec="0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
-            <img alt="Anxiety support" class="spec-img w-full h-full object-cover" data-spec="1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYgVLahFRggwgGGMSEQ2UB-mXpYsrWpQhMVzu-Cu3X5bYrzq8LMHdmL9ATDjOYLVYLhbJoj6Pi-qnnWfOTLB2j2uFPzCdqA5uhpQvF7mHf8D86YMa-W1fkkcI8mPHoi4JMXRsT359ByAD12-oo1jWKtFCzKuJX-Og4om9vZZg2GRrVSu4yxmqZo68H4pwLDHIU1IbJD0qPv55usKyXwKSYN1amp9s_NuyzimhzdrPcEkhwDpQLX5jfgo1Sk29w8GqaZrar9NABs6M" />
-            <img alt="Relationship counseling" class="spec-img w-full h-full object-cover" data-spec="2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCksBsDn2YNAqEZoqn2XMaooqK8MleiQHzxuYm4BAjlXHO_058N44W0kMPdIxnXA6hCyBPS6nCdZujz9-z8wyhoFferTl_Zil87GV6CX2w8gCdVdIUQQLR8o7edVKJhsnip7S93_FHSE6_8L1JDM4tBCk_Xli9aXKHKX6RuIUG3YLebCN-UjsoO5rCyRXnXCy7f41SmMy9SygQr6BAG7fS5vTFri8RQCktkp7MpsmkVPwQ9rxZb3pPQrRiCr-I0hi5Gr2LShk-vQLQ" />
-            <img alt="Sexuality exploration" class="spec-img w-full h-full object-cover" data-spec="3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrupQdzHvRlqnj5DU2WfwFI3zeKffUXUnvJsix97Kkn8AMEMXLnAYPlkLnSig71Ix8TDyQoBfukYTHA94W3L3KisGLt76r1PUTYkg-PUp_R6lkRZQPo58y0kTCFHB7g6yckAGBmXYbFvvaRh9mfomLgL5f-BVSr8NIcKDDaZYTyWU5YvNpkmlkVhin__Nt2RclRX_JiMa17HnM7ebpjcdtWMrjT7TBfzzNvYKHnV3sLTXCfMx6hCyu_Sx4e2XdWbrORSVqaCHsAEw" />
-            <img alt="Gender identity support" class="spec-img w-full h-full object-cover" data-spec="4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
-          </div>
-          <!-- Description panel (swaps with selection) -->
-          <div class="relative min-h-[100px]">
-            <div class="spec-detail active text-sm sm:text-base text-on-surface-variant leading-relaxed" data-spec="0">
-              <h3 class="text-lg sm:text-xl font-bold text-on-surface mb-2" style="font-family: 'Noto Serif', serif;">Depression Treatment</h3>
-              <p>We work with individuals experiencing persistent sadness, loss of motivation, and emotional numbness. Dr. Haddox uses cognitive-behavioral and psychodynamic approaches to uncover root causes and develop sustainable coping strategies tailored to each person.</p>
-            </div>
-            <div class="spec-detail text-sm sm:text-base text-on-surface-variant leading-relaxed" data-spec="1">
-              <h3 class="text-lg sm:text-xl font-bold text-on-surface mb-2" style="font-family: 'Noto Serif', serif;">Anxiety &amp; Stress</h3>
-              <p>From generalized anxiety to panic disorders and social anxiety, we provide evidence-based treatment integrating mindfulness techniques with traditional therapeutic methods to help you regain control and build resilience.</p>
-            </div>
-            <div class="spec-detail text-sm sm:text-base text-on-surface-variant leading-relaxed" data-spec="2">
-              <h3 class="text-lg sm:text-xl font-bold text-on-surface mb-2" style="font-family: 'Noto Serif', serif;">Relationships &amp; Couples</h3>
-              <p>We help couples and individuals navigate communication breakdowns, trust issues, codependency, and attachment patterns. Recovery from betrayal, improving family dynamics, and building healthier connections are areas of deep expertise.</p>
-            </div>
-            <div class="spec-detail text-sm sm:text-base text-on-surface-variant leading-relaxed" data-spec="3">
-              <h3 class="text-lg sm:text-xl font-bold text-on-surface mb-2" style="font-family: 'Noto Serif', serif;">Sexuality &amp; Identity</h3>
-              <p>We offer a judgment-free space to discuss sexual orientation, intimacy concerns, and the intersection of identity and desire. Support includes questions of identity, coming out, and building fulfilling intimate connections.</p>
-            </div>
-            <div class="spec-detail text-sm sm:text-base text-on-surface-variant leading-relaxed" data-spec="4">
-              <h3 class="text-lg sm:text-xl font-bold text-on-surface mb-2" style="font-family: 'Noto Serif', serif;">Gender &amp; Transition Support</h3>
-              <p>We support clients questioning, exploring, or affirming their gender — including those considering or undergoing transition. Our practice provides letters of support and guidance through social and medical transitions.</p>
-            </div>
+
+      <!-- Feature slider -->
+      <div class="relative h-[360px] sm:h-[420px] lg:h-[480px] rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden fade-in" id="spec-slider">
+        <!-- Slide 0: Depression -->
+        <div class="spec-slide active" data-spec="0">
+          <img alt="Depression therapy — calming office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white">
+            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Depression Treatment</h3>
+            <p class="text-sm sm:text-base lg:text-lg leading-relaxed text-white/85 max-w-2xl">We work with individuals experiencing persistent sadness, loss of motivation, and emotional numbness. Dr. Haddox uses cognitive-behavioral and psychodynamic approaches to uncover root causes and develop sustainable coping strategies.</p>
           </div>
         </div>
-        <!-- Right: Buttons -->
-        <div class="fade-in space-y-2 sm:space-y-3 lg:flex lg:flex-col lg:justify-center" id="spec-list">
-          <button class="spec-btn active w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex items-center gap-4 bg-surface-container-lowest rounded-2xl relative shadow-sm" data-spec="0">
-            <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">cloud</span>
-            <span class="text-base sm:text-lg font-bold text-on-surface">Depression Treatment</span>
-            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-          </button>
-          <button class="spec-btn w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex items-center gap-4 bg-surface-container-lowest rounded-2xl relative shadow-sm" data-spec="1">
-            <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">psychology</span>
-            <span class="text-base sm:text-lg font-bold text-on-surface">Anxiety &amp; Stress</span>
-            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-          </button>
-          <button class="spec-btn w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex items-center gap-4 bg-surface-container-lowest rounded-2xl relative shadow-sm" data-spec="2">
-            <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">handshake</span>
-            <span class="text-base sm:text-lg font-bold text-on-surface">Relationships &amp; Couples</span>
-            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-          </button>
-          <button class="spec-btn w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex items-center gap-4 bg-surface-container-lowest rounded-2xl relative shadow-sm" data-spec="3">
-            <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">spa</span>
-            <span class="text-base sm:text-lg font-bold text-on-surface">Sexuality &amp; Identity</span>
-            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-          </button>
-          <button class="spec-btn w-full px-5 sm:px-8 py-5 sm:py-6 text-left flex items-center gap-4 bg-surface-container-lowest rounded-2xl relative shadow-sm" data-spec="4">
-            <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">diversity_1</span>
-            <span class="text-base sm:text-lg font-bold text-on-surface">Gender &amp; Transition Support</span>
-            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-          </button>
+        <!-- Slide 1: Anxiety -->
+        <div class="spec-slide" data-spec="1">
+          <img alt="Anxiety support — serene natural textures" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYgVLahFRggwgGGMSEQ2UB-mXpYsrWpQhMVzu-Cu3X5bYrzq8LMHdmL9ATDjOYLVYLhbJoj6Pi-qnnWfOTLB2j2uFPzCdqA5uhpQvF7mHf8D86YMa-W1fkkcI8mPHoi4JMXRsT359ByAD12-oo1jWKtFCzKuJX-Og4om9vZZg2GRrVSu4yxmqZo68H4pwLDHIU1IbJD0qPv55usKyXwKSYN1amp9s_NuyzimhzdrPcEkhwDpQLX5jfgo1Sk29w8GqaZrar9NABs6M" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white">
+            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Anxiety &amp; Stress</h3>
+            <p class="text-sm sm:text-base lg:text-lg leading-relaxed text-white/85 max-w-2xl">From generalized anxiety to panic disorders and social anxiety, we provide evidence-based treatment integrating mindfulness techniques with traditional therapeutic methods to help you regain control and build resilience.</p>
+          </div>
         </div>
+        <!-- Slide 2: Relationships -->
+        <div class="spec-slide" data-spec="2">
+          <img alt="Relationship counseling — healing space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCksBsDn2YNAqEZoqn2XMaooqK8MleiQHzxuYm4BAjlXHO_058N44W0kMPdIxnXA6hCyBPS6nCdZujz9-z8wyhoFferTl_Zil87GV6CX2w8gCdVdIUQQLR8o7edVKJhsnip7S93_FHSE6_8L1JDM4tBCk_Xli9aXKHKX6RuIUG3YLebCN-UjsoO5rCyRXnXCy7f41SmMy9SygQr6BAG7fS5vTFri8RQCktkp7MpsmkVPwQ9rxZb3pPQrRiCr-I0hi5Gr2LShk-vQLQ" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white">
+            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Relationships &amp; Couples</h3>
+            <p class="text-sm sm:text-base lg:text-lg leading-relaxed text-white/85 max-w-2xl">We help couples and individuals navigate communication breakdowns, trust issues, codependency, and attachment patterns. Recovery from betrayal, improving family dynamics, and building healthier connections are areas of deep expertise.</p>
+          </div>
+        </div>
+        <!-- Slide 3: Sexuality -->
+        <div class="spec-slide" data-spec="3">
+          <img alt="Sexuality and identity exploration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrupQdzHvRlqnj5DU2WfwFI3zeKffUXUnvJsix97Kkn8AMEMXLnAYPlkLnSig71Ix8TDyQoBfukYTHA94W3L3KisGLt76r1PUTYkg-PUp_R6lkRZQPo58y0kTCFHB7g6yckAGBmXYbFvvaRh9mfomLgL5f-BVSr8NIcKDDaZYTyWU5YvNpkmlkVhin__Nt2RclRX_JiMa17HnM7ebpjcdtWMrjT7TBfzzNvYKHnV3sLTXCfMx6hCyu_Sx4e2XdWbrORSVqaCHsAEw" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white">
+            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Sexuality &amp; Identity</h3>
+            <p class="text-sm sm:text-base lg:text-lg leading-relaxed text-white/85 max-w-2xl">We offer a judgment-free space to discuss sexual orientation, intimacy concerns, and the intersection of identity and desire. Support includes questions of identity, coming out, and building fulfilling intimate connections.</p>
+          </div>
+        </div>
+        <!-- Slide 4: Gender -->
+        <div class="spec-slide" data-spec="4">
+          <img alt="Gender identity and transition support" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white">
+            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Gender &amp; Transition Support</h3>
+            <p class="text-sm sm:text-base lg:text-lg leading-relaxed text-white/85 max-w-2xl">We support clients questioning, exploring, or affirming their gender — including those considering or undergoing transition. Our practice provides letters of support and guidance through social and medical transitions.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Indicator row -->
+      <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-8 fade-in" id="spec-list">
+        <button class="spec-indicator active flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full text-on-surface-variant text-sm font-semibold" data-spec="0">
+          <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">cloud</span>
+          <span class="hidden sm:inline">Depression</span>
+          <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+        </button>
+        <button class="spec-indicator flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full text-on-surface-variant text-sm font-semibold" data-spec="1">
+          <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">psychology</span>
+          <span class="hidden sm:inline">Anxiety</span>
+          <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+        </button>
+        <button class="spec-indicator flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full text-on-surface-variant text-sm font-semibold" data-spec="2">
+          <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">handshake</span>
+          <span class="hidden sm:inline">Relationships</span>
+          <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+        </button>
+        <button class="spec-indicator flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full text-on-surface-variant text-sm font-semibold" data-spec="3">
+          <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">spa</span>
+          <span class="hidden sm:inline">Sexuality</span>
+          <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+        </button>
+        <button class="spec-indicator flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full text-on-surface-variant text-sm font-semibold" data-spec="4">
+          <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">diversity_1</span>
+          <span class="hidden sm:inline">Gender</span>
+          <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+        </button>
       </div>
     </div>
   </section>
@@ -704,9 +710,9 @@
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Frequently Asked Questions</h2>
         <p class="text-on-surface-variant text-base sm:text-lg">Everything you need to know about starting therapy at Spectrum Counseling in Gilbert, Arizona.</p>
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8 fade-in" id="faq-list">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-6 sm:gap-8 fade-in" id="faq-list">
         <!-- Question buttons -->
-        <div class="lg:col-span-2 space-y-2">
+        <div class="md:col-span-2 space-y-2">
           <button class="faq-btn active w-full px-5 py-4 text-left flex items-center gap-3 rounded-xl" data-faq="0">
             <span class="material-symbols-outlined text-lg faq-icon-btn flex-shrink-0">payments</span>
             <span class="text-base font-semibold">Do you take insurance?</span>
@@ -729,7 +735,7 @@
           </button>
         </div>
         <!-- Answer panel -->
-        <div class="lg:col-span-3 relative bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/10 p-8 sm:p-10 min-h-[280px] flex items-start">
+        <div class="md:col-span-3 relative bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/10 p-8 sm:p-10 min-h-[280px] flex items-start">
           <div class="faq-panel active" data-faq="0">
             <span class="inline-block px-3 py-1 bg-primary-container/40 text-primary text-[0.65rem] font-bold tracking-widest uppercase rounded-full mb-4">Insurance &amp; Billing</span>
             <h3 class="text-xl sm:text-2xl font-bold text-on-surface mb-4" style="font-family: 'Noto Serif', serif;">Insurance &amp; Payment at Spectrum Counseling</h3>
@@ -820,34 +826,29 @@
       activateFaq(0);
     })();
 
-    // === Specializations with auto-cycle timer ===
+    // === Specializations Feature Slider with auto-cycle timer ===
     (function() {
       var CYCLE_MS = 8000;
-      var specBtns = document.querySelectorAll('.spec-btn');
-      var specDetails = document.querySelectorAll('.spec-detail');
-      var specImages = document.querySelectorAll('.spec-img');
+      var slides = document.querySelectorAll('.spec-slide');
+      var indicators = document.querySelectorAll('.spec-indicator');
       var currentIndex = 0;
       var timer = null;
 
       function openSpec(index) {
-        specBtns.forEach(function(b) {
-          b.classList.remove('active');
-          var bar = b.querySelector('.spec-timer-bar');
+        slides.forEach(function(s) { s.classList.remove('active'); });
+        indicators.forEach(function(ind) {
+          ind.classList.remove('active');
+          var bar = ind.querySelector('.spec-timer-bar');
           bar.classList.remove('running');
           bar.style.width = '0%';
           bar.style.transitionDuration = '';
         });
-        specDetails.forEach(function(d) { d.classList.remove('active'); });
-        specImages.forEach(function(i) { i.classList.remove('active'); });
 
         currentIndex = index;
-        specBtns[index].classList.add('active');
-        specDetails[index].classList.add('active');
+        slides[index].classList.add('active');
+        indicators[index].classList.add('active');
 
-        var img = document.querySelector('.spec-img[data-spec="' + index + '"]');
-        if (img) img.classList.add('active');
-
-        var bar = specBtns[index].querySelector('.spec-timer-bar');
+        var bar = indicators[index].querySelector('.spec-timer-bar');
         void bar.offsetWidth;
         bar.style.transitionDuration = CYCLE_MS + 'ms';
         bar.classList.add('running');
@@ -856,7 +857,7 @@
       function startCycle() {
         stopCycle();
         timer = setTimeout(function advance() {
-          var next = (currentIndex + 1) % specBtns.length;
+          var next = (currentIndex + 1) % slides.length;
           openSpec(next);
           timer = setTimeout(advance, CYCLE_MS);
         }, CYCLE_MS);
@@ -866,24 +867,27 @@
         if (timer) { clearTimeout(timer); timer = null; }
       }
 
-      specBtns.forEach(function(btn, idx) {
-        btn.addEventListener('click', function() {
+      indicators.forEach(function(ind, idx) {
+        ind.addEventListener('click', function() {
           openSpec(idx);
           startCycle();
         });
       });
 
-      // Pause on hover
-      var specSection = document.getElementById('spec-list');
-      specSection.addEventListener('mouseenter', function() {
+      // Pause on hover over both slider and indicators
+      var slider = document.getElementById('spec-slider');
+      var specList = document.getElementById('spec-list');
+
+      function handleMouseEnter() {
         stopCycle();
-        var bar = specBtns[currentIndex].querySelector('.spec-timer-bar');
+        var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
         var computed = getComputedStyle(bar);
         bar.style.width = computed.width;
         bar.classList.remove('running');
-      });
-      specSection.addEventListener('mouseleave', function() {
-        var bar = specBtns[currentIndex].querySelector('.spec-timer-bar');
+      }
+
+      function handleMouseLeave() {
+        var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
         var currentWidth = parseFloat(bar.style.width) || 0;
         var parentWidth = bar.parentElement.offsetWidth;
         var pct = parentWidth > 0 ? (currentWidth / parentWidth) * 100 : 0;
@@ -893,11 +897,16 @@
         bar.classList.add('running');
         stopCycle();
         timer = setTimeout(function() {
-          var next = (currentIndex + 1) % specBtns.length;
+          var next = (currentIndex + 1) % slides.length;
           openSpec(next);
           startCycle();
         }, remaining);
-      });
+      }
+
+      slider.addEventListener('mouseenter', handleMouseEnter);
+      slider.addEventListener('mouseleave', handleMouseLeave);
+      specList.addEventListener('mouseenter', handleMouseEnter);
+      specList.addEventListener('mouseleave', handleMouseLeave);
 
       openSpec(0);
       startCycle();
