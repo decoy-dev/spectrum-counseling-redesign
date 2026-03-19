@@ -256,14 +256,17 @@
     .spec-indicator {
       transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
       position: relative;
+      backdrop-filter: blur(8px);
+      background-color: rgba(0, 0, 0, 0.25);
     }
     .spec-indicator:hover {
-      background-color: #e5e9eb;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
     }
     .spec-indicator.active {
-      background-color: #43627e;
-      color: #f6f9ff;
-      box-shadow: 0 4px 12px rgba(67, 98, 126, 0.2);
+      background-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
     .spec-indicator.active .spec-ind-icon {
       color: #b5d5f6;
@@ -274,14 +277,14 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: rgba(67, 98, 126, 0.12);
+      height: 3px;
+      background: rgba(255, 255, 255, 0.15);
       overflow: hidden;
-      border-radius: 0 0 1rem 1rem;
+      border-radius: 0 0 0.5rem 0.5rem;
     }
     .spec-timer-bar {
       height: 100%;
-      background: linear-gradient(90deg, #43627e, #b5d5f6);
+      background: linear-gradient(90deg, #b5d5f6, #fff);
       width: 0%;
       transition: none;
     }
@@ -412,6 +415,11 @@
         </div>
       </div>
     </div>
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-on-surface-variant/60 transition-opacity duration-500" id="scroll-hint">
+      <span class="text-xs tracking-widest uppercase font-medium">Scroll down</span>
+      <span class="material-symbols-outlined text-lg animate-bounce">keyboard_arrow_down</span>
+    </div>
   </section>
 
   <!-- About Section -->
@@ -539,8 +547,8 @@
         <!-- Slide 0: Depression -->
         <div class="spec-slide active" data-spec="0">
           <img alt="Depression therapy — calming office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white pl-[4.5rem] sm:pl-[5.5rem] lg:pl-[6.5rem]">
             <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Depression Treatment</h3>
             <p class="text-sm sm:text-base lg:text-lg leading-relaxed text-white/85 max-w-2xl">We work with individuals experiencing persistent sadness, loss of motivation, and emotional numbness. Dr. Haddox uses cognitive-behavioral and psychodynamic approaches to uncover root causes and develop sustainable coping strategies.</p>
           </div>
@@ -548,8 +556,8 @@
         <!-- Slide 1: Anxiety -->
         <div class="spec-slide" data-spec="1">
           <img alt="Anxiety support — serene natural textures" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYgVLahFRggwgGGMSEQ2UB-mXpYsrWpQhMVzu-Cu3X5bYrzq8LMHdmL9ATDjOYLVYLhbJoj6Pi-qnnWfOTLB2j2uFPzCdqA5uhpQvF7mHf8D86YMa-W1fkkcI8mPHoi4JMXRsT359ByAD12-oo1jWKtFCzKuJX-Og4om9vZZg2GRrVSu4yxmqZo68H4pwLDHIU1IbJD0qPv55usKyXwKSYN1amp9s_NuyzimhzdrPcEkhwDpQLX5jfgo1Sk29w8GqaZrar9NABs6M" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white pl-[4.5rem] sm:pl-[5.5rem] lg:pl-[6.5rem]">
             <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Anxiety &amp; Stress</h3>
             <p class="text-sm sm:text-base lg:text-lg leading-relaxed text-white/85 max-w-2xl">From generalized anxiety to panic disorders and social anxiety, we provide evidence-based treatment integrating mindfulness techniques with traditional therapeutic methods to help you regain control and build resilience.</p>
           </div>
@@ -557,8 +565,8 @@
         <!-- Slide 2: Relationships -->
         <div class="spec-slide" data-spec="2">
           <img alt="Relationship counseling — healing space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCksBsDn2YNAqEZoqn2XMaooqK8MleiQHzxuYm4BAjlXHO_058N44W0kMPdIxnXA6hCyBPS6nCdZujz9-z8wyhoFferTl_Zil87GV6CX2w8gCdVdIUQQLR8o7edVKJhsnip7S93_FHSE6_8L1JDM4tBCk_Xli9aXKHKX6RuIUG3YLebCN-UjsoO5rCyRXnXCy7f41SmMy9SygQr6BAG7fS5vTFri8RQCktkp7MpsmkVPwQ9rxZb3pPQrRiCr-I0hi5Gr2LShk-vQLQ" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white pl-[4.5rem] sm:pl-[5.5rem] lg:pl-[6.5rem]">
             <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Relationships &amp; Couples</h3>
             <p class="text-sm sm:text-base lg:text-lg leading-relaxed text-white/85 max-w-2xl">We help couples and individuals navigate communication breakdowns, trust issues, codependency, and attachment patterns. Recovery from betrayal, improving family dynamics, and building healthier connections are areas of deep expertise.</p>
           </div>
@@ -566,8 +574,8 @@
         <!-- Slide 3: Sexuality -->
         <div class="spec-slide" data-spec="3">
           <img alt="Sexuality and identity exploration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrupQdzHvRlqnj5DU2WfwFI3zeKffUXUnvJsix97Kkn8AMEMXLnAYPlkLnSig71Ix8TDyQoBfukYTHA94W3L3KisGLt76r1PUTYkg-PUp_R6lkRZQPo58y0kTCFHB7g6yckAGBmXYbFvvaRh9mfomLgL5f-BVSr8NIcKDDaZYTyWU5YvNpkmlkVhin__Nt2RclRX_JiMa17HnM7ebpjcdtWMrjT7TBfzzNvYKHnV3sLTXCfMx6hCyu_Sx4e2XdWbrORSVqaCHsAEw" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white pl-[4.5rem] sm:pl-[5.5rem] lg:pl-[6.5rem]">
             <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Sexuality &amp; Identity</h3>
             <p class="text-sm sm:text-base lg:text-lg leading-relaxed text-white/85 max-w-2xl">We offer a judgment-free space to discuss sexual orientation, intimacy concerns, and the intersection of identity and desire. Support includes questions of identity, coming out, and building fulfilling intimate connections.</p>
           </div>
@@ -575,41 +583,41 @@
         <!-- Slide 4: Gender -->
         <div class="spec-slide" data-spec="4">
           <img alt="Gender identity and transition support" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoM9MMefHqsX4MkQVz4DK2hhxUQ7J0f6XLLOA5lTsytbD-osGolC3HObSQj6-YS2TpdfUZ-5jAtKqD9ieIPctuqrDPbnVlNd22ak4lyGEQKsuu9UkG4Gf4kw8NqqpE8lo4lY078cBYXivU5kVq-OlCTOKWIAPUeclb16JRQ11iGTevGH67NjrH4JtD1QiIxZnC8DFmu74p3N-RDruvO5a565xdAsx84GBJxg2Ysu8ogrc7VT4K6BXqHIY0Wq0LzOYM36UJNn1pYuM" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14 text-white pl-[4.5rem] sm:pl-[5.5rem] lg:pl-[6.5rem]">
             <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Gender &amp; Transition Support</h3>
             <p class="text-sm sm:text-base lg:text-lg leading-relaxed text-white/85 max-w-2xl">We support clients questioning, exploring, or affirming their gender — including those considering or undergoing transition. Our practice provides letters of support and guidance through social and medical transitions.</p>
           </div>
         </div>
-      </div>
 
-      <!-- Indicator row -->
-      <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-8 fade-in" id="spec-list">
-        <button class="spec-indicator active flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full text-on-surface-variant text-sm font-semibold" data-spec="0">
-          <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">cloud</span>
-          <span class="hidden sm:inline">Depression</span>
-          <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-        </button>
-        <button class="spec-indicator flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full text-on-surface-variant text-sm font-semibold" data-spec="1">
-          <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">psychology</span>
-          <span class="hidden sm:inline">Anxiety</span>
-          <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-        </button>
-        <button class="spec-indicator flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full text-on-surface-variant text-sm font-semibold" data-spec="2">
-          <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">handshake</span>
-          <span class="hidden sm:inline">Relationships</span>
-          <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-        </button>
-        <button class="spec-indicator flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full text-on-surface-variant text-sm font-semibold" data-spec="3">
-          <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">spa</span>
-          <span class="hidden sm:inline">Sexuality</span>
-          <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-        </button>
-        <button class="spec-indicator flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full text-on-surface-variant text-sm font-semibold" data-spec="4">
-          <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">diversity_1</span>
-          <span class="hidden sm:inline">Gender</span>
-          <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-        </button>
+        <!-- Indicator buttons — stacked vertically, bottom-left inside slider -->
+        <div class="absolute bottom-4 sm:bottom-8 lg:bottom-12 left-4 sm:left-8 lg:left-12 z-10 flex flex-col gap-1.5 sm:gap-2" id="spec-list">
+          <button class="spec-indicator active flex items-center gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-white/70 text-xs sm:text-sm font-semibold" data-spec="0">
+            <span class="material-symbols-outlined text-base sm:text-lg spec-ind-icon">cloud</span>
+            <span class="hidden sm:inline">Depression</span>
+            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+          </button>
+          <button class="spec-indicator flex items-center gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-white/70 text-xs sm:text-sm font-semibold" data-spec="1">
+            <span class="material-symbols-outlined text-base sm:text-lg spec-ind-icon">psychology</span>
+            <span class="hidden sm:inline">Anxiety</span>
+            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+          </button>
+          <button class="spec-indicator flex items-center gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-white/70 text-xs sm:text-sm font-semibold" data-spec="2">
+            <span class="material-symbols-outlined text-base sm:text-lg spec-ind-icon">handshake</span>
+            <span class="hidden sm:inline">Relationships</span>
+            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+          </button>
+          <button class="spec-indicator flex items-center gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-white/70 text-xs sm:text-sm font-semibold" data-spec="3">
+            <span class="material-symbols-outlined text-base sm:text-lg spec-ind-icon">spa</span>
+            <span class="hidden sm:inline">Sexuality</span>
+            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+          </button>
+          <button class="spec-indicator flex items-center gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-white/70 text-xs sm:text-sm font-semibold" data-spec="4">
+            <span class="material-symbols-outlined text-base sm:text-lg spec-ind-icon">diversity_1</span>
+            <span class="hidden sm:inline">Gender</span>
+            <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -938,6 +946,15 @@
     document.querySelectorAll('.fade-in').forEach(function(el) {
       observer.observe(el);
     });
+
+    // === Scroll hint fade ===
+    var scrollHint = document.getElementById('scroll-hint');
+    if (scrollHint) {
+      window.addEventListener('scroll', function() {
+        scrollHint.style.opacity = window.scrollY > 80 ? '0' : '1';
+        scrollHint.style.pointerEvents = window.scrollY > 80 ? 'none' : 'auto';
+      }, { passive: true });
+    }
   </script>
 </body>
 </html>
