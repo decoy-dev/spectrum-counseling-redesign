@@ -343,14 +343,14 @@
 <body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
 
   <!-- Top Navigation Bar -->
-  <nav id="main-nav" class="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 bg-white/85 backdrop-blur-xl shadow-lg border border-white/30 rounded-[1.25rem] md:rounded-full w-[92%] max-w-6xl">
+  <nav id="main-nav" class="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 bg-white/85 backdrop-blur-xl shadow-lg border border-white/30 rounded-[1.25rem] lg:rounded-full w-[92%] max-w-6xl">
     <div class="flex justify-between items-center px-4 sm:px-6 py-3">
       <div class="flex items-center">
         <a href="index.html">
-          <img alt="Spectrum Counseling Logo" class="h-10 md:h-12 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uiW71XvAti9pL6jbcsFAEaEdxhEePuv-rOZTr6grA3JVq0o4yVm2564eUC0zhMuqTmNQnH8vyXhu6j2EW8M4TYVgeF1FysXk3qODXbu0pa646_rwmxb1BNONrpLOWd0EoZ4TBnyFoYAo6Ovn0yn6dQGkhYAkIHj0jwDcdPsOG_7fTvpxPsQGCLfWTthc4Dd2G4pgNs0HlkoNihV-Hnu8xUiNkVDc0_HAeFtuDPwiQQgKJuZNjDpb2gRzVhRfV8MG1wW6_9nxUNU" />
+          <img alt="Spectrum Counseling Logo" class="h-10 lg:h-12 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uiW71XvAti9pL6jbcsFAEaEdxhEePuv-rOZTr6grA3JVq0o4yVm2564eUC0zhMuqTmNQnH8vyXhu6j2EW8M4TYVgeF1FysXk3qODXbu0pa646_rwmxb1BNONrpLOWd0EoZ4TBnyFoYAo6Ovn0yn6dQGkhYAkIHj0jwDcdPsOG_7fTvpxPsQGCLfWTthc4Dd2G4pgNs0HlkoNihV-Hnu8xUiNkVDc0_HAeFtuDPwiQQgKJuZNjDpb2gRzVhRfV8MG1wW6_9nxUNU" />
         </a>
       </div>
-      <div class="hidden md:flex flex-1 justify-center gap-6 lg:gap-8 items-center">
+      <div class="hidden lg:flex flex-1 justify-center gap-6 xl:gap-8 items-center">
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#about">About</a>
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#services">Services</a>
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#specializations">Specializations</a>
@@ -358,7 +358,7 @@
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#location">Location</a>
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#faq">FAQ</a>
       </div>
-      <div class="hidden md:flex items-center gap-2">
+      <div class="hidden lg:flex items-center gap-2">
         <a href="contact.html" class="bg-white text-on-surface-variant hover:text-primary hover:bg-primary-container hover:border-primary/30 hover:-translate-y-0.5 hover:shadow-md px-4 py-2 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200">
           Contact
         </a>
@@ -367,12 +367,12 @@
         </a>
       </div>
       <!-- Mobile menu button -->
-      <button id="mobile-menu-btn" class="md:hidden flex items-center text-on-surface-variant" aria-label="Toggle menu">
+      <button id="mobile-menu-btn" class="lg:hidden flex items-center text-on-surface-variant" aria-label="Toggle menu">
         <span class="material-symbols-outlined text-2xl">menu</span>
       </button>
     </div>
     <!-- Mobile menu -->
-    <div id="mobile-menu" class="mobile-menu md:hidden px-6">
+    <div id="mobile-menu" class="mobile-menu lg:hidden px-6">
       <div class="flex flex-col gap-4 pb-6 pt-2">
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#about">About</a>
         <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm tracking-wide hover:underline hover:underline-offset-4 hover:decoration-2" href="#services">Services</a>
@@ -419,7 +419,7 @@
       </div>
     </div>
     <!-- Scroll indicator -->
-    <div class="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 flex flex-col items-center gap-0.5 text-on-surface-variant/60 transition-opacity duration-500" id="scroll-hint">
+    <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-0.5 text-on-surface-variant/60 transition-opacity duration-500" id="scroll-hint">
       <span class="text-xs tracking-widest uppercase font-medium">Scroll down</span>
       <span class="material-symbols-outlined text-lg animate-bounce">keyboard_arrow_down</span>
     </div>
@@ -542,7 +542,7 @@
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
       <div class="mb-10 sm:mb-16 fade-in">
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-on-surface mb-4 sm:mb-6">Therapy Specializations</h2>
-        <p class="text-base sm:text-lg md:text-xl text-on-surface-variant max-w-2xl">Deep clinical expertise in depression, anxiety, relationships, sexuality, and gender identity counseling in Gilbert, AZ.</p>
+        <p class="text-base sm:text-lg md:text-xl text-on-surface-variant max-w-2xl">Deep clinical expertise in depression, anxiety, relationships, sexuality, and gender identity counseling.</p>
       </div>
 
       <!-- Feature slider with side buttons -->
