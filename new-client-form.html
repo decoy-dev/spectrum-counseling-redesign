@@ -410,6 +410,23 @@
               <span class="text-on-surface-variant">I will be applying for <strong class="text-on-surface">out-of-network reimbursement</strong> and do not require a Good Faith Estimate.</span>
             </label>
           </div>
+          <div class="mt-8 pt-6 border-t border-outline-variant/20 sm:ml-11">
+            <h3 class="font-bold text-on-surface text-sm uppercase tracking-wide mb-3">Financial Responsibility</h3>
+            <div class="bg-surface-container-low rounded-xl p-5 text-sm text-on-surface-variant leading-relaxed space-y-3">
+              <p>The client/responsible party is responsible for payment of professional services at the time they are rendered.</p>
+              <p>By signing below, I certify that I, the client/responsible party, acknowledge that <strong class="text-on-surface">Dr. Haddox does not accept any health insurance</strong> and <strong class="text-on-surface">will not submit claims for reimbursement</strong> to any insurance company on my behalf.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              <div>
+                <label class="form-label" for="financial-signature">Signature (Type Full Name) <span class="text-error">*</span></label>
+                <input class="form-input" type="text" id="financial-signature" name="Financial Responsibility Signature" required placeholder="Type your full legal name" />
+              </div>
+              <div>
+                <label class="form-label" for="financial-date">Date <span class="text-error">*</span></label>
+                <input class="form-input" type="date" id="financial-date" name="Financial Responsibility Date" required />
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Section 6: HIPAA Notice of Privacy Practices -->
