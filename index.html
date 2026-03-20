@@ -981,25 +981,32 @@
         freezeBar();
       }
 
-      // Click: switch slide or toggle pause/play on current
+      // Click: toggle pause/play on current, or switch to new slide
       indicators.forEach(function(ind, idx) {
         ind.addEventListener('click', function() {
-          if (paused && currentIndex === idx) {
-            // Resume from paused state
-            paused = false;
-            indicators[idx].classList.remove('paused');
-            indicators[idx].classList.add('resuming');
-            setTimeout(function() { indicators[idx].classList.remove('resuming'); }, 600);
-            var remaining = Math.max(CYCLE_MS - elapsed, 200);
-            resumeCycle(remaining);
+          if (currentIndex === idx) {
+            if (paused) {
+              // Resume from paused state
+              paused = false;
+              indicators[idx].classList.remove('paused');
+              indicators[idx].classList.add('resuming');
+              setTimeout(function() { indicators[idx].classList.remove('resuming'); }, 600);
+              var remaining = Math.max(CYCLE_MS - elapsed, 200);
+              resumeCycle(remaining);
+            } else {
+              // Pause the currently playing slide
+              paused = true;
+              pauseTimer();
+              indicators[idx].classList.add('paused');
+            }
             return;
           }
-          // Switch to new slide and pause
+          // Switch to a different slide and pause
           if (timer) { clearTimeout(timer); timer = null; }
           paused = true;
           openSpec(idx);
           indicators[idx].classList.add('paused');
-          elapsed = CYCLE_MS; // fully elapsed
+          elapsed = 0;
           var bar = indicators[idx].querySelector('.spec-timer-bar');
           bar.style.transitionDuration = '300ms';
           bar.style.height = '100%';
