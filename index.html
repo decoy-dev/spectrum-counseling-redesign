@@ -911,6 +911,8 @@
       var currentIndex = 0;
       var timer = null;
       var paused = false;
+      var cycleStart = 0;   // timestamp when current cycle segment began
+      var elapsed = 0;      // ms elapsed before pause
 
       function resetAllBars() {
         indicators.forEach(function(ind) {
@@ -926,7 +928,7 @@
         var bar = indicators[index].querySelector('.spec-timer-bar');
         bar.style.height = '0%';
         bar.style.transitionDuration = '0ms';
-        void bar.offsetWidth; // force reflow
+        void bar.offsetWidth;
         bar.style.transitionDuration = duration + 'ms';
         bar.style.height = '100%';
         bar.classList.add('running');
@@ -940,20 +942,28 @@
         indicators[index].classList.add('active');
       }
 
-      function startCycle() {
-        stopCycle();
-        paused = false;
-        indicators[currentIndex].classList.remove('paused');
-        animateBar(currentIndex, CYCLE_MS);
-        timer = setTimeout(function advance() {
-          openSpec((currentIndex + 1) % slides.length);
-          animateBar(currentIndex, CYCLE_MS);
-          timer = setTimeout(advance, CYCLE_MS);
-        }, CYCLE_MS);
+      function advance() {
+        openSpec((currentIndex + 1) % slides.length);
+        beginFullCycle();
       }
 
-      function stopCycle() {
-        if (timer) { clearTimeout(timer); timer = null; }
+      function beginFullCycle() {
+        if (timer) clearTimeout(timer);
+        elapsed = 0;
+        cycleStart = Date.now();
+        animateBar(currentIndex, CYCLE_MS);
+        timer = setTimeout(advance, CYCLE_MS);
+      }
+
+      function resumeCycle(remaining) {
+        if (timer) clearTimeout(timer);
+        cycleStart = Date.now();
+        // Continue bar from current position
+        var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
+        bar.style.transitionDuration = remaining + 'ms';
+        bar.style.height = '100%';
+        bar.classList.add('running');
+        timer = setTimeout(advance, remaining);
       }
 
       function freezeBar() {
@@ -965,22 +975,31 @@
         bar.style.height = h;
       }
 
-      // Click: switch and pause
+      function pauseTimer() {
+        if (timer) { clearTimeout(timer); timer = null; }
+        elapsed += Date.now() - cycleStart;
+        freezeBar();
+      }
+
+      // Click: switch slide or toggle pause/play on current
       indicators.forEach(function(ind, idx) {
         ind.addEventListener('click', function() {
           if (paused && currentIndex === idx) {
-            // Resume
+            // Resume from paused state
+            paused = false;
             indicators[idx].classList.remove('paused');
             indicators[idx].classList.add('resuming');
             setTimeout(function() { indicators[idx].classList.remove('resuming'); }, 600);
-            startCycle();
+            var remaining = Math.max(CYCLE_MS - elapsed, 200);
+            resumeCycle(remaining);
             return;
           }
-          stopCycle();
+          // Switch to new slide and pause
+          if (timer) { clearTimeout(timer); timer = null; }
           paused = true;
           openSpec(idx);
           indicators[idx].classList.add('paused');
-          // Fill bar instantly
+          elapsed = CYCLE_MS; // fully elapsed
           var bar = indicators[idx].querySelector('.spec-timer-bar');
           bar.style.transitionDuration = '300ms';
           bar.style.height = '100%';
@@ -994,29 +1013,13 @@
 
       function handleMouseEnter() {
         if (paused) return;
-        stopCycle();
-        freezeBar();
+        pauseTimer();
       }
 
       function handleMouseLeave() {
         if (paused) return;
-        var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
-        var currentH = parseFloat(bar.style.height) || 0;
-        var parentH = bar.parentElement.offsetHeight;
-        var pct = parentH > 0 ? (currentH / parentH) * 100 : 0;
-        var remaining = CYCLE_MS * (1 - pct / 100);
-        bar.style.transitionDuration = remaining + 'ms';
-        bar.style.height = '100%';
-        bar.classList.add('running');
-        timer = setTimeout(function() {
-          openSpec((currentIndex + 1) % slides.length);
-          animateBar(currentIndex, CYCLE_MS);
-          timer = setTimeout(function advance() {
-            openSpec((currentIndex + 1) % slides.length);
-            animateBar(currentIndex, CYCLE_MS);
-            timer = setTimeout(advance, CYCLE_MS);
-          }, CYCLE_MS);
-        }, remaining);
+        var remaining = Math.max(CYCLE_MS - elapsed, 200);
+        resumeCycle(remaining);
       }
 
       slider.addEventListener('mouseenter', handleMouseEnter);
@@ -1024,13 +1027,9 @@
       specList.addEventListener('mouseenter', handleMouseEnter);
       specList.addEventListener('mouseleave', handleMouseLeave);
 
+      // Start on Depression (index 0)
       openSpec(0);
-      animateBar(0, CYCLE_MS);
-      timer = setTimeout(function advance() {
-        openSpec((currentIndex + 1) % slides.length);
-        animateBar(currentIndex, CYCLE_MS);
-        timer = setTimeout(advance, CYCLE_MS);
-      }, CYCLE_MS);
+      beginFullCycle();
     })();
 
     // === Mobile menu toggle ===
