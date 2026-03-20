@@ -7,7 +7,7 @@
   <meta name="description" content="Complete the new client intake form for Spectrum Counseling. Dr. Marie Haddox, Ph.D. — Licensed psychologist in Gilbert, AZ." />
   <link rel="canonical" href="https://decoy-dev.github.io/spectrum-counseling-redesign/new-client-form.html" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
   <script>
     tailwind.config = {
@@ -42,7 +42,7 @@
             "error": "#a83836"
           },
           fontFamily: {
-            headline: ["Noto Serif", "serif"],
+            headline: ["Playfair Display", "serif"],
             body: ["Manrope", "sans-serif"]
           },
           borderRadius: {
@@ -64,7 +64,7 @@
       background-color: #f8f9fa;
     }
     h1, h2, h3, h4 {
-      font-family: 'Noto Serif', serif;
+      font-family: 'Playfair Display', serif;
     }
     html {
       scroll-behavior: smooth;
@@ -412,23 +412,102 @@
           </div>
         </div>
 
-        <!-- Section 6: Acknowledgment -->
-        <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm mb-8 fade-in">
+        <!-- Section 6: HIPAA Notice of Privacy Practices -->
+        <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm mb-6 fade-in">
           <div class="flex items-center gap-3 mb-6 sm:mb-8">
             <span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-on-surface">HIPAA Notice of Privacy Practices</h2>
+          </div>
+          <div class="space-y-4 text-sm text-on-surface-variant leading-relaxed sm:ml-11">
+            <p>In accordance with the Health Insurance Portability and Accountability Act (HIPAA) and its amendments, including the HITECH Act and the 2013 Omnibus Rule, this notice describes how your protected health information (PHI) may be used and disclosed, and how you can access this information.</p>
+            <div class="bg-surface-container-low rounded-xl p-5 space-y-3">
+              <h3 class="font-bold text-on-surface text-sm uppercase tracking-wide">Uses and Disclosures of PHI</h3>
+              <p>Your PHI may be used or disclosed for the following purposes:</p>
+              <ul class="space-y-2 list-disc list-inside text-sm">
+                <li><strong class="text-on-surface">Treatment:</strong> To provide, coordinate, or manage your mental health care and related services.</li>
+                <li><strong class="text-on-surface">Payment:</strong> To obtain payment for services, including billing and collections activities.</li>
+                <li><strong class="text-on-surface">Health Care Operations:</strong> For quality assessment, staff training, and other administrative activities.</li>
+                <li><strong class="text-on-surface">As Required by Law:</strong> When required by federal, state, or local law, including mandatory reporting of abuse, neglect, or threats of harm.</li>
+              </ul>
+            </div>
+            <div class="bg-surface-container-low rounded-xl p-5 space-y-3">
+              <h3 class="font-bold text-on-surface text-sm uppercase tracking-wide">Your Rights Regarding PHI</h3>
+              <ul class="space-y-2 list-disc list-inside text-sm">
+                <li><strong class="text-on-surface">Right to Access:</strong> You may request access to your PHI and obtain a copy of your records.</li>
+                <li><strong class="text-on-surface">Right to Amend:</strong> You may request amendments to your PHI if you believe it is inaccurate or incomplete.</li>
+                <li><strong class="text-on-surface">Right to Restrict:</strong> You may request restrictions on certain uses and disclosures of your PHI.</li>
+                <li><strong class="text-on-surface">Right to Confidential Communications:</strong> You may request to receive communications by alternative means or at alternative locations.</li>
+                <li><strong class="text-on-surface">Right to an Accounting:</strong> You may request an accounting of disclosures of your PHI made by this practice.</li>
+                <li><strong class="text-on-surface">Right to a Copy of This Notice:</strong> You may request a paper copy of this notice at any time.</li>
+                <li><strong class="text-on-surface">Right to File a Complaint:</strong> You may file a complaint with Spectrum Counseling, LLC or the U.S. Department of Health and Human Services if you believe your privacy rights have been violated.</li>
+              </ul>
+            </div>
+            <div class="bg-surface-container-low rounded-xl p-5 space-y-3">
+              <h3 class="font-bold text-on-surface text-sm uppercase tracking-wide">Psychotherapy Notes</h3>
+              <p>Under HIPAA, psychotherapy notes receive additional protection. These notes are maintained separately from your medical record and will not be disclosed without your written authorization, except in limited circumstances as permitted by law.</p>
+            </div>
+            <div class="bg-surface-container-low rounded-xl p-5 space-y-3">
+              <h3 class="font-bold text-on-surface text-sm uppercase tracking-wide">Breach Notification</h3>
+              <p>In the event of a breach of unsecured PHI, Spectrum Counseling, LLC will notify you as required by the HITECH Act and the Breach Notification Rule.</p>
+            </div>
+            <p class="text-xs text-on-surface-variant pt-2">This notice is effective as of the date signed below. Spectrum Counseling, LLC reserves the right to change the terms of this notice at any time. Changes will apply to all PHI maintained by the practice.</p>
+            <div class="pt-4 border-t border-outline-variant/20">
+              <p class="font-semibold text-on-surface mb-4">By signing below, I acknowledge that I have received and reviewed the HIPAA Notice of Privacy Practices for Spectrum Counseling, LLC.</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="form-label" for="hipaa-signature">Signature (Type Full Name) <span class="text-error">*</span></label>
+                  <input class="form-input" type="text" id="hipaa-signature" name="HIPAA Signature" required placeholder="Type your full legal name" />
+                </div>
+                <div>
+                  <label class="form-label" for="hipaa-date">Date <span class="text-error">*</span></label>
+                  <input class="form-input" type="date" id="hipaa-date" name="HIPAA Signature Date" required />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 7: Acknowledgment -->
+        <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm mb-8 fade-in">
+          <div class="flex items-center gap-3 mb-6 sm:mb-8">
+            <span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-bold flex-shrink-0">7</span>
             <h2 class="text-xl sm:text-2xl font-bold text-on-surface">Acknowledgment</h2>
           </div>
           <div class="space-y-4 text-sm text-on-surface-variant leading-relaxed sm:ml-11">
             <p>By submitting this form, I acknowledge that:</p>
-            <ul class="space-y-2 list-disc list-inside">
-              <li>I understand Dr. Haddox does not accept any health insurance and will not submit claims for reimbursement.</li>
-              <li>I am responsible for payment of professional services at the time they are rendered.</li>
-              <li>I voluntarily agree to receive mental health assessment, care, treatment, or services.</li>
-              <li>I understand I may stop care at any time.</li>
-            </ul>
+            <div class="space-y-3 mt-3">
+              <div class="flex items-start gap-3 bg-surface-container-low rounded-xl p-4">
+                <div class="flex-shrink-0 w-16">
+                  <label class="text-[0.65rem] font-bold text-on-surface-variant uppercase tracking-wide" for="ack-initials-1">Initials <span class="text-error">*</span></label>
+                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-1" name="Ack Initials 1 - Insurance" required maxlength="5" placeholder="___" />
+                </div>
+                <p class="pt-2">I understand Dr. Haddox does not accept any health insurance and will not submit claims for reimbursement.</p>
+              </div>
+              <div class="flex items-start gap-3 bg-surface-container-low rounded-xl p-4">
+                <div class="flex-shrink-0 w-16">
+                  <label class="text-[0.65rem] font-bold text-on-surface-variant uppercase tracking-wide" for="ack-initials-2">Initials <span class="text-error">*</span></label>
+                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-2" name="Ack Initials 2 - Payment" required maxlength="5" placeholder="___" />
+                </div>
+                <p class="pt-2">I am responsible for payment of professional services at the time they are rendered.</p>
+              </div>
+              <div class="flex items-start gap-3 bg-surface-container-low rounded-xl p-4">
+                <div class="flex-shrink-0 w-16">
+                  <label class="text-[0.65rem] font-bold text-on-surface-variant uppercase tracking-wide" for="ack-initials-3">Initials <span class="text-error">*</span></label>
+                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-3" name="Ack Initials 3 - Consent" required maxlength="5" placeholder="___" />
+                </div>
+                <p class="pt-2">I voluntarily agree to receive mental health assessment, care, treatment, or services.</p>
+              </div>
+              <div class="flex items-start gap-3 bg-surface-container-low rounded-xl p-4">
+                <div class="flex-shrink-0 w-16">
+                  <label class="text-[0.65rem] font-bold text-on-surface-variant uppercase tracking-wide" for="ack-initials-4">Initials <span class="text-error">*</span></label>
+                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-4" name="Ack Initials 4 - Stop Care" required maxlength="5" placeholder="___" />
+                </div>
+                <p class="pt-2">I understand I may stop care at any time.</p>
+              </div>
+            </div>
             <label class="flex items-start gap-3 cursor-pointer pt-4">
               <input type="checkbox" name="Acknowledgment" value="Acknowledged" class="mt-1 rounded text-primary focus:ring-primary-fixed-dim" required />
-              <span class="text-on-surface font-semibold">I have read and agree to the above terms. <span class="text-error">*</span></span>
+              <span class="text-on-surface font-semibold">I have read, initialed, and agree to the above terms. <span class="text-error">*</span></span>
             </label>
           </div>
         </div>
