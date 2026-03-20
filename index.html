@@ -955,10 +955,21 @@
         timer = setTimeout(advance, CYCLE_MS);
       }
 
-      function resumeCycle(remaining) {
+      function getBarProgress() {
+        var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
+        var trackH = bar.parentElement.offsetHeight;
+        if (trackH <= 0) return 0;
+        var barH = parseFloat(getComputedStyle(bar).height) || 0;
+        return barH / trackH; // 0 to 1
+      }
+
+      function resumeCycle() {
         if (timer) clearTimeout(timer);
         cycleStart = Date.now();
-        // Continue bar from current position
+        var progress = getBarProgress();
+        // Keep the same speed: remaining distance at original rate
+        var remaining = Math.max((1 - progress) * CYCLE_MS, 100);
+        elapsed = progress * CYCLE_MS;
         var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
         bar.style.transitionDuration = remaining + 'ms';
         bar.style.height = '100%';
@@ -966,19 +977,15 @@
         timer = setTimeout(advance, remaining);
       }
 
-      function freezeBar() {
+      function pauseTimer() {
+        if (timer) { clearTimeout(timer); timer = null; }
+        // Freeze bar at current visual position
         var bar = indicators[currentIndex].querySelector('.spec-timer-bar');
-        var computed = getComputedStyle(bar);
-        var h = computed.height;
+        var h = getComputedStyle(bar).height;
         bar.classList.remove('running');
         bar.style.transitionDuration = '0ms';
         bar.style.height = h;
-      }
-
-      function pauseTimer() {
-        if (timer) { clearTimeout(timer); timer = null; }
-        elapsed += Date.now() - cycleStart;
-        freezeBar();
+        void bar.offsetWidth; // force reflow so freeze takes effect
       }
 
       // Click: toggle pause/play on current, or switch to new slide
@@ -991,8 +998,7 @@
               indicators[idx].classList.remove('paused');
               indicators[idx].classList.add('resuming');
               setTimeout(function() { indicators[idx].classList.remove('resuming'); }, 600);
-              var remaining = Math.max(CYCLE_MS - elapsed, 200);
-              resumeCycle(remaining);
+              resumeCycle();
             } else {
               // Pause the currently playing slide
               paused = true;
@@ -1025,8 +1031,7 @@
 
       function handleMouseLeave() {
         if (paused) return;
-        var remaining = Math.max(CYCLE_MS - elapsed, 200);
-        resumeCycle(remaining);
+        resumeCycle();
       }
 
       slider.addEventListener('mouseenter', handleMouseEnter);
