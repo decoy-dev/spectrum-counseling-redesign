@@ -227,19 +227,19 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <label class="form-label" for="client-first">First Name <span class="text-error">*</span></label>
-              <input class="form-input" type="text" id="client-first" name="Client First Name" required />
+              <input class="form-input" type="text" id="client-first" name="Client First Name" required maxlength="100" />
             </div>
             <div>
               <label class="form-label" for="client-last">Last Name <span class="text-error">*</span></label>
-              <input class="form-input" type="text" id="client-last" name="Client Last Name" required />
+              <input class="form-input" type="text" id="client-last" name="Client Last Name" required maxlength="100" />
             </div>
             <div>
               <label class="form-label" for="client-preferred">Preferred Name</label>
-              <input class="form-input" type="text" id="client-preferred" name="Client Preferred Name" />
+              <input class="form-input" type="text" id="client-preferred" name="Client Preferred Name" maxlength="100" />
             </div>
             <div>
               <label class="form-label" for="client-pronouns">Pronouns</label>
-              <input class="form-input" type="text" id="client-pronouns" name="Client Pronouns" placeholder="e.g. she/her, he/him, they/them" />
+              <input class="form-input" type="text" id="client-pronouns" name="Client Pronouns" placeholder="e.g. she/her, he/him, they/them" maxlength="50" />
             </div>
             <div>
               <label class="form-label" for="client-dob">Date of Birth <span class="text-error">*</span></label>
@@ -247,23 +247,23 @@
             </div>
             <div>
               <label class="form-label" for="client-phone">Phone Number <span class="text-error">*</span></label>
-              <input class="form-input" type="tel" id="client-phone" name="Client Phone" required />
+              <input class="form-input" type="tel" id="client-phone" name="Client Phone" required maxlength="20" pattern="[\d\s\-\(\)\+\.]{7,20}" title="Enter a valid phone number" />
             </div>
             <div class="sm:col-span-2">
               <label class="form-label" for="client-email">Email <span class="text-error">*</span></label>
-              <input class="form-input" type="email" id="client-email" name="Client Email" required />
+              <input class="form-input" type="email" id="client-email" name="Client Email" required maxlength="254" />
             </div>
             <div class="sm:col-span-2">
               <label class="form-label" for="client-address">Address <span class="text-error">*</span></label>
-              <input class="form-input" type="text" id="client-address" name="Client Address" required />
+              <input class="form-input" type="text" id="client-address" name="Client Address" required maxlength="300" />
             </div>
             <div>
               <label class="form-label" for="client-employer">Employer</label>
-              <input class="form-input" type="text" id="client-employer" name="Employer" />
+              <input class="form-input" type="text" id="client-employer" name="Employer" maxlength="150" />
             </div>
             <div>
               <label class="form-label" for="client-occupation">Occupation</label>
-              <input class="form-input" type="text" id="client-occupation" name="Occupation" />
+              <input class="form-input" type="text" id="client-occupation" name="Occupation" maxlength="150" />
             </div>
           </div>
           <p class="text-xs text-on-surface-variant mt-4">By submitting this form, you agree to receive SMS from Spectrum Counseling, LLC. Carrier and data rates may apply. Reply STOP to end or HELP for info.</p>
@@ -279,19 +279,19 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <label class="form-label" for="partner-last">Partner Last Name</label>
-              <input class="form-input" type="text" id="partner-last" name="Partner Last Name" />
+              <input class="form-input" type="text" id="partner-last" name="Partner Last Name" maxlength="100" />
             </div>
             <div>
               <label class="form-label" for="partner-first">Partner First Name</label>
-              <input class="form-input" type="text" id="partner-first" name="Partner First Name" />
+              <input class="form-input" type="text" id="partner-first" name="Partner First Name" maxlength="100" />
             </div>
             <div>
               <label class="form-label" for="partner-preferred">Preferred Name</label>
-              <input class="form-input" type="text" id="partner-preferred" name="Partner Preferred Name" />
+              <input class="form-input" type="text" id="partner-preferred" name="Partner Preferred Name" maxlength="100" />
             </div>
             <div>
               <label class="form-label" for="partner-pronouns">Pronouns</label>
-              <input class="form-input" type="text" id="partner-pronouns" name="Partner Pronouns" />
+              <input class="form-input" type="text" id="partner-pronouns" name="Partner Pronouns" maxlength="50" />
             </div>
             <div>
               <label class="form-label" for="partner-dob">Partner Date of Birth</label>
@@ -303,15 +303,15 @@
             </div>
             <div class="sm:col-span-2">
               <label class="form-label" for="parent-names">Parent/Guardian Names (for minor clients)</label>
-              <input class="form-input" type="text" id="parent-names" name="Parent Guardian Names" />
+              <input class="form-input" type="text" id="parent-names" name="Parent Guardian Names" maxlength="200" />
             </div>
             <div>
               <label class="form-label" for="client-school">School (if applicable)</label>
-              <input class="form-input" type="text" id="client-school" name="School" />
+              <input class="form-input" type="text" id="client-school" name="School" maxlength="150" />
             </div>
             <div>
               <label class="form-label" for="client-grade">Grade</label>
-              <input class="form-input" type="text" id="client-grade" name="Grade" />
+              <input class="form-input" type="text" id="client-grade" name="Grade" maxlength="20" />
             </div>
           </div>
         </div>
@@ -325,23 +325,23 @@
           <div class="space-y-4 sm:space-y-5">
             <div>
               <label class="form-label" for="reason">Reason for Counseling <span class="text-error">*</span></label>
-              <textarea class="form-input" id="reason" name="Reason for Counseling" rows="3" required></textarea>
+              <textarea class="form-input" id="reason" name="Reason for Counseling" rows="3" required maxlength="2000"></textarea>
             </div>
             <div>
               <label class="form-label" for="referred-by">Referred By</label>
-              <input class="form-input" type="text" id="referred-by" name="Referred By" />
+              <input class="form-input" type="text" id="referred-by" name="Referred By" maxlength="150" />
             </div>
             <div>
               <label class="form-label" for="previous-counseling">Previous Counseling Experience</label>
-              <textarea class="form-input" id="previous-counseling" name="Previous Counseling" rows="2"></textarea>
+              <textarea class="form-input" id="previous-counseling" name="Previous Counseling" rows="2" maxlength="2000"></textarea>
             </div>
             <div>
               <label class="form-label" for="medications">Current Medications &amp; Reasons</label>
-              <textarea class="form-input" id="medications" name="Current Medications" rows="2"></textarea>
+              <textarea class="form-input" id="medications" name="Current Medications" rows="2" maxlength="2000"></textarea>
             </div>
             <div>
               <label class="form-label" for="medical-concerns">Medical Problems / Concerns</label>
-              <textarea class="form-input" id="medical-concerns" name="Medical Problems" rows="2"></textarea>
+              <textarea class="form-input" id="medical-concerns" name="Medical Problems" rows="2" maxlength="2000"></textarea>
             </div>
           </div>
         </div>
@@ -419,7 +419,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
               <div>
                 <label class="form-label" for="financial-signature">Signature (Type Full Name) <span class="text-error">*</span></label>
-                <input class="form-input" type="text" id="financial-signature" name="Financial Responsibility Signature" required placeholder="Type your full legal name" />
+                <input class="form-input" type="text" id="financial-signature" name="Financial Responsibility Signature" required placeholder="Type your full legal name" maxlength="150" />
               </div>
               <div>
                 <label class="form-label" for="financial-date">Date <span class="text-error">*</span></label>
@@ -473,7 +473,7 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="form-label" for="hipaa-signature">Signature (Type Full Name) <span class="text-error">*</span></label>
-                  <input class="form-input" type="text" id="hipaa-signature" name="HIPAA Signature" required placeholder="Type your full legal name" />
+                  <input class="form-input" type="text" id="hipaa-signature" name="HIPAA Signature" required placeholder="Type your full legal name" maxlength="150" />
                 </div>
                 <div>
                   <label class="form-label" for="hipaa-date">Date <span class="text-error">*</span></label>
@@ -531,7 +531,7 @@
 
         <!-- Submit -->
         <div class="text-center fade-in">
-          <button type="submit" class="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-10 sm:px-14 py-4 rounded-full text-lg font-bold shadow-xl shadow-primary/10 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 hover:brightness-110 transition-all duration-200 active:scale-95">
+          <button id="submit-btn" type="submit" class="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-10 sm:px-14 py-4 rounded-full text-lg font-bold shadow-xl shadow-primary/10 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 hover:brightness-110 transition-all duration-200 active:scale-95">
             Submit Client Form
           </button>
           <p class="text-xs text-on-surface-variant mt-4">Your information is transmitted securely and kept confidential.</p>
@@ -608,6 +608,67 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+
+    // Form validation and double-submit prevention
+    (function() {
+      var form = document.getElementById('client-form');
+      var submitBtn = document.getElementById('submit-btn');
+      if (!form || !submitBtn) return;
+
+      form.addEventListener('submit', function(e) {
+        // Prevent double submission
+        if (submitBtn.disabled) { e.preventDefault(); return; }
+
+        // Validate DOB is not in the future
+        var dob = document.getElementById('client-dob');
+        if (dob && dob.value) {
+          var dobDate = new Date(dob.value);
+          var today = new Date();
+          today.setHours(0, 0, 0, 0);
+          if (dobDate > today) {
+            e.preventDefault();
+            alert('Date of Birth cannot be in the future.');
+            dob.focus();
+            return;
+          }
+        }
+
+        // Validate signature dates are today or earlier
+        var sigDates = [
+          document.getElementById('financial-date'),
+          document.getElementById('hipaa-date')
+        ];
+        for (var i = 0; i < sigDates.length; i++) {
+          if (sigDates[i] && sigDates[i].value) {
+            var sigDate = new Date(sigDates[i].value);
+            var now = new Date();
+            now.setHours(0, 0, 0, 0);
+            if (sigDate > now) {
+              e.preventDefault();
+              alert('Signature date cannot be in the future.');
+              sigDates[i].focus();
+              return;
+            }
+          }
+        }
+
+        // Validate initials contain only letters
+        var initials = document.querySelectorAll('[id^="ack-initials-"]');
+        for (var j = 0; j < initials.length; j++) {
+          if (initials[j].value && !/^[A-Za-z]{1,5}$/.test(initials[j].value)) {
+            e.preventDefault();
+            alert('Initials should contain only letters (A-Z).');
+            initials[j].focus();
+            return;
+          }
+        }
+
+        // Disable button to prevent double submit
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+        submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
+      });
+    })();
   </script>
 </body>
 </html>
