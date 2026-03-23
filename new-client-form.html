@@ -154,7 +154,7 @@
 <body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
 
   <!-- Navigation -->
-  <nav id="main-nav" class="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 bg-white/85 backdrop-blur-xl shadow-lg border border-white/30 rounded-full w-[92%] max-w-6xl">
+  <nav id="main-nav" class="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 bg-white/85 backdrop-blur-xl shadow-lg border border-white/30 rounded-full w-[92%] max-w-6xl transition-[border-radius] duration-300">
     <div class="flex justify-between items-center px-4 sm:px-6 py-3">
       <div class="flex items-center">
         <a href="index.html">
@@ -627,15 +627,24 @@
     // Mobile menu
     var menuBtn = document.getElementById('mobile-menu-btn');
     var mobileMenu = document.getElementById('mobile-menu');
+    var mainNav = document.getElementById('main-nav');
+    function setMenuOpen(open) {
+      if (open) {
+        mobileMenu.classList.add('open');
+        mainNav.classList.remove('rounded-full');
+        mainNav.classList.add('rounded-[1.25rem]');
+      } else {
+        mobileMenu.classList.remove('open');
+        mainNav.classList.remove('rounded-[1.25rem]');
+        mainNav.classList.add('rounded-full');
+      }
+      menuBtn.querySelector('.material-symbols-outlined').textContent = open ? 'close' : 'menu';
+    }
     menuBtn.addEventListener('click', function() {
-      mobileMenu.classList.toggle('open');
-      menuBtn.querySelector('.material-symbols-outlined').textContent = mobileMenu.classList.contains('open') ? 'close' : 'menu';
+      setMenuOpen(!mobileMenu.classList.contains('open'));
     });
     mobileMenu.querySelectorAll('a').forEach(function(link) {
-      link.addEventListener('click', function() {
-        mobileMenu.classList.remove('open');
-        menuBtn.querySelector('.material-symbols-outlined').textContent = 'menu';
-      });
+      link.addEventListener('click', function() { setMenuOpen(false); });
     });
     // Fade-in
     var observer = new IntersectionObserver(function(entries) {
