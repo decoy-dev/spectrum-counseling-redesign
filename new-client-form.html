@@ -210,13 +210,10 @@
   <!-- Form -->
   <section class="py-12 sm:py-16 md:py-20 bg-surface">
     <div class="max-w-4xl mx-auto px-5 sm:px-8">
-      <form id="client-form" action="https://formsubmit.co/mhaddox@spectrumcounseling.net" method="POST">
-        <!-- FormSubmit config -->
-        <input type="hidden" name="_subject" value="New Client Intake Form Submission" />
-        <input type="hidden" name="_captcha" value="true" />
-        <input type="hidden" name="_next" value="https://decoy-dev.github.io/spectrum-counseling-redesign/new-client-form.html?submitted=true" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="text" name="_honey" style="display:none" />
+      <!-- ACTION: Replace the URL below with your deployed Google Apps Script web app URL -->
+      <form id="client-form" action="https://script.google.com/macros/s/AKfycbzrNHAfkxFZsAfHtZmhlnKME56BGFUxki3FLGawHd0SNE272uLV7LfOaYPkcQtk8Cka/exec" method="POST">
+        <!-- Honeypot spam protection — hidden from real users -->
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
 
         <!-- Section 1: Client Information -->
         <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm mb-6">

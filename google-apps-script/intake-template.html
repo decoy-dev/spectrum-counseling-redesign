@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Intake Form Template — Copy into Google Docs</title>
+  <style>
+    /* Print-friendly, clean layout designed to paste well into Google Docs */
+    @page { margin: 0.75in; size: letter; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 11pt;
+      line-height: 1.5;
+      color: #1a1a1a;
+      max-width: 7.5in;
+      margin: 0.75in auto;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding-bottom: 12pt;
+      border-bottom: 2.5pt solid #567a96;
+      margin-bottom: 20pt;
+    }
+    .header h1 {
+      font-size: 18pt;
+      font-weight: bold;
+      color: #567a96;
+      letter-spacing: 1pt;
+      margin-bottom: 2pt;
+    }
+    .header h2 {
+      font-size: 11pt;
+      font-weight: normal;
+      color: #555;
+    }
+    .header .subtitle {
+      font-size: 9pt;
+      color: #888;
+      margin-top: 4pt;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 18pt;
+      page-break-inside: avoid;
+    }
+    .section-title {
+      font-size: 12pt;
+      font-weight: bold;
+      color: #567a96;
+      border-bottom: 1pt solid #567a96;
+      padding-bottom: 3pt;
+      margin-bottom: 10pt;
+      text-transform: uppercase;
+      letter-spacing: 0.5pt;
+    }
+
+    /* Field rows */
+    .row {
+      display: flex;
+      gap: 20pt;
+      margin-bottom: 8pt;
+    }
+    .field {
+      flex: 1;
+    }
+    .field-full {
+      width: 100%;
+      margin-bottom: 8pt;
+    }
+    .label {
+      font-size: 8pt;
+      font-weight: bold;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5pt;
+      margin-bottom: 1pt;
+    }
+    .value {
+      font-size: 11pt;
+      padding: 4pt 0;
+      border-bottom: 1pt solid #ccc;
+      min-height: 18pt;
+      color: #1a1a1a;
+    }
+
+    /* Checkbox / multiline areas */
+    .text-block {
+      font-size: 11pt;
+      padding: 6pt 0;
+      border-bottom: 1pt solid #ccc;
+      min-height: 28pt;
+    }
+
+    /* Signature block */
+    .sig-row {
+      display: flex;
+      gap: 20pt;
+      margin-top: 10pt;
+      margin-bottom: 6pt;
+    }
+    .sig-field {
+      flex: 1;
+    }
+    .sig-line {
+      border-bottom: 1pt solid #333;
+      min-height: 22pt;
+      padding: 4pt 0;
+      font-size: 11pt;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 24pt;
+      padding-top: 10pt;
+      border-top: 1pt solid #ccc;
+      text-align: center;
+      font-size: 8pt;
+      color: #999;
+    }
+
+    /* Acknowledgment items */
+    .ack-item {
+      display: flex;
+      gap: 10pt;
+      align-items: flex-start;
+      margin-bottom: 6pt;
+      padding: 4pt 0;
+    }
+    .ack-initials {
+      min-width: 50pt;
+      text-align: center;
+    }
+    .ack-initials .value {
+      font-weight: bold;
+    }
+
+    /* Compact info line */
+    .info-note {
+      font-size: 9pt;
+      color: #666;
+      font-style: italic;
+      margin-bottom: 10pt;
+    }
+
+    @media print {
+      body { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <div class="header">
+    <h1>SPECTRUM COUNSELING, LLC</h1>
+    <h2>Marie Haddox, Ph.D. &mdash; Licensed Psychologist</h2>
+    <div class="subtitle">428 S. Gilbert Rd. Ste. #105 (Bldg. 3) &bull; Gilbert, AZ 85296 &bull; (480) 782-0113</div>
+  </div>
+
+  <div style="text-align:center; margin-bottom: 16pt;">
+    <strong style="font-size: 13pt; color: #567a96;">NEW CLIENT INTAKE FORM</strong><br>
+    <span style="font-size: 9pt; color: #888;">Submitted: {{Submission Date}}</span>
+  </div>
+
+
+  <!-- ============ SECTION 1: CLIENT INFORMATION ============ -->
+  <div class="section">
+    <div class="section-title">1 &mdash; Client Information</div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">First Name</div>
+        <div class="value">{{Client First Name}}</div>
+      </div>
+      <div class="field">
+        <div class="label">Last Name</div>
+        <div class="value">{{Client Last Name}}</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">Preferred Name</div>
+        <div class="value">{{Client Preferred Name}}</div>
+      </div>
+      <div class="field">
+        <div class="label">Pronouns</div>
+        <div class="value">{{Client Pronouns}}</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">Date of Birth</div>
+        <div class="value">{{Client Date of Birth}}</div>
+      </div>
+      <div class="field">
+        <div class="label">Phone Number</div>
+        <div class="value">{{Client Phone}}</div>
+      </div>
+    </div>
+
+    <div class="field-full">
+      <div class="label">Email</div>
+      <div class="value">{{Client Email}}</div>
+    </div>
+
+    <div class="field-full">
+      <div class="label">Address</div>
+      <div class="value">{{Client Address}}</div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">Employer</div>
+        <div class="value">{{Employer}}</div>
+      </div>
+      <div class="field">
+        <div class="label">Occupation</div>
+        <div class="value">{{Occupation}}</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============ SECTION 2: PARTNER / MINOR ============ -->
+  <div class="section">
+    <div class="section-title">2 &mdash; Partner / Minor Information</div>
+    <div class="info-note">Complete if seeking couples therapy or if client is a minor.</div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">Partner First Name</div>
+        <div class="value">{{Partner First Name}}</div>
+      </div>
+      <div class="field">
+        <div class="label">Partner Last Name</div>
+        <div class="value">{{Partner Last Name}}</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">Preferred Name</div>
+        <div class="value">{{Partner Preferred Name}}</div>
+      </div>
+      <div class="field">
+        <div class="label">Pronouns</div>
+        <div class="value">{{Partner Pronouns}}</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">Partner Date of Birth</div>
+        <div class="value">{{Partner Date of Birth}}</div>
+      </div>
+      <div class="field">
+        <div class="label">Partner Email</div>
+        <div class="value">{{Partner Email}}</div>
+      </div>
+    </div>
+
+    <div class="field-full">
+      <div class="label">Parent / Guardian Names (for minor clients)</div>
+      <div class="value">{{Parent Guardian Names}}</div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">School</div>
+        <div class="value">{{School}}</div>
+      </div>
+      <div class="field">
+        <div class="label">Grade</div>
+        <div class="value">{{Grade}}</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============ SECTION 3: CLINICAL BACKGROUND ============ -->
+  <div class="section">
+    <div class="section-title">3 &mdash; Clinical Background</div>
+
+    <div class="field-full">
+      <div class="label">Reason for Counseling</div>
+      <div class="text-block">{{Reason for Counseling}}</div>
+    </div>
+
+    <div class="field-full">
+      <div class="label">Referred By</div>
+      <div class="value">{{Referred By}}</div>
+    </div>
+
+    <div class="field-full">
+      <div class="label">Previous Counseling Experience</div>
+      <div class="text-block">{{Previous Counseling}}</div>
+    </div>
+
+    <div class="field-full">
+      <div class="label">Current Medications &amp; Reasons</div>
+      <div class="text-block">{{Current Medications}}</div>
+    </div>
+
+    <div class="field-full">
+      <div class="label">Medical Problems / Concerns</div>
+      <div class="text-block">{{Medical Problems}}</div>
+    </div>
+  </div>
+
+
+  <!-- ============ SECTION 4: AREAS OF CONCERN ============ -->
+  <div class="section">
+    <div class="section-title">4 &mdash; Areas of Concern</div>
+
+    <div class="field-full">
+      <div class="label">Selected Concerns</div>
+      <div class="text-block">{{Concerns}}</div>
+    </div>
+  </div>
+
+
+  <!-- ============ SECTION 5: PAYMENT & INSURANCE ============ -->
+  <div class="section">
+    <div class="section-title">5 &mdash; Payment &amp; Insurance</div>
+
+    <div class="field-full">
+      <div class="label">Payment Preference</div>
+      <div class="value">{{Payment Preference}}</div>
+    </div>
+
+    <div style="margin-top: 12pt; padding: 8pt; border: 1pt solid #ccc; font-size: 9.5pt; color: #444; line-height: 1.6;">
+      <strong>Financial Responsibility Acknowledgment:</strong> The client/responsible party is responsible for payment of professional services at the time they are rendered. By signing below, I certify that I, the client/responsible party, acknowledge that Dr. Haddox does not accept any health insurance and will not submit claims for reimbursement to any insurance company on my behalf.
+    </div>
+
+    <div class="sig-row">
+      <div class="sig-field">
+        <div class="label">Signature (Typed)</div>
+        <div class="sig-line">{{Financial Responsibility Signature}}</div>
+      </div>
+      <div class="sig-field">
+        <div class="label">Date</div>
+        <div class="sig-line">{{Financial Responsibility Date}}</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============ SECTION 6: HIPAA ============ -->
+  <div class="section">
+    <div class="section-title">6 &mdash; HIPAA Notice of Privacy Practices</div>
+
+    <div style="font-size: 9.5pt; color: #444; line-height: 1.6; margin-bottom: 10pt;">
+      By signing below, I acknowledge that I have received and reviewed the HIPAA Notice of Privacy Practices for Spectrum Counseling, LLC, in accordance with the Health Insurance Portability and Accountability Act (HIPAA), the HITECH Act, and the 2013 Omnibus Rule.
+    </div>
+
+    <div class="sig-row">
+      <div class="sig-field">
+        <div class="label">Signature (Typed)</div>
+        <div class="sig-line">{{HIPAA Signature}}</div>
+      </div>
+      <div class="sig-field">
+        <div class="label">Date</div>
+        <div class="sig-line">{{HIPAA Signature Date}}</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============ SECTION 7: ACKNOWLEDGMENT ============ -->
+  <div class="section">
+    <div class="section-title">7 &mdash; Acknowledgment</div>
+
+    <div class="ack-item">
+      <div class="ack-initials">
+        <div class="label">Initials</div>
+        <div class="value">{{Ack Initials 1}}</div>
+      </div>
+      <div style="padding-top: 12pt; font-size: 10pt;">
+        I understand Dr. Haddox does not accept any health insurance and will not submit claims for reimbursement.
+      </div>
+    </div>
+
+    <div class="ack-item">
+      <div class="ack-initials">
+        <div class="label">Initials</div>
+        <div class="value">{{Ack Initials 2}}</div>
+      </div>
+      <div style="padding-top: 12pt; font-size: 10pt;">
+        I am responsible for payment of professional services at the time they are rendered.
+      </div>
+    </div>
+
+    <div class="ack-item">
+      <div class="ack-initials">
+        <div class="label">Initials</div>
+        <div class="value">{{Ack Initials 3}}</div>
+      </div>
+      <div style="padding-top: 12pt; font-size: 10pt;">
+        I voluntarily agree to receive mental health assessment, care, treatment, or services.
+      </div>
+    </div>
+
+    <div class="ack-item">
+      <div class="ack-initials">
+        <div class="label">Initials</div>
+        <div class="value">{{Ack Initials 4}}</div>
+      </div>
+      <div style="padding-top: 12pt; font-size: 10pt;">
+        I understand I may stop care at any time.
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============ FOOTER ============ -->
+  <div class="footer">
+    Spectrum Counseling, LLC &bull; Marie Haddox, Ph.D. &bull; 428 S. Gilbert Rd. Ste. #105, Gilbert, AZ 85296 &bull; (480) 782-0113 &bull; mhaddox@spectrumcounseling.net
+  </div>
+
+</body>
+</html>
