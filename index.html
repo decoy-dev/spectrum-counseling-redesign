@@ -457,9 +457,9 @@
   <!-- Hero Section -->
   <section class="relative min-h-[100dvh] sm:min-h-[80vh] md:min-h-[85vh] flex items-end sm:items-center pt-20 sm:pt-32 md:pt-36 pb-12 sm:pb-14 md:pb-10 overflow-hidden">
     <div class="absolute inset-0 -z-10">
-      <img alt="Water lilies on a serene pond" class="w-full h-full object-cover" src="assets/hero.jpg" />
-      <!-- Mobile overlay: image visible at top, fades to surface at bottom for text readability -->
-      <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-white/70 via-[55%] to-white sm:hidden"></div>
+      <!-- Mobile: image only covers the top portion, solid white below -->
+      <img alt="Water lilies on a serene pond" class="w-full h-[45%] sm:h-full object-cover" src="assets/hero.jpg" />
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white via-[40%] to-white sm:hidden"></div>
       <!-- Desktop overlay: left-to-right fade for side-aligned content -->
       <div class="absolute inset-0 hidden sm:block bg-white/40 bg-gradient-to-r from-white via-white/80 to-transparent"></div>
       <div class="absolute bottom-0 left-0 right-0 h-32 sm:h-40 bg-gradient-to-t from-[#f1f4f5] to-transparent"></div>
