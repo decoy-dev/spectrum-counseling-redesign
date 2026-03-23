@@ -30,7 +30,6 @@ var BRAND = {
   ruleLight:   '#cccccc',
   ruleDark:    '#333333',
   footerGrey:  '#999999',
-  noteBg:      '#f5f7f8',
   white:       '#ffffff'
 };
 
@@ -97,11 +96,6 @@ function doPost(e) {
     body.setMarginLeft(54);
     body.setMarginRight(54);
 
-    // Remove the default empty paragraph
-    if (body.getNumChildren() > 0) {
-      body.removeChild(body.getChild(0));
-    }
-
     buildDocument(body, f);
 
     doc.saveAndClose();
@@ -145,136 +139,82 @@ function doPost(e) {
 
 function buildDocument(body, f) {
 
+  // Remove the default empty paragraph that Google Docs creates
+  var firstChild = body.getChild(0);
+  if (firstChild) {
+    body.removeChild(firstChild);
+  }
+
   // ── HEADER ────────────────────────────────────────────────────
-  addParagraph(body, 'SPECTRUM COUNSELING, LLC', {
-    font: 'Times New Roman', size: 18, bold: true,
-    color: BRAND.primary, align: DocumentApp.HorizontalAlignment.CENTER,
-    spacingAfter: 0
-  });
-  addParagraph(body, 'Marie Haddox, Ph.D. \u2014 Licensed Psychologist', {
-    font: 'Times New Roman', size: 11, bold: false,
-    color: BRAND.textMuted, align: DocumentApp.HorizontalAlignment.CENTER,
-    spacingAfter: 0
-  });
-  addParagraph(body, '428 S. Gilbert Rd. Ste. #105 (Bldg. 3) \u2022 Gilbert, AZ 85296 \u2022 (480) 782-0113', {
-    font: 'Times New Roman', size: 9, bold: false,
-    color: BRAND.labelGrey, align: DocumentApp.HorizontalAlignment.CENTER,
-    spacingAfter: 2
-  });
+  addStyledPara(body, 'SPECTRUM COUNSELING, LLC', 'Times New Roman', 18, true, BRAND.primary, DocumentApp.HorizontalAlignment.CENTER, 0, 0);
+  addStyledPara(body, 'Marie Haddox, Ph.D. \u2014 Licensed Psychologist', 'Times New Roman', 11, false, BRAND.textMuted, DocumentApp.HorizontalAlignment.CENTER, 0, 0);
+  addStyledPara(body, '428 S. Gilbert Rd. Ste. #105 (Bldg. 3) \u2022 Gilbert, AZ 85296 \u2022 (480) 782-0113', 'Times New Roman', 9, false, BRAND.labelGrey, DocumentApp.HorizontalAlignment.CENTER, 0, 6);
 
-  // Header divider line (using a 1-row, 1-col table with colored bottom border)
-  addHorizontalRule(body, BRAND.primary, 2);
+  // Header divider
+  addColoredRule(body, BRAND.primary);
 
-  addParagraph(body, 'NEW CLIENT INTAKE FORM', {
-    font: 'Times New Roman', size: 13, bold: true,
-    color: BRAND.primary, align: DocumentApp.HorizontalAlignment.CENTER,
-    spacingBefore: 10, spacingAfter: 0
-  });
-  addParagraph(body, 'Submitted: ' + f.submissionDate, {
-    font: 'Times New Roman', size: 9, bold: false,
-    color: BRAND.labelGrey, align: DocumentApp.HorizontalAlignment.CENTER,
-    spacingAfter: 12
-  });
+  addStyledPara(body, 'NEW CLIENT INTAKE FORM', 'Times New Roman', 13, true, BRAND.primary, DocumentApp.HorizontalAlignment.CENTER, 10, 0);
+  addStyledPara(body, 'Submitted: ' + f.submissionDate, 'Times New Roman', 9, false, BRAND.labelGrey, DocumentApp.HorizontalAlignment.CENTER, 0, 12);
 
 
   // ── SECTION 1: CLIENT INFORMATION ─────────────────────────────
   addSectionTitle(body, '1 \u2014 Client Information');
 
-  addFieldRow(body, [
-    { label: 'FIRST NAME', value: f.clientFirst },
-    { label: 'LAST NAME',  value: f.clientLast }
-  ]);
-  addFieldRow(body, [
-    { label: 'PREFERRED NAME', value: f.preferredName },
-    { label: 'PRONOUNS',       value: f.pronouns }
-  ]);
-  addFieldRow(body, [
-    { label: 'DATE OF BIRTH', value: f.dob },
-    { label: 'PHONE NUMBER',  value: f.phone }
-  ]);
-  addFieldSingle(body, 'EMAIL', f.email);
-  addFieldSingle(body, 'ADDRESS', f.address);
-  addFieldRow(body, [
-    { label: 'EMPLOYER',   value: f.employer },
-    { label: 'OCCUPATION', value: f.occupation }
-  ]);
-  addSpacer(body, 6);
+  addTwoColFields(body, 'FIRST NAME', f.clientFirst, 'LAST NAME', f.clientLast);
+  addTwoColFields(body, 'PREFERRED NAME', f.preferredName, 'PRONOUNS', f.pronouns);
+  addTwoColFields(body, 'DATE OF BIRTH', f.dob, 'PHONE NUMBER', f.phone);
+  addSingleField(body, 'EMAIL', f.email);
+  addSingleField(body, 'ADDRESS', f.address);
+  addTwoColFields(body, 'EMPLOYER', f.employer, 'OCCUPATION', f.occupation);
 
 
   // ── SECTION 2: PARTNER / MINOR INFORMATION ────────────────────
   addSectionTitle(body, '2 \u2014 Partner / Minor Information');
-  addNote(body, 'Complete if seeking couples therapy or if client is a minor.');
+  addItalicNote(body, 'Complete if seeking couples therapy or if client is a minor.');
 
-  addFieldRow(body, [
-    { label: 'PARTNER FIRST NAME', value: f.partnerFirst },
-    { label: 'PARTNER LAST NAME',  value: f.partnerLast }
-  ]);
-  addFieldRow(body, [
-    { label: 'PREFERRED NAME', value: f.partnerPref },
-    { label: 'PRONOUNS',       value: f.partnerPro }
-  ]);
-  addFieldRow(body, [
-    { label: 'PARTNER DATE OF BIRTH', value: f.partnerDob },
-    { label: 'PARTNER EMAIL',         value: f.partnerEmail }
-  ]);
-  addFieldSingle(body, 'PARENT / GUARDIAN NAMES (FOR MINOR CLIENTS)', f.parentNames);
-  addFieldRow(body, [
-    { label: 'SCHOOL', value: f.school },
-    { label: 'GRADE',  value: f.grade }
-  ]);
-  addSpacer(body, 6);
+  addTwoColFields(body, 'PARTNER FIRST NAME', f.partnerFirst, 'PARTNER LAST NAME', f.partnerLast);
+  addTwoColFields(body, 'PREFERRED NAME', f.partnerPref, 'PRONOUNS', f.partnerPro);
+  addTwoColFields(body, 'PARTNER DATE OF BIRTH', f.partnerDob, 'PARTNER EMAIL', f.partnerEmail);
+  addSingleField(body, 'PARENT / GUARDIAN NAMES (FOR MINOR CLIENTS)', f.parentNames);
+  addTwoColFields(body, 'SCHOOL', f.school, 'GRADE', f.grade);
 
 
   // ── SECTION 3: CLINICAL BACKGROUND ────────────────────────────
   addSectionTitle(body, '3 \u2014 Clinical Background');
 
-  addFieldSingle(body, 'REASON FOR COUNSELING', f.reason, true);
-  addFieldSingle(body, 'REFERRED BY', f.referredBy);
-  addFieldSingle(body, 'PREVIOUS COUNSELING EXPERIENCE', f.prevCounseling, true);
-  addFieldSingle(body, 'CURRENT MEDICATIONS & REASONS', f.medications, true);
-  addFieldSingle(body, 'MEDICAL PROBLEMS / CONCERNS', f.medical, true);
-  addSpacer(body, 6);
+  addSingleField(body, 'REASON FOR COUNSELING', f.reason);
+  addSingleField(body, 'REFERRED BY', f.referredBy);
+  addSingleField(body, 'PREVIOUS COUNSELING EXPERIENCE', f.prevCounseling);
+  addSingleField(body, 'CURRENT MEDICATIONS & REASONS', f.medications);
+  addSingleField(body, 'MEDICAL PROBLEMS / CONCERNS', f.medical);
 
 
   // ── SECTION 4: AREAS OF CONCERN ───────────────────────────────
   addSectionTitle(body, '4 \u2014 Areas of Concern');
-  addFieldSingle(body, 'SELECTED CONCERNS', f.concerns, true);
-  addSpacer(body, 6);
+  addSingleField(body, 'SELECTED CONCERNS', f.concerns);
 
 
   // ── SECTION 5: PAYMENT & INSURANCE ────────────────────────────
   addSectionTitle(body, '5 \u2014 Payment & Insurance');
-  addFieldSingle(body, 'PAYMENT PREFERENCE', f.payment);
+  addSingleField(body, 'PAYMENT PREFERENCE', f.payment);
 
-  // Financial responsibility box
+  // Financial responsibility notice box
   addNoticeBox(body,
-    'Financial Responsibility Acknowledgment: ' +
+    'Financial Responsibility Acknowledgment:',
     'The client/responsible party is responsible for payment of professional services at the time they are rendered. ' +
     'By signing below, I certify that I, the client/responsible party, acknowledge that Dr. Haddox does not accept any ' +
     'health insurance and will not submit claims for reimbursement to any insurance company on my behalf.'
   );
 
-  addFieldRow(body, [
-    { label: 'SIGNATURE (TYPED)', value: f.finSig },
-    { label: 'DATE',              value: f.finDate }
-  ], true);
-  addSpacer(body, 6);
+  addTwoColFields(body, 'SIGNATURE (TYPED)', f.finSig, 'DATE', f.finDate);
 
 
   // ── SECTION 6: HIPAA ─────────────────────────────────────────
   addSectionTitle(body, '6 \u2014 HIPAA Notice of Privacy Practices');
 
-  addBodyText(body,
-    'By signing below, I acknowledge that I have received and reviewed the HIPAA Notice of Privacy Practices ' +
-    'for Spectrum Counseling, LLC, in accordance with the Health Insurance Portability and Accountability Act (HIPAA), ' +
-    'the HITECH Act, and the 2013 Omnibus Rule.'
-  );
+  addStyledPara(body, 'By signing below, I acknowledge that I have received and reviewed the HIPAA Notice of Privacy Practices for Spectrum Counseling, LLC, in accordance with the Health Insurance Portability and Accountability Act (HIPAA), the HITECH Act, and the 2013 Omnibus Rule.', 'Times New Roman', 9.5, false, BRAND.textMuted, DocumentApp.HorizontalAlignment.LEFT, 2, 8);
 
-  addFieldRow(body, [
-    { label: 'SIGNATURE (TYPED)', value: f.hipaaSig },
-    { label: 'DATE',              value: f.hipaaDate }
-  ], true);
-  addSpacer(body, 6);
+  addTwoColFields(body, 'SIGNATURE (TYPED)', f.hipaaSig, 'DATE', f.hipaaDate);
 
 
   // ── SECTION 7: ACKNOWLEDGMENT ─────────────────────────────────
@@ -284,16 +224,12 @@ function buildDocument(body, f) {
   addAckItem(body, f.ack2, 'I am responsible for payment of professional services at the time they are rendered.');
   addAckItem(body, f.ack3, 'I voluntarily agree to receive mental health assessment, care, treatment, or services.');
   addAckItem(body, f.ack4, 'I understand I may stop care at any time.');
-  addSpacer(body, 10);
 
 
   // ── FOOTER ────────────────────────────────────────────────────
-  addHorizontalRule(body, BRAND.ruleLight, 1);
-  addParagraph(body, 'Spectrum Counseling, LLC \u2022 Marie Haddox, Ph.D. \u2022 428 S. Gilbert Rd. Ste. #105, Gilbert, AZ 85296 \u2022 (480) 782-0113 \u2022 mhaddox@spectrumcounseling.net', {
-    font: 'Times New Roman', size: 8, bold: false,
-    color: BRAND.footerGrey, align: DocumentApp.HorizontalAlignment.CENTER,
-    spacingBefore: 4
-  });
+  addSpacer(body, 10);
+  addColoredRule(body, BRAND.ruleLight);
+  addStyledPara(body, 'Spectrum Counseling, LLC \u2022 Marie Haddox, Ph.D. \u2022 428 S. Gilbert Rd. Ste. #105, Gilbert, AZ 85296 \u2022 (480) 782-0113 \u2022 mhaddox@spectrumcounseling.net', 'Times New Roman', 8, false, BRAND.footerGrey, DocumentApp.HorizontalAlignment.CENTER, 4, 0);
 }
 
 
@@ -302,267 +238,142 @@ function buildDocument(body, f) {
 // ╚══════════════════════════════════════════════════════════════╝
 
 /**
- * Add a styled paragraph.
+ * Add a paragraph with full style control.
  */
-function addParagraph(body, text, opts) {
+function addStyledPara(body, text, fontFamily, fontSize, bold, color, alignment, spacingBefore, spacingAfter) {
   var para = body.appendParagraph(text);
-  var style = {};
-  style[DocumentApp.Attribute.FONT_FAMILY] = opts.font || 'Times New Roman';
-  style[DocumentApp.Attribute.FONT_SIZE] = opts.size || 11;
-  style[DocumentApp.Attribute.BOLD] = opts.bold || false;
-  style[DocumentApp.Attribute.FOREGROUND_COLOR] = opts.color || BRAND.textDark;
-  style[DocumentApp.Attribute.ITALIC] = opts.italic || false;
-  para.setAttributes(style);
-  para.setAlignment(opts.align || DocumentApp.HorizontalAlignment.LEFT);
-  if (opts.spacingBefore !== undefined) para.setSpacingBefore(opts.spacingBefore);
-  if (opts.spacingAfter !== undefined)  para.setSpacingAfter(opts.spacingAfter);
+  para.setFontFamily(fontFamily);
+  para.setFontSize(fontSize);
+  para.setBold(bold);
+  para.setForegroundColor(color);
+  para.setAlignment(alignment);
+  para.setSpacingBefore(spacingBefore);
+  para.setSpacingAfter(spacingAfter);
   return para;
 }
 
 /**
- * Add a colored section title with underline rule.
+ * Add a colored section title with a rule underneath.
  */
 function addSectionTitle(body, text) {
-  var para = body.appendParagraph(text);
-  var style = {};
-  style[DocumentApp.Attribute.FONT_FAMILY] = 'Times New Roman';
-  style[DocumentApp.Attribute.FONT_SIZE] = 12;
-  style[DocumentApp.Attribute.BOLD] = true;
-  style[DocumentApp.Attribute.FOREGROUND_COLOR] = BRAND.primary;
-  para.setAttributes(style);
-  para.setAlignment(DocumentApp.HorizontalAlignment.LEFT);
-  para.setSpacingBefore(14);
-  para.setSpacingAfter(2);
-
-  // Colored rule below the title
-  addHorizontalRule(body, BRAND.primary, 1);
+  addStyledPara(body, text, 'Times New Roman', 12, true, BRAND.primary, DocumentApp.HorizontalAlignment.LEFT, 16, 2);
+  addColoredRule(body, BRAND.primary);
 }
 
 /**
- * Draw a horizontal rule using a single-cell table with a colored bottom border.
+ * Draw a colored horizontal rule using a single-cell table.
  */
-function addHorizontalRule(body, color, thickness) {
+function addColoredRule(body, color) {
   var table = body.appendTable([['']]);
+  table.setBorderColor(color);
   table.setBorderWidth(0);
+
   var cell = table.getRow(0).getCell(0);
-
-  // Make the cell as small as possible
-  var cellPara = cell.getChild(0).asParagraph();
-  var cellStyle = {};
-  cellStyle[DocumentApp.Attribute.FONT_SIZE] = 1;
-  cellStyle[DocumentApp.Attribute.FOREGROUND_COLOR] = color;
-  cellPara.setAttributes(cellStyle);
-  cellPara.setSpacingBefore(0);
-  cellPara.setSpacingAfter(0);
-
-  // Set bottom border via cell attributes
-  cell.setAttributes(createBorderAttrs(color, thickness));
   cell.setPaddingTop(0);
   cell.setPaddingBottom(0);
   cell.setPaddingLeft(0);
   cell.setPaddingRight(0);
 
-  // Minimal spacing around the table
-  // Tables don't have setSpacingBefore/After, so we keep them tight
+  // Style the paragraph inside the cell to be minimal
+  var para = cell.getChild(0).asParagraph();
+  para.setFontSize(1);
+  para.setSpacingBefore(0);
+  para.setSpacingAfter(0);
+
+  // Use a bottom border on the cell's paragraph to create the line effect
+  // Since we can't do per-side borders, use the paragraph's built-in HR
+  // Actually, the simplest approach: just use appendHorizontalRule on body
+  // But that doesn't support color. So let's use a colored text line instead.
+
+  // Replace the table approach with a simple colored dash line
+  body.removeChild(table);
+
+  var rule = body.appendParagraph('\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500');
+  rule.setFontFamily('Times New Roman');
+  rule.setFontSize(4);
+  rule.setForegroundColor(color);
+  rule.setSpacingBefore(0);
+  rule.setSpacingAfter(2);
 }
 
 /**
- * Create border attributes for a table cell — only bottom border visible.
+ * Add a two-column field row using a 1-row, 2-column table.
  */
-function createBorderAttrs(color, width) {
-  var attrs = {};
-  attrs[DocumentApp.Attribute.BORDER_WIDTH] = 0;
-  return attrs;
-}
+function addTwoColFields(body, label1, value1, label2, value2) {
+  var val1 = value1 || '\u2014';
+  var val2 = value2 || '\u2014';
 
-/**
- * Add a two-column field row (label + value pairs side by side).
- * @param {boolean} isSignature - if true, use a darker underline
- */
-function addFieldRow(body, fields, isSignature) {
-  var table = body.appendTable();
+  // Create a table with one row and two cells
+  var table = body.appendTable([[' ', ' ']]);
   table.setBorderWidth(0);
+
   var row = table.getRow(0);
 
-  // Remove the default cell content, build fresh
-  // appendTable() creates a 1x1 table; we need to add cells
-  // Actually, let's build it properly
-  table.removeRow(0);
+  // Style cell 1
+  var cell1 = row.getCell(0);
+  cell1.setPaddingTop(2);
+  cell1.setPaddingBottom(4);
+  cell1.setPaddingLeft(0);
+  cell1.setPaddingRight(10);
+  styleLabelValueCell(cell1, label1, val1);
 
-  var dataRow = table.appendTableRow();
-
-  for (var i = 0; i < fields.length; i++) {
-    var cell = dataRow.appendTableCell();
-    cell.setPaddingTop(2);
-    cell.setPaddingBottom(4);
-    cell.setPaddingLeft(0);
-    cell.setPaddingRight(i < fields.length - 1 ? 14 : 0);
-
-    // Label
-    var labelPara = cell.appendParagraph(fields[i].label);
-    var labelStyle = {};
-    labelStyle[DocumentApp.Attribute.FONT_FAMILY] = 'Times New Roman';
-    labelStyle[DocumentApp.Attribute.FONT_SIZE] = 8;
-    labelStyle[DocumentApp.Attribute.BOLD] = true;
-    labelStyle[DocumentApp.Attribute.FOREGROUND_COLOR] = BRAND.labelGrey;
-    labelPara.setAttributes(labelStyle);
-    labelPara.setSpacingBefore(0);
-    labelPara.setSpacingAfter(1);
-
-    // Value
-    var val = fields[i].value || '\u2014';
-    var valuePara = cell.appendParagraph(val);
-    var valueStyle = {};
-    valueStyle[DocumentApp.Attribute.FONT_FAMILY] = 'Times New Roman';
-    valueStyle[DocumentApp.Attribute.FONT_SIZE] = 11;
-    valueStyle[DocumentApp.Attribute.BOLD] = false;
-    valueStyle[DocumentApp.Attribute.FOREGROUND_COLOR] = BRAND.textDark;
-    valuePara.setAttributes(valueStyle);
-    valuePara.setSpacingBefore(0);
-    valuePara.setSpacingAfter(0);
-
-    // Remove the auto-created first paragraph in the cell
-    if (cell.getNumChildren() > 2) {
-      cell.removeChild(cell.getChild(0));
-    }
-  }
-
-  // Add underline row
-  var underRow = table.appendTableRow();
-  for (var j = 0; j < fields.length; j++) {
-    var uCell = underRow.appendTableCell();
-    uCell.setPaddingTop(0);
-    uCell.setPaddingBottom(0);
-    uCell.setPaddingLeft(0);
-    uCell.setPaddingRight(j < fields.length - 1 ? 14 : 0);
-
-    var lineColor = isSignature ? BRAND.ruleDark : BRAND.ruleLight;
-
-    // Tiny paragraph + bottom-border effect via a narrow table won't work cleanly,
-    // so we use a simple thin-font paragraph as a visual divider
-    var uPara = uCell.appendParagraph('');
-    var uStyle = {};
-    uStyle[DocumentApp.Attribute.FONT_SIZE] = 1;
-    uPara.setAttributes(uStyle);
-    uPara.setSpacingBefore(0);
-    uPara.setSpacingAfter(0);
-
-    // Remove auto-created paragraph
-    if (uCell.getNumChildren() > 1) {
-      uCell.removeChild(uCell.getChild(0));
-    }
-  }
-
-  // Actually, the underline approach with a separate row is messy. Let's use a
-  // simpler approach: just have the value paragraph with underline formatting.
-  // But Google Docs doesn't support bottom-border on paragraphs.
-  // So let's keep the two-row table but make the underline row have a top border.
-
-  // Unfortunately, Google Apps Script table border control is limited.
-  // The cleanest approach: use a single row, value text with UNDERLINE style.
-  // Let's refactor to that approach:
-
-  // Remove the underline row we just added — we'll use underlined text instead
-  table.removeRow(1);
-
-  // Go back and underline the value text in each cell
-  for (var k = 0; k < fields.length; k++) {
-    var targetCell = dataRow.getCell(k);
-    // The value paragraph is the last child
-    var numChildren = targetCell.getNumChildren();
-    var valPara = targetCell.getChild(numChildren - 1).asParagraph();
-    // Don't underline — instead, add a line of underscores below
-    // Actually, the cleanest print-ready approach for Google Docs is to
-    // put the value on a line that is underlined.
-  }
-
-  // Let's just leave the clean label+value layout without explicit underlines.
-  // The table cell boundaries provide enough visual structure.
+  // Style cell 2
+  var cell2 = row.getCell(1);
+  cell2.setPaddingTop(2);
+  cell2.setPaddingBottom(4);
+  cell2.setPaddingLeft(10);
+  cell2.setPaddingRight(0);
+  styleLabelValueCell(cell2, label2, val2);
 }
 
 /**
- * Add a single full-width field (label + value).
- * @param {boolean} isTextBlock - if true, allows for taller content area
+ * Style a table cell with a label paragraph and a value paragraph.
  */
-function addFieldSingle(body, label, value, isTextBlock) {
-  // Label
-  var labelPara = body.appendParagraph(label);
-  var labelStyle = {};
-  labelStyle[DocumentApp.Attribute.FONT_FAMILY] = 'Times New Roman';
-  labelStyle[DocumentApp.Attribute.FONT_SIZE] = 8;
-  labelStyle[DocumentApp.Attribute.BOLD] = true;
-  labelStyle[DocumentApp.Attribute.FOREGROUND_COLOR] = BRAND.labelGrey;
-  labelPara.setAttributes(labelStyle);
-  labelPara.setSpacingBefore(6);
+function styleLabelValueCell(cell, label, value) {
+  // The cell already has one auto-created paragraph — use it for the label
+  var labelPara = cell.getChild(0).asParagraph();
+  labelPara.setText(label);
+  labelPara.setFontFamily('Times New Roman');
+  labelPara.setFontSize(8);
+  labelPara.setBold(true);
+  labelPara.setForegroundColor(BRAND.labelGrey);
+  labelPara.setSpacingBefore(0);
   labelPara.setSpacingAfter(1);
 
-  // Value
-  var val = value || '\u2014';
-  var valuePara = body.appendParagraph(val);
-  var valueStyle = {};
-  valueStyle[DocumentApp.Attribute.FONT_FAMILY] = 'Times New Roman';
-  valueStyle[DocumentApp.Attribute.FONT_SIZE] = 11;
-  valueStyle[DocumentApp.Attribute.BOLD] = false;
-  valueStyle[DocumentApp.Attribute.FOREGROUND_COLOR] = BRAND.textDark;
-  valuePara.setAttributes(valueStyle);
+  // Append value paragraph
+  var valuePara = cell.appendParagraph(value);
+  valuePara.setFontFamily('Times New Roman');
+  valuePara.setFontSize(11);
+  valuePara.setBold(false);
+  valuePara.setForegroundColor(BRAND.textDark);
   valuePara.setSpacingBefore(0);
-  valuePara.setSpacingAfter(2);
-
-  // Divider line below
-  addThinRule(body);
+  valuePara.setSpacingAfter(0);
 }
 
 /**
- * Add a thin light grey divider line (using a tiny colored paragraph).
+ * Add a single full-width field (label + value + thin divider).
  */
-function addThinRule(body) {
-  // Use a table-based horizontal rule with light color
-  var table = body.appendTable([['']]);
-  table.setBorderWidth(0);
-  var cell = table.getRow(0).getCell(0);
-  cell.setPaddingTop(0);
-  cell.setPaddingBottom(0);
-  cell.setPaddingLeft(0);
-  cell.setPaddingRight(0);
+function addSingleField(body, label, value) {
+  var val = value || '\u2014';
 
-  var p = cell.getChild(0).asParagraph();
-  p.setText('\u2500'.repeat(90));
-  var s = {};
-  s[DocumentApp.Attribute.FONT_SIZE] = 4;
-  s[DocumentApp.Attribute.FOREGROUND_COLOR] = BRAND.ruleLight;
-  s[DocumentApp.Attribute.FONT_FAMILY] = 'Times New Roman';
-  p.setAttributes(s);
-  p.setSpacingBefore(0);
-  p.setSpacingAfter(0);
+  addStyledPara(body, label, 'Times New Roman', 8, true, BRAND.labelGrey, DocumentApp.HorizontalAlignment.LEFT, 6, 1);
+  addStyledPara(body, val, 'Times New Roman', 11, false, BRAND.textDark, DocumentApp.HorizontalAlignment.LEFT, 0, 2);
+  addColoredRule(body, BRAND.ruleLight);
 }
 
 /**
- * Add an italic info note below a section title.
+ * Add an italic info note.
  */
-function addNote(body, text) {
-  addParagraph(body, text, {
-    font: 'Times New Roman', size: 9, italic: true,
-    color: BRAND.textMuted,
-    spacingBefore: 0, spacingAfter: 6
-  });
+function addItalicNote(body, text) {
+  var para = addStyledPara(body, text, 'Times New Roman', 9, false, BRAND.textMuted, DocumentApp.HorizontalAlignment.LEFT, 0, 6);
+  para.setItalic(true);
 }
 
 /**
- * Add a body text paragraph.
+ * Add a bordered notice box with a bold heading and body text.
  */
-function addBodyText(body, text) {
-  addParagraph(body, text, {
-    font: 'Times New Roman', size: 9.5,
-    color: BRAND.textMuted,
-    spacingBefore: 2, spacingAfter: 8
-  });
-}
-
-/**
- * Add a bordered notice box (for legal text like financial responsibility).
- */
-function addNoticeBox(body, text) {
-  var table = body.appendTable([[text]]);
+function addNoticeBox(body, heading, text) {
+  var table = body.appendTable([[heading + ' ' + text]]);
   table.setBorderWidth(1);
   table.setBorderColor(BRAND.ruleLight);
 
@@ -572,91 +383,72 @@ function addNoticeBox(body, text) {
   cell.setPaddingLeft(8);
   cell.setPaddingRight(8);
 
-  var p = cell.getChild(0).asParagraph();
-  var style = {};
-  style[DocumentApp.Attribute.FONT_FAMILY] = 'Times New Roman';
-  style[DocumentApp.Attribute.FONT_SIZE] = 9.5;
-  style[DocumentApp.Attribute.FOREGROUND_COLOR] = BRAND.textMuted;
-  style[DocumentApp.Attribute.LINE_SPACING] = 1.4;
-  p.setAttributes(style);
-  p.setSpacingBefore(0);
-  p.setSpacingAfter(0);
+  var para = cell.getChild(0).asParagraph();
+  para.setFontFamily('Times New Roman');
+  para.setFontSize(9.5);
+  para.setForegroundColor(BRAND.textMuted);
+  para.setSpacingBefore(0);
+  para.setSpacingAfter(0);
 
-  // Bold the first part "Financial Responsibility Acknowledgment:"
-  var boldEnd = text.indexOf(':');
-  if (boldEnd > 0) {
-    p.editAsText().setBold(0, boldEnd, true);
-  }
+  // Bold just the heading portion
+  var headingLength = heading.length;
+  para.editAsText().setBold(0, headingLength - 1, true);
 }
 
 /**
- * Add an acknowledgment item: initials box + statement text.
+ * Add an acknowledgment item: initials + statement in a two-column table.
  */
 function addAckItem(body, initials, statement) {
-  var table = body.appendTable();
+  var initVal = initials || '\u2014';
+
+  var table = body.appendTable([['INITIALS', statement]]);
   table.setBorderWidth(0);
 
-  // Remove auto-created row
-  table.removeRow(0);
-
-  var row = table.appendTableRow();
+  var row = table.getRow(0);
 
   // Initials cell (narrow)
-  var initCell = row.appendTableCell();
+  var initCell = row.getCell(0);
+  initCell.setWidth(60);
   initCell.setPaddingTop(4);
   initCell.setPaddingBottom(4);
   initCell.setPaddingLeft(0);
   initCell.setPaddingRight(8);
-  initCell.setWidth(60);
 
-  var initLabel = initCell.appendParagraph('INITIALS');
-  var initLabelStyle = {};
-  initLabelStyle[DocumentApp.Attribute.FONT_FAMILY] = 'Times New Roman';
-  initLabelStyle[DocumentApp.Attribute.FONT_SIZE] = 7;
-  initLabelStyle[DocumentApp.Attribute.BOLD] = true;
-  initLabelStyle[DocumentApp.Attribute.FOREGROUND_COLOR] = BRAND.labelGrey;
-  initLabel.setAttributes(initLabelStyle);
-  initLabel.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
-  initLabel.setSpacingBefore(0);
-  initLabel.setSpacingAfter(1);
+  // Replace the auto text with label + value
+  var initLabelPara = initCell.getChild(0).asParagraph();
+  initLabelPara.setText('INITIALS');
+  initLabelPara.setFontFamily('Times New Roman');
+  initLabelPara.setFontSize(7);
+  initLabelPara.setBold(true);
+  initLabelPara.setForegroundColor(BRAND.labelGrey);
+  initLabelPara.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
+  initLabelPara.setSpacingBefore(0);
+  initLabelPara.setSpacingAfter(1);
 
-  var initValue = initCell.appendParagraph(initials || '\u2014');
-  var initValStyle = {};
-  initValStyle[DocumentApp.Attribute.FONT_FAMILY] = 'Times New Roman';
-  initValStyle[DocumentApp.Attribute.FONT_SIZE] = 11;
-  initValStyle[DocumentApp.Attribute.BOLD] = true;
-  initValStyle[DocumentApp.Attribute.FOREGROUND_COLOR] = BRAND.textDark;
-  initValue.setAttributes(initValStyle);
-  initValue.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
-  initValue.setSpacingBefore(0);
-  initValue.setSpacingAfter(0);
-
-  // Remove auto-created paragraph in initials cell
-  if (initCell.getNumChildren() > 2) {
-    initCell.removeChild(initCell.getChild(0));
-  }
+  var initValPara = initCell.appendParagraph(initVal);
+  initValPara.setFontFamily('Times New Roman');
+  initValPara.setFontSize(11);
+  initValPara.setBold(true);
+  initValPara.setForegroundColor(BRAND.textDark);
+  initValPara.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
+  initValPara.setSpacingBefore(0);
+  initValPara.setSpacingAfter(0);
 
   // Statement cell
-  var stmtCell = row.appendTableCell();
+  var stmtCell = row.getCell(1);
   stmtCell.setPaddingTop(8);
   stmtCell.setPaddingBottom(4);
   stmtCell.setPaddingLeft(4);
   stmtCell.setPaddingRight(0);
 
-  var stmtPara = stmtCell.appendParagraph(statement);
-  var stmtStyle = {};
-  stmtStyle[DocumentApp.Attribute.FONT_FAMILY] = 'Times New Roman';
-  stmtStyle[DocumentApp.Attribute.FONT_SIZE] = 10;
-  stmtStyle[DocumentApp.Attribute.BOLD] = false;
-  stmtStyle[DocumentApp.Attribute.FOREGROUND_COLOR] = BRAND.textDark;
-  stmtPara.setAttributes(stmtStyle);
+  var stmtPara = stmtCell.getChild(0).asParagraph();
+  stmtPara.setText(statement);
+  stmtPara.setFontFamily('Times New Roman');
+  stmtPara.setFontSize(10);
+  stmtPara.setBold(false);
+  stmtPara.setForegroundColor(BRAND.textDark);
   stmtPara.setSpacingBefore(0);
   stmtPara.setSpacingAfter(0);
-
-  // Remove auto-created paragraph in statement cell
-  if (stmtCell.getNumChildren() > 1) {
-    stmtCell.removeChild(stmtCell.getChild(0));
-  }
 }
 
 /**
@@ -664,9 +456,7 @@ function addAckItem(body, initials, statement) {
  */
 function addSpacer(body, pts) {
   var p = body.appendParagraph('');
-  var s = {};
-  s[DocumentApp.Attribute.FONT_SIZE] = 1;
-  p.setAttributes(s);
+  p.setFontSize(1);
   p.setSpacingBefore(pts || 4);
   p.setSpacingAfter(0);
 }
