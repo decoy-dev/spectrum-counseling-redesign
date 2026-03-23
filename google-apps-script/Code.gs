@@ -127,6 +127,9 @@ function doPost(e) {
 
   } catch (error) {
     Logger.log('Intake form error: ' + error.toString());
+    Logger.log('Stack: ' + (error.stack || 'no stack'));
+    // Re-throw so the execution shows as Failed in the dashboard
+    throw error;
   }
 
   return redirect();
@@ -139,14 +142,18 @@ function doPost(e) {
 
 function buildDocument(body, f) {
 
-  // Remove the default empty paragraph that Google Docs creates
-  var firstChild = body.getChild(0);
-  if (firstChild) {
-    body.removeChild(firstChild);
-  }
-
-  // ── HEADER ────────────────────────────────────────────────────
-  addStyledPara(body, 'SPECTRUM COUNSELING, LLC', 'Times New Roman', 18, true, BRAND.primary, DocumentApp.HorizontalAlignment.CENTER, 0, 0);
+  // Use the default empty paragraph for the first line instead of removing it
+  // (Google Docs requires at least one child in the body at all times)
+  var firstPara = body.getChild(0).asParagraph();
+  firstPara.setText('SPECTRUM COUNSELING, LLC');
+  var firstTs = firstPara.editAsText();
+  firstTs.setFontFamily('Times New Roman');
+  firstTs.setFontSize(18);
+  firstTs.setBold(true);
+  firstTs.setForegroundColor(BRAND.primary);
+  firstPara.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
+  firstPara.setSpacingBefore(0);
+  firstPara.setSpacingAfter(0);
   addStyledPara(body, 'Marie Haddox, Ph.D. \u2014 Licensed Psychologist', 'Times New Roman', 11, false, BRAND.textMuted, DocumentApp.HorizontalAlignment.CENTER, 0, 0);
   addStyledPara(body, '428 S. Gilbert Rd. Ste. #105 (Bldg. 3) \u2022 Gilbert, AZ 85296 \u2022 (480) 782-0113', 'Times New Roman', 9, false, BRAND.labelGrey, DocumentApp.HorizontalAlignment.CENTER, 0, 6);
 
