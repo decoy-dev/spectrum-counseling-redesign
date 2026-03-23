@@ -455,26 +455,29 @@
   </nav>
 
   <!-- Hero Section -->
-  <section class="relative min-h-[85vh] sm:min-h-[80vh] md:min-h-[85vh] flex items-center pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-14 md:pb-10 overflow-hidden">
+  <section class="relative min-h-[100dvh] sm:min-h-[80vh] md:min-h-[85vh] flex items-end sm:items-center pt-20 sm:pt-32 md:pt-36 pb-12 sm:pb-14 md:pb-10 overflow-hidden">
     <div class="absolute inset-0 -z-10">
       <img alt="Water lilies on a serene pond" class="w-full h-full object-cover" src="assets/hero.jpg" />
-      <div class="absolute inset-0 bg-white/60 sm:bg-white/40 bg-gradient-to-b sm:bg-gradient-to-r from-white via-white/80 to-transparent"></div>
+      <!-- Mobile overlay: image visible at top, fades to surface at bottom for text readability -->
+      <div class="absolute inset-0 bg-gradient-to-b from-white/15 via-white/50 to-[#f1f4f5] sm:hidden"></div>
+      <!-- Desktop overlay: left-to-right fade for side-aligned content -->
+      <div class="absolute inset-0 hidden sm:block bg-white/40 bg-gradient-to-r from-white via-white/80 to-transparent"></div>
       <div class="absolute bottom-0 left-0 right-0 h-32 sm:h-40 bg-gradient-to-t from-[#f1f4f5] to-transparent"></div>
     </div>
-    <div class="max-w-7xl mx-auto px-5 sm:px-8 w-full">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 w-full">
       <div class="max-w-3xl">
-        <span class="inline-flex items-center gap-2 text-primary text-[0.65rem] sm:text-xs font-bold tracking-widest uppercase mb-4 sm:mb-6 border-l-2 border-primary pl-3">
+        <span class="inline-flex items-center gap-2 text-primary text-[0.7rem] sm:text-xs font-bold tracking-[0.05em] sm:tracking-widest uppercase mb-4 sm:mb-6 border-l-2 border-primary pl-3">
           <span class="material-symbols-outlined text-sm sm:text-base">spa</span>
           Honoring Every Part of Who You Are
         </span>
-        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-on-surface leading-[1.15] sm:leading-[1.1] mb-6 sm:mb-8">
+        <h1 class="text-4xl sm:text-4xl md:text-5xl lg:text-7xl font-light sm:font-bold text-on-surface leading-[1.08] sm:leading-[1.1] tracking-tight sm:tracking-normal mb-6 sm:mb-8">
           Finding healing in the <span class="spectrum-wrap"><canvas id="spectrum-trail" class="spectrum-trail-canvas"></canvas><span class="spectrum-wave">Spectrum</span></span> of human experience.
         </h1>
-        <p class="text-base sm:text-lg md:text-xl text-on-surface-variant leading-relaxed mb-8 sm:mb-10 max-w-2xl">
+        <p class="text-[1.0625rem] sm:text-lg md:text-xl text-on-surface-variant leading-relaxed mb-8 sm:mb-10 max-w-[90%] sm:max-w-2xl">
           Personalized and compassionate therapy for individuals, couples, and families in Gilbert, AZ. Over 20 years of clinical experience with relationships, anxiety, depression, and LGBTQ+ affirming care.
         </p>
         <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <a href="new-client-form.html" class="inline-block text-center bg-gradient-to-r from-primary to-primary-dim text-on-primary px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-semibold shadow-xl shadow-primary/10 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 hover:brightness-110 transition-all duration-200 active:scale-95">
+          <a href="new-client-form.html" class="inline-block text-center bg-gradient-to-r from-primary to-primary-dim text-on-primary px-8 sm:px-8 py-4 sm:py-4 rounded-full text-base sm:text-lg font-semibold shadow-[0_8px_24px_rgba(67,98,126,0.15)] hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 hover:brightness-110 transition-all duration-200 active:scale-95">
             Start New Client Form
           </a>
           <a class="bg-surface-container-highest/80 backdrop-blur-sm text-on-primary-container px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-semibold hover:bg-surface-variant hover:-translate-y-1 hover:shadow-lg transition-all duration-200 text-center" href="#services">
@@ -847,7 +850,7 @@
           </button>
         </div>
         <!-- Answer panel -->
-        <div class="md:col-span-3 relative bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/10 p-8 sm:p-10 min-h-[280px] flex items-start">
+        <div class="md:col-span-3 relative bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/10 p-8 sm:p-10 min-h-[280px] flex items-start overflow-hidden" id="faq-answer-panel">
           <div class="faq-panel active" data-faq="0">
             <span class="inline-block px-3 py-1 bg-primary-container/40 text-primary text-[0.65rem] font-bold tracking-widest uppercase rounded-full mb-4">Insurance &amp; Billing</span>
             <h3 class="text-xl sm:text-2xl font-bold text-on-surface mb-4" style="font-family: 'Noto Serif', serif;">Insurance &amp; Payment at Spectrum Counseling</h3>
@@ -924,7 +927,7 @@
       var faqBtns = document.querySelectorAll('.faq-btn');
       var faqPanels = document.querySelectorAll('.faq-panel');
 
-      var faqAnswerContainer = document.querySelector('#faq-list .md\\:col-span-3');
+      var faqAnswerContainer = document.getElementById('faq-answer-panel');
 
       function activateFaq(index, shouldScroll) {
         faqBtns.forEach(function(b) { b.classList.remove('active'); });
