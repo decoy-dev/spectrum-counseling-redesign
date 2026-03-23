@@ -474,7 +474,7 @@
           Personalized and compassionate therapy for individuals, couples, and families in Gilbert, AZ. Over 20 years of clinical experience with relationships, anxiety, depression, and LGBTQ+ affirming care.
         </p>
         <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <a href="new-client-form.html" class="inline-block bg-gradient-to-r from-primary to-primary-dim text-on-primary px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-semibold shadow-xl shadow-primary/10 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 hover:brightness-110 transition-all duration-200 active:scale-95">
+          <a href="new-client-form.html" class="inline-block text-center bg-gradient-to-r from-primary to-primary-dim text-on-primary px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-semibold shadow-xl shadow-primary/10 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 hover:brightness-110 transition-all duration-200 active:scale-95">
             Start New Client Form
           </a>
           <a class="bg-surface-container-highest/80 backdrop-blur-sm text-on-primary-container px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-semibold hover:bg-surface-variant hover:-translate-y-1 hover:shadow-lg transition-all duration-200 text-center" href="#services">
@@ -657,7 +657,7 @@
           </button>
         </div>
         <!-- Image slider -->
-        <div class="relative h-[300px] sm:h-full flex-1 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden" id="spec-slider">
+        <div class="relative h-[300px] sm:h-full sm:flex-1 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden" id="spec-slider">
           <!-- Slide 0: Depression -->
           <div class="spec-slide active" data-spec="0">
             <img alt="Spectrum Counseling therapy room" src="assets/about-hero.jpg" />
@@ -924,15 +924,20 @@
       var faqBtns = document.querySelectorAll('.faq-btn');
       var faqPanels = document.querySelectorAll('.faq-panel');
 
-      function activateFaq(index) {
+      var faqAnswerContainer = document.querySelector('#faq-list .md\\:col-span-3');
+
+      function activateFaq(index, shouldScroll) {
         faqBtns.forEach(function(b) { b.classList.remove('active'); });
         faqPanels.forEach(function(p) { p.classList.remove('active'); });
         faqBtns[index].classList.add('active');
         faqPanels[index].classList.add('active');
+        if (shouldScroll && window.innerWidth < 768 && faqAnswerContainer) {
+          faqAnswerContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       }
 
       faqBtns.forEach(function(btn, idx) {
-        btn.addEventListener('click', function() { activateFaq(idx); });
+        btn.addEventListener('click', function() { activateFaq(idx, true); });
       });
 
       activateFaq(0);
