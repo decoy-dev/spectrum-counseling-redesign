@@ -1091,19 +1091,17 @@
     var menuBtn = document.getElementById('mobile-menu-btn');
     var mobileMenu = document.getElementById('mobile-menu');
     var mainNav = document.getElementById('main-nav');
-    var navRadiusTimer = null;
     function setMenuOpen(open) {
-      if (navRadiusTimer) { clearTimeout(navRadiusTimer); navRadiusTimer = null; }
       if (open) {
+        mainNav.style.transition = 'none';
         mainNav.classList.remove('rounded-full');
         mainNav.classList.add('rounded-[1.25rem]');
         mobileMenu.classList.add('open');
       } else {
+        mainNav.style.transition = 'border-radius 0.3s ease';
         mobileMenu.classList.remove('open');
-        navRadiusTimer = setTimeout(function() {
-          mainNav.classList.remove('rounded-[1.25rem]');
-          mainNav.classList.add('rounded-full');
-        }, 300);
+        mainNav.classList.remove('rounded-[1.25rem]');
+        mainNav.classList.add('rounded-full');
       }
       menuBtn.querySelector('.material-symbols-outlined').textContent = open ? 'close' : 'menu';
     }
