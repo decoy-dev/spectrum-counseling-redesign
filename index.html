@@ -375,6 +375,23 @@
       padding: 0.1em 0.05em;
       line-height: 1.3;
     }
+    /* Spectral trail wrapper */
+    .spectrum-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .spectrum-trail-canvas {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .spectrum-wave {
+      position: relative;
+      z-index: 1;
+    }
     /* Fade-in on scroll */
     .fade-in {
       opacity: 0;
@@ -451,7 +468,7 @@
           Honoring Every Part of Who You Are
         </span>
         <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-on-surface leading-[1.15] sm:leading-[1.1] mb-6 sm:mb-8">
-          Finding healing in the <span class="spectrum-wave">Spectrum</span> of human experience.
+          Finding healing in the <span class="spectrum-wrap"><canvas id="spectrum-trail" class="spectrum-trail-canvas"></canvas><span class="spectrum-wave">Spectrum</span></span> of human experience.
         </h1>
         <p class="text-base sm:text-lg md:text-xl text-on-surface-variant leading-relaxed mb-8 sm:mb-10 max-w-2xl">
           Personalized and compassionate therapy for individuals, couples, and families in Gilbert, AZ. Over 20 years of clinical experience with relationships, anxiety, depression, and LGBTQ+ affirming care.
@@ -1099,6 +1116,179 @@
       }
       window.addEventListener('scroll', hideScrollHint, { passive: true });
     }
+  </script>
+
+  <script>
+    // === Spectral Ghost Trail on "Spectrum" ===
+    (function() {
+      var canvas = document.getElementById('spectrum-trail');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var wrap = canvas.parentElement;
+      var textEl = wrap.querySelector('.spectrum-wave');
+
+      var palette = [
+        'rgba(86,122,150,',   // primary #567a96
+        'rgba(54,86,113,',    // primary-dim #365671
+        'rgba(106,143,174,',  // mid blue #6a8fae
+        'rgba(122,155,181,',  // lighter #7a9bb5
+        'rgba(181,213,246,',  // primary-fixed #b5d5f6
+        'rgba(167,199,231,',  // primary-fixed-dim #a7c7e7
+      ];
+
+      // Ghost trail copies
+      var ghosts = [];
+      var maxGhosts = 5;
+      for (var i = 0; i < maxGhosts; i++) {
+        ghosts.push({
+          offsetX: 0, offsetY: 0,
+          targetX: 0, targetY: 0,
+          opacity: 0, targetOpacity: 0,
+          colorIdx: i % palette.length,
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.3 + Math.random() * 0.4,
+          amplitude: 3 + Math.random() * 6,
+          yAmplitude: 1.5 + Math.random() * 3
+        });
+      }
+
+      // Floating particles
+      var particles = [];
+      var maxParticles = 18;
+      function spawnParticle() {
+        return {
+          x: Math.random(),
+          y: Math.random(),
+          size: 1.5 + Math.random() * 3,
+          opacity: 0,
+          maxOpacity: 0.15 + Math.random() * 0.45,
+          fadeIn: true,
+          fadeSpeed: 0.003 + Math.random() * 0.008,
+          driftX: (Math.random() - 0.5) * 0.15,
+          driftY: -0.05 - Math.random() * 0.15,
+          life: 0,
+          maxLife: 120 + Math.random() * 200,
+          colorIdx: Math.floor(Math.random() * palette.length)
+        };
+      }
+      for (var i = 0; i < maxParticles; i++) {
+        var p = spawnParticle();
+        p.life = Math.random() * p.maxLife;
+        p.opacity = p.maxOpacity * 0.5;
+        p.fadeIn = false;
+        particles.push(p);
+      }
+
+      var w, h, fontSize, fontFamily, textWidth, textMetrics;
+
+      function resize() {
+        var rect = textEl.getBoundingClientRect();
+        var cs = getComputedStyle(textEl);
+        fontSize = parseFloat(cs.fontSize);
+        fontFamily = cs.fontFamily;
+
+        // Canvas is larger than text to allow trail overflow
+        var padX = fontSize * 1.8;
+        var padY = fontSize * 1.2;
+        w = Math.ceil(rect.width + padX * 2);
+        h = Math.ceil(rect.height + padY * 2);
+
+        var dpr = window.devicePixelRatio || 1;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        // Measure text for ghost drawing
+        ctx.font = 'italic bold ' + fontSize + 'px ' + fontFamily;
+        textMetrics = ctx.measureText('Spectrum');
+        textWidth = textMetrics.width;
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+
+      var time = 0;
+
+      function draw() {
+        time += 0.016;
+        ctx.clearRect(0, 0, w, h);
+
+        var cx = w / 2;
+        var cy = h / 2;
+
+        ctx.font = 'italic bold ' + fontSize + 'px ' + fontFamily;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        // Draw ghost trail copies
+        for (var i = 0; i < ghosts.length; i++) {
+          var g = ghosts[i];
+          g.phase += g.speed * 0.016;
+
+          // Sinusoidal drifting motion
+          g.targetX = Math.sin(g.phase) * g.amplitude;
+          g.targetY = Math.cos(g.phase * 0.7 + i) * g.yAmplitude;
+          g.offsetX += (g.targetX - g.offsetX) * 0.03;
+          g.offsetY += (g.targetY - g.offsetY) * 0.03;
+
+          // Pulsing opacity
+          var baseOpacity = 0.04 + (maxGhosts - i) * 0.018;
+          g.targetOpacity = baseOpacity + Math.sin(g.phase * 1.3 + i * 0.8) * 0.025;
+          g.opacity += (g.targetOpacity - g.opacity) * 0.05;
+
+          var col = palette[g.colorIdx];
+          ctx.fillStyle = col + g.opacity + ')';
+          ctx.fillText('Spectrum', cx + g.offsetX, cy + g.offsetY);
+        }
+
+        // Draw particles
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          p.life++;
+
+          // Fade in then fade out
+          if (p.life < p.maxLife * 0.3) {
+            p.opacity = Math.min(p.opacity + p.fadeSpeed, p.maxOpacity);
+          } else if (p.life > p.maxLife * 0.7) {
+            p.opacity = Math.max(p.opacity - p.fadeSpeed, 0);
+          }
+
+          // Drift
+          p.x += p.driftX * 0.002;
+          p.y += p.driftY * 0.002;
+
+          // Reset when expired or out of bounds
+          if (p.life > p.maxLife || p.opacity <= 0 || p.x < -0.2 || p.x > 1.2 || p.y < -0.2 || p.y > 1.2) {
+            var np = spawnParticle();
+            particles[i] = np;
+            continue;
+          }
+
+          var px = p.x * w;
+          var py = p.y * h;
+          var col = palette[p.colorIdx];
+
+          ctx.beginPath();
+          ctx.arc(px, py, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = col + p.opacity + ')';
+          ctx.fill();
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      // Wait for fonts to load before starting
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function() {
+          resize();
+          draw();
+        });
+      } else {
+        setTimeout(function() { resize(); draw(); }, 300);
+      }
+    })();
   </script>
 </body>
 </html>
