@@ -628,15 +628,19 @@
     var menuBtn = document.getElementById('mobile-menu-btn');
     var mobileMenu = document.getElementById('mobile-menu');
     var mainNav = document.getElementById('main-nav');
+    var navRadiusTimer = null;
     function setMenuOpen(open) {
+      if (navRadiusTimer) { clearTimeout(navRadiusTimer); navRadiusTimer = null; }
       if (open) {
-        mobileMenu.classList.add('open');
         mainNav.classList.remove('rounded-full');
         mainNav.classList.add('rounded-[1.25rem]');
+        mobileMenu.classList.add('open');
       } else {
         mobileMenu.classList.remove('open');
-        mainNav.classList.remove('rounded-[1.25rem]');
-        mainNav.classList.add('rounded-full');
+        navRadiusTimer = setTimeout(function() {
+          mainNav.classList.remove('rounded-[1.25rem]');
+          mainNav.classList.add('rounded-full');
+        }, 300);
       }
       menuBtn.querySelector('.material-symbols-outlined').textContent = open ? 'close' : 'menu';
     }
