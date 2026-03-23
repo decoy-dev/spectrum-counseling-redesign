@@ -407,7 +407,7 @@
 <body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
 
   <!-- Top Navigation Bar -->
-  <nav id="main-nav" class="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 bg-white/85 backdrop-blur-xl shadow-lg border border-white/30 rounded-full w-[92%] max-w-6xl ">
+  <nav id="main-nav" class="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 bg-white/85 backdrop-blur-xl shadow-lg border border-white/30 rounded-[2.5rem] w-[92%] max-w-6xl">
     <div class="flex justify-between items-center px-4 sm:px-6 py-3">
       <div class="flex items-center">
         <a href="index.html">
@@ -1093,18 +1093,15 @@
     var mainNav = document.getElementById('main-nav');
     function setMenuOpen(open) {
       if (open) {
-        mainNav.classList.remove('rounded-full');
+        mainNav.style.transition = 'none';
+        mainNav.classList.remove('rounded-[2.5rem]');
         mainNav.classList.add('rounded-[1.25rem]');
         mobileMenu.classList.add('open');
       } else {
+        mainNav.style.transition = 'border-radius 0.3s ease-out';
         mobileMenu.classList.remove('open');
-        mobileMenu.addEventListener('transitionend', function handler() {
-          mobileMenu.removeEventListener('transitionend', handler);
-          if (!mobileMenu.classList.contains('open')) {
-            mainNav.classList.remove('rounded-[1.25rem]');
-            mainNav.classList.add('rounded-full');
-          }
-        });
+        mainNav.classList.remove('rounded-[1.25rem]');
+        mainNav.classList.add('rounded-[2.5rem]');
       }
       menuBtn.querySelector('.material-symbols-outlined').textContent = open ? 'close' : 'menu';
     }
