@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Terms of Service | Marie Haddox, Ph.D. | Spectrum Counseling</title>
+  <meta name="description" content="Terms of Service for the Spectrum Counseling website. Dr. Marie Haddox — Licensed psychologist in Gilbert, AZ." />
+  <link rel="canonical" href="https://decoy-dev.github.io/spectrum-counseling-redesign/terms.html" />
+  <meta property="og:title" content="Terms of Service | Spectrum Counseling" />
+  <meta property="og:site_name" content="Spectrum Counseling" />
+  <meta property="og:image" content="https://decoy-dev.github.io/spectrum-counseling-redesign/assets/sc_og_image.png" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@300;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-container": "#445362",
+            "on-tertiary": "#fbf7ff",
+            "surface-container-low": "#f1f4f5",
+            "primary-dim": "#365671",
+            "surface-variant": "#dee3e6",
+            "inverse-primary": "#b5d5f6",
+            "primary-fixed-dim": "#a7c7e7",
+            "primary": "#567a96",
+            "on-secondary": "#f6f9ff",
+            "primary-fixed": "#b5d5f6",
+            "tertiary": "#5c5b85",
+            "background": "#f8f9fa",
+            "surface": "#f8f9fa",
+            "surface-dim": "#d5dbdd",
+            "secondary-dim": "#465563",
+            "outline-variant": "#adb3b5",
+            "surface-container-high": "#e5e9eb",
+            "on-background": "#2d3335",
+            "secondary-fixed": "#d4e4f6",
+            "on-surface": "#2d3335",
+            "surface-container": "#ebeef0",
+            "on-surface-variant": "#5a6062",
+            "secondary": "#526170",
+            "secondary-fixed-dim": "#c6d6e8",
+            "outline": "#767c7e",
+            "on-primary": "#f6f9ff",
+            "secondary-container": "#d4e4f6",
+            "tertiary-container": "#cac7f8",
+            "surface-container-lowest": "#ffffff",
+            "primary-container": "#b5d5f6",
+            "surface-container-highest": "#dee3e6",
+            "on-primary-container": "#2a4a65"
+          },
+          fontFamily: {
+            headline: ["Noto Serif", "serif"],
+            body: ["Manrope", "sans-serif"]
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    body { font-family: 'Manrope', sans-serif; background-color: #f8f9fa; }
+    h1, h2, h3, h4 { font-family: 'Noto Serif', serif; }
+    html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+    @media (min-width: 640px) { html { scroll-padding-top: 7rem; } }
+    .mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .mobile-menu.open { max-height: 400px; }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: currentColor; opacity: 0; transition: opacity 0.25s ease; }
+    .nav-link:hover::after { opacity: 1; }
+  </style>
+</head>
+<body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
+
+  <!-- Navigation -->
+  <nav id="main-nav" class="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 bg-white/85 backdrop-blur-xl shadow-lg border border-white/30 rounded-[2.5rem] w-[92%] max-w-6xl">
+    <div class="flex justify-between items-center px-4 sm:px-6 py-3">
+      <div class="flex items-center">
+        <a href="index.html">
+          <img alt="Spectrum Counseling Logo" class="h-10 lg:h-12 w-auto object-contain" src="assets/SC_logo.png" />
+        </a>
+      </div>
+      <div class="hidden lg:flex flex-1 justify-center gap-6 xl:gap-8 items-center">
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="index.html#about">About</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="index.html#services">Services</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="index.html#specializations">Specializations</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="index.html#testimonials">Testimonials</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="index.html#location">Location</a>
+        <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="index.html#faq">FAQ</a>
+      </div>
+      <div class="hidden lg:flex items-center gap-2">
+        <a href="contact.html" class="bg-white text-on-surface-variant hover:text-primary hover:bg-primary-container hover:border-primary/30 hover:-translate-y-0.5 hover:shadow-md px-4 py-2 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200">
+          Contact
+        </a>
+        <a href="new-client-form.html" class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dim hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/25 transition-all duration-200 active:scale-95 shadow-md shadow-primary/10">
+          New Client Form
+        </a>
+      </div>
+      <button id="mobile-menu-btn" class="lg:hidden flex items-center text-on-surface-variant" aria-label="Toggle menu">
+        <span class="material-symbols-outlined text-2xl">menu</span>
+      </button>
+    </div>
+    <div id="mobile-menu" class="mobile-menu lg:hidden px-6">
+      <div class="flex flex-col gap-4 pb-6 pt-2">
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm" href="index.html#about">About</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm" href="index.html#services">Services</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm" href="index.html#specializations">Specializations</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm" href="index.html#testimonials">Testimonials</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm" href="index.html#location">Location</a>
+        <a class="text-on-surface-variant hover:text-primary transition-all font-medium text-sm" href="index.html#faq">FAQ</a>
+        <a href="contact.html" class="bg-white text-on-surface-variant hover:text-primary hover:bg-primary-container px-5 py-2.5 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200 w-full text-center">Contact</a>
+        <a href="new-client-form.html" class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dim transition-all duration-200 shadow-md shadow-primary/10 w-full text-center">New Client Form</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="pt-32 sm:pt-36 md:pt-40 pb-12 sm:pb-16 bg-surface-container-low">
+    <div class="max-w-4xl mx-auto px-5 sm:px-8">
+      <a href="index.html" class="inline-flex items-center gap-1 text-sm text-on-surface-variant hover:text-primary transition-colors mb-6">
+        <span class="material-symbols-outlined text-lg">arrow_back</span>
+        Back to Home
+      </a>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-on-surface mb-4">Terms of Service</h1>
+      <p class="text-base sm:text-lg text-on-surface-variant max-w-2xl">Terms and conditions for using the Spectrum Counseling website.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="py-12 sm:py-16 md:py-20 bg-surface">
+    <div class="max-w-4xl mx-auto px-5 sm:px-8">
+      <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm space-y-8">
+
+        <div>
+          <p class="text-sm text-on-surface-variant mb-6">Effective Date: March 23, 2026</p>
+          <p class="text-on-surface-variant leading-relaxed">
+            By accessing and using the Spectrum Counseling website ("Site"), you agree to the following terms and conditions. If you do not agree to these terms, please do not use this Site.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-on-surface mb-4">Use of This Website</h2>
+          <p class="text-on-surface-variant leading-relaxed">
+            This Site is provided for informational purposes about Spectrum Counseling, LLC and the services offered by Dr. Marie Haddox, Ph.D. The content on this Site does not constitute medical or psychological advice, diagnosis, or treatment. Always seek the advice of a qualified health provider with any questions you may have regarding a medical or psychological condition.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-on-surface mb-4">No Therapist-Client Relationship</h2>
+          <p class="text-on-surface-variant leading-relaxed">
+            Use of this Site, including submission of the new client intake form, does not establish a therapist-client relationship. A therapeutic relationship is only established after a mutual agreement between the client and Dr. Haddox following an initial consultation.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-on-surface mb-4">Intake Form Submissions</h2>
+          <p class="text-on-surface-variant leading-relaxed">
+            Information submitted through the new client intake form is transmitted securely and used solely for the purpose of initiating contact and preparing for a potential first session. Submission of the form does not guarantee acceptance as a client. All submitted information is handled in accordance with our <a href="privacy.html" class="text-primary hover:underline font-semibold">Privacy Policy</a> and applicable HIPAA regulations.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-on-surface mb-4">Intellectual Property</h2>
+          <p class="text-on-surface-variant leading-relaxed">
+            All content on this Site — including text, images, logos, and design — is the property of Spectrum Counseling, LLC and is protected by applicable copyright and trademark laws. You may not reproduce, distribute, or create derivative works from this content without prior written consent.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-on-surface mb-4">External Links</h2>
+          <p class="text-on-surface-variant leading-relaxed">
+            This Site may contain links to third-party websites for your convenience. Spectrum Counseling does not endorse or assume responsibility for the content, privacy policies, or practices of any third-party sites.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-on-surface mb-4">Limitation of Liability</h2>
+          <p class="text-on-surface-variant leading-relaxed">
+            Spectrum Counseling, LLC and Dr. Marie Haddox shall not be liable for any damages arising from the use or inability to use this Site. This Site is provided "as is" without warranties of any kind, either express or implied.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-on-surface mb-4">Governing Law</h2>
+          <p class="text-on-surface-variant leading-relaxed">
+            These terms are governed by the laws of the State of Arizona. Any disputes arising from these terms or your use of the Site shall be resolved in the courts of Maricopa County, Arizona.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-on-surface mb-4">Changes to These Terms</h2>
+          <p class="text-on-surface-variant leading-relaxed">
+            We reserve the right to update these Terms of Service at any time. Changes will be posted on this page with an updated effective date. Continued use of the Site after changes constitutes acceptance of the revised terms.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-on-surface mb-4">Contact Us</h2>
+          <p class="text-on-surface-variant leading-relaxed">
+            If you have questions about these Terms of Service, please contact us at:
+          </p>
+          <div class="mt-4 text-on-surface-variant">
+            <p class="font-bold text-on-surface">Spectrum Counseling, LLC</p>
+            <p>428 S. Gilbert Rd. Ste. #105 (Bldg. 3), Gilbert, AZ 85296</p>
+            <p>Phone: <a href="tel:+14807820113" class="text-primary hover:underline">(480) 782-0113</a></p>
+            <p>Email: <a href="mailto:mhaddox@spectrumcounseling.net" class="text-primary hover:underline">mhaddox@spectrumcounseling.net</a></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="w-full py-10 sm:py-16 px-5 sm:px-8 bg-primary text-on-primary">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6 sm:gap-8 max-w-7xl mx-auto">
+      <div class="flex flex-col items-center md:items-start">
+        <a href="index.html">
+          <img alt="Spectrum Counseling Logo" class="h-10 sm:h-12 w-auto object-contain brightness-0 invert mb-2" src="assets/SC_logo.png" />
+        </a>
+        <p class="text-on-primary/70 text-xs sm:text-sm tracking-wide">&copy; 2026 Spectrum Counseling | Marie Haddox, Ph.D.</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4 sm:gap-8">
+        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="contact.html">Contact</a>
+        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="privacy.html">Privacy Policy</a>
+        <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="terms.html">Terms of Service</a>
+      </div>
+      <div class="flex gap-4">
+        <span class="material-symbols-outlined text-on-primary/60">diversity_3</span>
+        <span class="material-symbols-outlined text-on-primary/60">spa</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    var menuBtn = document.getElementById('mobile-menu-btn');
+    var mobileMenu = document.getElementById('mobile-menu');
+    var mainNav = document.getElementById('main-nav');
+    function setMenuOpen(open) {
+      if (open) {
+        mainNav.style.transition = 'none';
+        mainNav.classList.remove('rounded-[2.5rem]');
+        mainNav.classList.add('rounded-[1.25rem]');
+        mobileMenu.classList.add('open');
+      } else {
+        mainNav.style.transition = 'border-radius 0.3s ease-out';
+        mobileMenu.classList.remove('open');
+        mainNav.classList.remove('rounded-[1.25rem]');
+        mainNav.classList.add('rounded-[2.5rem]');
+      }
+      menuBtn.querySelector('.material-symbols-outlined').textContent = open ? 'close' : 'menu';
+    }
+    menuBtn.addEventListener('click', function() {
+      setMenuOpen(!mobileMenu.classList.contains('open'));
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() { setMenuOpen(false); });
+    });
+  </script>
+</body>
+</html>
