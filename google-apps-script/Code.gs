@@ -242,10 +242,11 @@ function buildDocument(body, f) {
  */
 function addStyledPara(body, text, fontFamily, fontSize, bold, color, alignment, spacingBefore, spacingAfter) {
   var para = body.appendParagraph(text);
-  para.setFontFamily(fontFamily);
-  para.setFontSize(fontSize);
-  para.setBold(bold);
-  para.setForegroundColor(color);
+  var ts = para.editAsText();
+  ts.setFontFamily(fontFamily);
+  ts.setFontSize(fontSize);
+  ts.setBold(bold);
+  ts.setForegroundColor(color);
   para.setAlignment(alignment);
   para.setSpacingBefore(spacingBefore);
   para.setSpacingAfter(spacingAfter);
@@ -276,7 +277,7 @@ function addColoredRule(body, color) {
 
   // Style the paragraph inside the cell to be minimal
   var para = cell.getChild(0).asParagraph();
-  para.setFontSize(1);
+  para.editAsText().setFontSize(1);
   para.setSpacingBefore(0);
   para.setSpacingAfter(0);
 
@@ -289,9 +290,10 @@ function addColoredRule(body, color) {
   body.removeChild(table);
 
   var rule = body.appendParagraph('\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500');
-  rule.setFontFamily('Times New Roman');
-  rule.setFontSize(4);
-  rule.setForegroundColor(color);
+  var ruleTs = rule.editAsText();
+  ruleTs.setFontFamily('Times New Roman');
+  ruleTs.setFontSize(4);
+  ruleTs.setForegroundColor(color);
   rule.setSpacingBefore(0);
   rule.setSpacingAfter(2);
 }
@@ -333,19 +335,21 @@ function styleLabelValueCell(cell, label, value) {
   // The cell already has one auto-created paragraph — use it for the label
   var labelPara = cell.getChild(0).asParagraph();
   labelPara.setText(label);
-  labelPara.setFontFamily('Times New Roman');
-  labelPara.setFontSize(8);
-  labelPara.setBold(true);
-  labelPara.setForegroundColor(BRAND.labelGrey);
+  var labelTs = labelPara.editAsText();
+  labelTs.setFontFamily('Times New Roman');
+  labelTs.setFontSize(8);
+  labelTs.setBold(true);
+  labelTs.setForegroundColor(BRAND.labelGrey);
   labelPara.setSpacingBefore(0);
   labelPara.setSpacingAfter(1);
 
   // Append value paragraph
   var valuePara = cell.appendParagraph(value);
-  valuePara.setFontFamily('Times New Roman');
-  valuePara.setFontSize(11);
-  valuePara.setBold(false);
-  valuePara.setForegroundColor(BRAND.textDark);
+  var valueTs = valuePara.editAsText();
+  valueTs.setFontFamily('Times New Roman');
+  valueTs.setFontSize(11);
+  valueTs.setBold(false);
+  valueTs.setForegroundColor(BRAND.textDark);
   valuePara.setSpacingBefore(0);
   valuePara.setSpacingAfter(0);
 }
@@ -366,7 +370,7 @@ function addSingleField(body, label, value) {
  */
 function addItalicNote(body, text) {
   var para = addStyledPara(body, text, 'Times New Roman', 9, false, BRAND.textMuted, DocumentApp.HorizontalAlignment.LEFT, 0, 6);
-  para.setItalic(true);
+  para.editAsText().setItalic(true);
 }
 
 /**
@@ -384,15 +388,16 @@ function addNoticeBox(body, heading, text) {
   cell.setPaddingRight(8);
 
   var para = cell.getChild(0).asParagraph();
-  para.setFontFamily('Times New Roman');
-  para.setFontSize(9.5);
-  para.setForegroundColor(BRAND.textMuted);
+  var paraTs = para.editAsText();
+  paraTs.setFontFamily('Times New Roman');
+  paraTs.setFontSize(9.5);
+  paraTs.setForegroundColor(BRAND.textMuted);
   para.setSpacingBefore(0);
   para.setSpacingAfter(0);
 
   // Bold just the heading portion
   var headingLength = heading.length;
-  para.editAsText().setBold(0, headingLength - 1, true);
+  paraTs.setBold(0, headingLength - 1, true);
 }
 
 /**
@@ -417,19 +422,21 @@ function addAckItem(body, initials, statement) {
   // Replace the auto text with label + value
   var initLabelPara = initCell.getChild(0).asParagraph();
   initLabelPara.setText('INITIALS');
-  initLabelPara.setFontFamily('Times New Roman');
-  initLabelPara.setFontSize(7);
-  initLabelPara.setBold(true);
-  initLabelPara.setForegroundColor(BRAND.labelGrey);
+  var initLabelTs = initLabelPara.editAsText();
+  initLabelTs.setFontFamily('Times New Roman');
+  initLabelTs.setFontSize(7);
+  initLabelTs.setBold(true);
+  initLabelTs.setForegroundColor(BRAND.labelGrey);
   initLabelPara.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
   initLabelPara.setSpacingBefore(0);
   initLabelPara.setSpacingAfter(1);
 
   var initValPara = initCell.appendParagraph(initVal);
-  initValPara.setFontFamily('Times New Roman');
-  initValPara.setFontSize(11);
-  initValPara.setBold(true);
-  initValPara.setForegroundColor(BRAND.textDark);
+  var initValTs = initValPara.editAsText();
+  initValTs.setFontFamily('Times New Roman');
+  initValTs.setFontSize(11);
+  initValTs.setBold(true);
+  initValTs.setForegroundColor(BRAND.textDark);
   initValPara.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
   initValPara.setSpacingBefore(0);
   initValPara.setSpacingAfter(0);
@@ -443,10 +450,11 @@ function addAckItem(body, initials, statement) {
 
   var stmtPara = stmtCell.getChild(0).asParagraph();
   stmtPara.setText(statement);
-  stmtPara.setFontFamily('Times New Roman');
-  stmtPara.setFontSize(10);
-  stmtPara.setBold(false);
-  stmtPara.setForegroundColor(BRAND.textDark);
+  var stmtTs = stmtPara.editAsText();
+  stmtTs.setFontFamily('Times New Roman');
+  stmtTs.setFontSize(10);
+  stmtTs.setBold(false);
+  stmtTs.setForegroundColor(BRAND.textDark);
   stmtPara.setSpacingBefore(0);
   stmtPara.setSpacingAfter(0);
 }
@@ -456,7 +464,7 @@ function addAckItem(body, initials, statement) {
  */
 function addSpacer(body, pts) {
   var p = body.appendParagraph('');
-  p.setFontSize(1);
+  p.editAsText().setFontSize(1);
   p.setSpacingBefore(pts || 4);
   p.setSpacingAfter(0);
 }
