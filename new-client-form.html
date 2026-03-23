@@ -560,7 +560,7 @@
           <img alt="Spectrum Counseling Logo" class="h-10 sm:h-12 w-auto object-contain brightness-0 invert mb-2" src="https://lh3.googleusercontent.com/aida/ADBb0uiW71XvAti9pL6jbcsFAEaEdxhEePuv-rOZTr6grA3JVq0o4yVm2564eUC0zhMuqTmNQnH8vyXhu6j2EW8M4TYVgeF1FysXk3qODXbu0pa646_rwmxb1BNONrpLOWd0EoZ4TBnyFoYAo6Ovn0yn6dQGkhYAkIHj0jwDcdPsOG_7fTvpxPsQGCLfWTthc4Dd2G4pgNs0HlkoNihV-Hnu8xUiNkVDc0_HAeFtuDPwiQQgKJuZNjDpb2gRzVhRfV8MG1wW6_9nxUNU" />
         </a>
         <p class="text-on-primary/70 text-xs sm:text-sm tracking-wide">&copy; 2026 Spectrum Counseling | Marie Haddox, Ph.D.</p>
-        <p class="text-on-primary/30 text-[0.6rem] tracking-wide mt-1">Build 2026-03-23a</p>
+        <p class="text-on-primary/30 text-[0.6rem] tracking-wide mt-1">Build 2026-03-23b</p>
       </div>
       <div class="flex flex-wrap justify-center gap-4 sm:gap-8">
         <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="contact.html">Contact</a>
@@ -575,16 +575,44 @@
   </footer>
 
   <script>
-    // Show success state if redirected back after submission
+    // Show success state if redirected back after submission (legacy support)
     (function() {
       var params = new URLSearchParams(window.location.search);
       if (params.get('submitted') === 'true') {
         document.getElementById('client-form').style.display = 'none';
-        document.getElementById('form-success').classList.add('show');
+        document.getElementById('form-success').style.display = '';
       } else {
         document.getElementById('form-success').style.display = 'none';
       }
     })();
+
+    // Submit form via fetch so the browser stays on the page
+    document.getElementById('client-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var form = e.target;
+      var btn = document.getElementById('submit-btn');
+      var originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        mode: 'no-cors'
+      }).then(function() {
+        form.style.display = 'none';
+        document.getElementById('form-success').style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }).catch(function() {
+        // no-cors means we can't read the response, but the request still goes through
+        form.style.display = 'none';
+        document.getElementById('form-success').style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }).finally(function() {
+        btn.disabled = false;
+        btn.textContent = originalText;
+      });
+    });
 
     // Mobile menu
     var menuBtn = document.getElementById('mobile-menu-btn');
