@@ -863,7 +863,7 @@
           </button>
         </div>
         <!-- Answer panel -->
-        <div class="md:col-span-3 relative bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/10 p-8 sm:p-10 min-h-[280px] flex items-start overflow-hidden" id="faq-answer-panel">
+        <div class="md:col-span-3 relative bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/10 p-8 sm:p-10 flex items-start overflow-hidden transition-[min-height] duration-350 ease-in-out" id="faq-answer-panel">
           <div class="faq-panel active" data-faq="0">
             <span class="inline-block px-3 py-1 bg-primary-container/40 text-primary text-[0.65rem] font-bold tracking-widest uppercase rounded-full mb-4">Insurance &amp; Billing</span>
             <h3 class="text-xl sm:text-2xl font-bold text-on-surface mb-4" style="font-family: 'Noto Serif', serif;">Insurance &amp; Payment at Spectrum Counseling</h3>
@@ -942,11 +942,21 @@
 
       var faqAnswerContainer = document.getElementById('faq-answer-panel');
 
+      function resizeFaqPanel(panel) {
+        if (!faqAnswerContainer || !panel) return;
+        // Temporarily make panel visible for measurement
+        panel.style.position = 'relative';
+        var h = panel.scrollHeight;
+        panel.style.position = '';
+        faqAnswerContainer.style.minHeight = h + 'px';
+      }
+
       function activateFaq(index, shouldScroll) {
         faqBtns.forEach(function(b) { b.classList.remove('active'); });
         faqPanels.forEach(function(p) { p.classList.remove('active'); });
         faqBtns[index].classList.add('active');
         faqPanels[index].classList.add('active');
+        resizeFaqPanel(faqPanels[index]);
         if (shouldScroll && window.innerWidth < 768 && faqAnswerContainer) {
           faqAnswerContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -957,6 +967,10 @@
       });
 
       activateFaq(0);
+      window.addEventListener('resize', function() {
+        var active = document.querySelector('.faq-panel.active');
+        if (active) resizeFaqPanel(active);
+      });
     })();
 
     // === Specializations Feature Slider with auto-cycle timer ===
