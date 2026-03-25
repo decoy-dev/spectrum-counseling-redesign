@@ -100,12 +100,12 @@
       --color-nav-glass: 255 255 255;
     }
     .dark {
-      --color-primary: 147 178 220;
-      --color-primary-dim: 118 152 200;
+      --color-primary: 70 110 165;
+      --color-primary-dim: 55 90 140;
       --color-primary-fixed: 60 90 130;
       --color-primary-fixed-dim: 80 115 160;
       --color-primary-container: 40 60 95;
-      --color-on-primary: 18 22 32;
+      --color-on-primary: 235 240 250;
       --color-on-primary-container: 170 195 230;
       --color-secondary: 140 160 185;
       --color-secondary-container: 40 55 75;
@@ -314,6 +314,7 @@
   </style>
 </head>
 <body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold">Skip to main content</a>
   <div id="page-transition"></div>
 
   <!-- Navigation -->
@@ -368,14 +369,15 @@
     </div>
   </nav>
 
+  <main id="main-content">
   <!-- Page Header -->
   <section class="pt-32 sm:pt-36 md:pt-40 pb-12 sm:pb-16 bg-surface-container-low">
     <div class="max-w-4xl mx-auto px-5 sm:px-8">
       <a href="https://spectrumcounseling.net/" class="inline-flex items-center gap-1 text-sm text-on-surface-variant hover:text-primary transition-colors mb-6">
-        <span class="material-symbols-outlined text-lg">arrow_back</span>
+        <span class="material-symbols-outlined text-lg" aria-hidden="true">arrow_back</span>
         Back to Home
       </a>
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-on-surface mb-4">New Client Form</h1>
+      <h1 class="text-3xl sm:text-4xl font-serif text-on-surface font-semibold leading-tight">New Client Intake Form</h1>
       <p class="text-base sm:text-lg text-on-surface-variant max-w-2xl">Complete the information below to begin your journey with Spectrum Counseling. All information is kept strictly confidential.</p>
     </div>
   </section>
@@ -386,7 +388,7 @@
       <!-- ACTION: Replace the URL below with your deployed Google Apps Script web app URL -->
       <form id="client-form" action="https://script.google.com/macros/s/AKfycbzrNHAfkxFZsAfHtZmhlnKME56BGFUxki3FLGawHd0SNE272uLV7LfOaYPkcQtk8Cka/exec" method="POST">
         <!-- Honeypot spam protection — hidden from real users -->
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+        <input type="text" name="_honey" aria-hidden="true" tabindex="-1" style="position:absolute;left:-9999px" autocomplete="off" />
         <!-- Bot timing detection — set by JS on page load, validated server-side -->
         <input type="hidden" name="_loaded" id="_loaded" value="" />
 
@@ -729,7 +731,7 @@
 
       <!-- Success Message (shown after redirect back) -->
       <div id="form-success" class="form-success fade-in visible text-center py-20">
-        <span class="material-symbols-outlined text-6xl text-primary mb-6 block">check_circle</span>
+        <span class="material-symbols-outlined text-6xl text-primary mb-6 block" aria-hidden="true">check_circle</span>
         <h2 class="text-2xl sm:text-3xl font-bold text-on-surface mb-4">Form Submitted Successfully</h2>
         <p class="text-on-surface-variant mb-8 max-w-lg mx-auto">Thank you for submitting your new client information. Dr. Haddox will review your form and contact you to schedule your first session.</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -743,6 +745,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <!-- Footer -->
   <footer class="w-full py-10 sm:py-16 px-5 sm:px-8 bg-primary text-on-primary">
@@ -760,8 +763,8 @@
         <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="terms.html">Terms of Service</a>
       </div>
       <div class="flex gap-4">
-        <span class="material-symbols-outlined text-on-primary/60">diversity_3</span>
-        <span class="material-symbols-outlined text-on-primary/60">spa</span>
+        <span class="material-symbols-outlined text-on-primary/60" aria-hidden="true">diversity_3</span>
+        <span class="material-symbols-outlined text-on-primary/60" aria-hidden="true">spa</span>
       </div>
     </div>
   </footer>

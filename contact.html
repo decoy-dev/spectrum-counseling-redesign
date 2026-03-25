@@ -112,12 +112,12 @@
       --color-nav-glass: 255 255 255;
     }
     .dark {
-      --color-primary: 147 178 220;
-      --color-primary-dim: 118 152 200;
+      --color-primary: 70 110 165;
+      --color-primary-dim: 55 90 140;
       --color-primary-fixed: 60 90 130;
       --color-primary-fixed-dim: 80 115 160;
       --color-primary-container: 40 60 95;
-      --color-on-primary: 18 22 32;
+      --color-on-primary: 235 240 250;
       --color-on-primary-container: 170 195 230;
       --color-secondary: 140 160 185;
       --color-secondary-dim: 110 130 155;
@@ -274,6 +274,7 @@
   </style>
 </head>
 <body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold">Skip to main content</a>
   <div id="page-transition"></div>
 
   <!-- Navigation -->
@@ -328,11 +329,12 @@
     </div>
   </nav>
 
+  <main id="main-content">
   <!-- Page Header -->
   <section class="pt-32 sm:pt-36 md:pt-40 pb-12 sm:pb-16 bg-surface-container-low">
     <div class="max-w-5xl mx-auto px-5 sm:px-8">
       <a href="https://spectrumcounseling.net/" class="inline-flex items-center gap-1 text-sm text-on-surface-variant hover:text-primary transition-colors mb-6">
-        <span class="material-symbols-outlined text-lg">arrow_back</span>
+        <span class="material-symbols-outlined text-lg" aria-hidden="true">arrow_back</span>
         Back to Home
       </a>
       <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-on-surface mb-4">Contact Us</h1>
@@ -346,19 +348,19 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-16 sm:mb-20 fade-in">
         <!-- Phone -->
         <a href="tel:+14807820113" class="group bg-surface-container-lowest rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg hover:scale-[1.01] transition-all duration-200">
-          <span class="material-symbols-outlined text-3xl text-primary mb-4 block">call</span>
+          <span class="material-symbols-outlined text-3xl text-primary mb-4 block" aria-hidden="true">call</span>
           <h3 class="text-lg font-bold text-on-surface mb-2">Phone</h3>
           <p class="text-on-surface-variant group-hover:text-primary transition-colors">(480) 782-0113</p>
         </a>
         <!-- Email -->
         <a href="mailto:mhaddox@spectrumcounseling.net" class="group bg-surface-container-lowest rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg hover:scale-[1.01] transition-all duration-200">
-          <span class="material-symbols-outlined text-3xl text-primary mb-4 block">mail</span>
+          <span class="material-symbols-outlined text-3xl text-primary mb-4 block" aria-hidden="true">mail</span>
           <h3 class="text-lg font-bold text-on-surface mb-2">Email</h3>
           <p class="text-on-surface-variant group-hover:text-primary transition-colors break-all">mhaddox@spectrumcounseling.net</p>
         </a>
         <!-- Location -->
         <a href="https://maps.app.goo.gl/2ZQNhKLbCcT1tTy28" target="_blank" rel="noopener noreferrer" class="group bg-surface-container-lowest rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg hover:scale-[1.01] transition-all duration-200 sm:col-span-2 lg:col-span-1">
-          <span class="material-symbols-outlined text-3xl text-primary mb-4 block">location_on</span>
+          <span class="material-symbols-outlined text-3xl text-primary mb-4 block" aria-hidden="true">location_on</span>
           <h3 class="text-lg font-bold text-on-surface mb-2">Office</h3>
           <address class="not-italic text-on-surface-variant group-hover:text-primary transition-colors">
             428 S. Gilbert Rd. Ste. #105 (Bldg. 3)<br>Gilbert, AZ 85296
@@ -373,7 +375,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
           <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 shadow-sm">
             <div class="flex items-center gap-3 mb-4">
-              <span class="material-symbols-outlined text-2xl text-primary">event_note</span>
+              <span class="material-symbols-outlined text-2xl text-primary" aria-hidden="true">event_note</span>
               <h3 class="text-lg font-bold text-on-surface">Intake / Assessment</h3>
             </div>
             <div class="flex items-baseline gap-1 mb-2">
@@ -384,7 +386,7 @@
           </div>
           <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 shadow-sm">
             <div class="flex items-center gap-3 mb-4">
-              <span class="material-symbols-outlined text-2xl text-primary">self_improvement</span>
+              <span class="material-symbols-outlined text-2xl text-primary" aria-hidden="true">self_improvement</span>
               <h3 class="text-lg font-bold text-on-surface">Individual / Relationships / Family</h3>
             </div>
             <div class="flex items-baseline gap-1 mb-2">
@@ -395,7 +397,7 @@
           </div>
         </div>
         <p class="text-sm text-on-surface-variant mt-4 flex items-center gap-2">
-          <span class="material-symbols-outlined text-lg text-primary">info</span>
+          <span class="material-symbols-outlined text-lg text-primary" aria-hidden="true">info</span>
           Discount available for cash, check, or certain cash app payments.
         </p>
       </div>
@@ -411,23 +413,23 @@
           <h3 class="text-lg font-bold text-on-surface mt-8 mb-4">Questions to Ask Your Insurance Provider</h3>
           <ul class="space-y-2 text-on-surface-variant text-sm sm:text-base">
             <li class="flex items-start gap-2">
-              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0">check_circle</span>
+              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
               Do I have benefits for mental health services?
             </li>
             <li class="flex items-start gap-2">
-              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0">check_circle</span>
+              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
               Do I have a deductible and, if so, has it been met?
             </li>
             <li class="flex items-start gap-2">
-              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0">check_circle</span>
+              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
               How many sessions per year does my plan cover?
             </li>
             <li class="flex items-start gap-2">
-              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0">check_circle</span>
+              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
               What is the coverage amount for out-of-network providers?
             </li>
             <li class="flex items-start gap-2">
-              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0">check_circle</span>
+              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
               Is preapproval required from my primary care physician?
             </li>
           </ul>
@@ -456,15 +458,15 @@
           </p>
           <ul class="space-y-4 text-on-surface-variant text-sm sm:text-base mb-6">
             <li class="flex items-start gap-3">
-              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0">description</span>
+              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0" aria-hidden="true">description</span>
               <span>You have the right to receive a Good Faith Estimate for the total expected cost of any non-emergency items or services, including related costs like medical tests, prescription drugs, equipment, and hospital fees.</span>
             </li>
             <li class="flex items-start gap-3">
-              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0">calendar_today</span>
+              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0" aria-hidden="true">calendar_today</span>
               <span>Make sure your health care provider gives you a Good Faith Estimate in writing at least 1 business day before your medical service or item. You can also ask any provider for a Good Faith Estimate before you schedule an item or service.</span>
             </li>
             <li class="flex items-start gap-3">
-              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0">gavel</span>
+              <span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0" aria-hidden="true">gavel</span>
               <span>If you receive a bill that is at least <strong class="text-on-surface">$400 more</strong> than your Good Faith Estimate, you can dispute the bill.</span>
             </li>
           </ul>
@@ -490,6 +492,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <!-- Footer -->
   <footer class="w-full py-10 sm:py-16 px-5 sm:px-8 bg-primary text-on-primary">
@@ -506,8 +509,8 @@
         <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="terms.html">Terms of Service</a>
       </div>
       <div class="flex gap-4">
-        <span class="material-symbols-outlined text-on-primary/60">diversity_3</span>
-        <span class="material-symbols-outlined text-on-primary/60">spa</span>
+        <span class="material-symbols-outlined text-on-primary/60" aria-hidden="true">diversity_3</span>
+        <span class="material-symbols-outlined text-on-primary/60" aria-hidden="true">spa</span>
       </div>
     </div>
   </footer>

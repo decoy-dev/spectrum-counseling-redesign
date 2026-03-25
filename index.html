@@ -254,12 +254,12 @@
       --color-nav-glass: 255 255 255;
     }
     .dark {
-      --color-primary: 147 178 220;
-      --color-primary-dim: 118 152 200;
+      --color-primary: 70 110 165;
+      --color-primary-dim: 55 90 140;
       --color-primary-fixed: 60 90 130;
       --color-primary-fixed-dim: 80 115 160;
       --color-primary-container: 40 60 95;
-      --color-on-primary: 18 22 32;
+      --color-on-primary: 235 240 250;
       --color-on-primary-container: 170 195 230;
       --color-on-primary-fixed: 200 215 235;
       --color-on-primary-fixed-variant: 170 190 220;
@@ -290,7 +290,7 @@
       --color-surface-container-high: 35 42 58;
       --color-surface-container-highest: 45 52 70;
       --color-surface-variant: 40 50 65;
-      --color-surface-tint: 147 178 220;
+      --color-surface-tint: 70 110 165;
       --color-on-surface: 220 225 235;
       --color-on-surface-variant: 170 178 190;
       --color-on-background: 220 225 235;
@@ -642,6 +642,7 @@
   </style>
 </head>
 <body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold">Skip to main content</a>
 
   <div id="page-transition"></div>
 
@@ -677,7 +678,7 @@
       </div>
       <!-- Mobile menu button -->
       <button id="mobile-menu-btn" class="lg:hidden flex items-center text-on-surface-variant" aria-label="Toggle menu">
-        <span class="material-symbols-outlined text-2xl">menu</span>
+        <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
       </button>
     </div>
     <!-- Mobile menu -->
@@ -696,20 +697,21 @@
           New Client Form
         </a>
         <button id="theme-toggle-mobile" class="flex items-center justify-center gap-2 text-on-surface-variant hover:text-primary transition-colors py-2 text-sm font-medium" aria-label="Toggle dark mode">
-          <span class="material-symbols-outlined text-xl">dark_mode</span>
+          <span class="material-symbols-outlined text-xl" aria-hidden="true">dark_mode</span>
           <span>Dark Mode</span>
         </button>
       </div>
     </div>
   </nav>
 
+  <main id="main-content">
   <!-- Hero Section -->
   <section class="relative min-h-[100dvh] sm:min-h-[80vh] md:min-h-[85vh] flex items-end sm:items-center pt-20 sm:pt-32 md:pt-36 pb-12 sm:pb-14 md:pb-10 overflow-hidden">
     <div class="absolute inset-0 -z-10">
       <!-- Mobile: image only covers the top portion, solid surface below -->
       <div class="relative w-full h-[45%] sm:h-full">
-        <img id="hero-light" alt="Water lilies on a serene pond" class="absolute inset-0 w-full h-full object-cover" src="assets/hero.jpg" />
-        <img id="hero-dark" alt="Dark lotus flowers" class="absolute inset-0 w-full h-full object-cover opacity-0" src="assets/hero-dark.jpg" />
+        <img id="hero-light" alt="Serene water lily pond — Spectrum Counseling Gilbert AZ therapy practice" class="absolute inset-0 w-full h-full object-cover" src="assets/hero.jpg" />
+        <img id="hero-dark" alt="Lotus flowers at dusk — Spectrum Counseling dark theme" class="absolute inset-0 w-full h-full object-cover opacity-0" src="assets/hero-dark.jpg" />
       </div>
       <div class="absolute inset-0 bg-gradient-to-b from-transparent via-surface via-[40%] to-surface sm:hidden"></div>
       <!-- Desktop overlay: left-to-right fade for side-aligned content -->
@@ -719,7 +721,7 @@
     <div class="max-w-7xl mx-auto px-6 sm:px-8 w-full">
       <div class="max-w-3xl">
         <span class="inline-flex items-center gap-2 text-primary text-[0.7rem] sm:text-xs font-bold tracking-[0.05em] sm:tracking-widest uppercase mb-4 sm:mb-6 hero-tag sm:bg-transparent rounded-full px-4 py-1.5 sm:px-0 sm:py-0 sm:rounded-none border-l-0 sm:border-l-2 border-primary sm:pl-3">
-          <span class="material-symbols-outlined text-sm sm:text-base">spa</span>
+          <span class="material-symbols-outlined text-sm sm:text-base" aria-hidden="true">spa</span>
           Honoring Every Part of Who You Are
         </span>
         <h1 class="text-4xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-on-surface leading-[1.08] sm:leading-[1.1] tracking-tight sm:tracking-normal mb-6 sm:mb-8">
@@ -742,9 +744,9 @@
 
   <!-- Scroll indicator — fixed, mirrors nav distance from top -->
   <div class="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 hidden lg:flex items-center gap-2 scroll-hint-glass backdrop-blur-xl shadow-lg rounded-full px-4 py-2 text-on-surface-variant/70 transition-opacity duration-300" id="scroll-hint">
-    <span class="material-symbols-outlined text-base animate-bounce">keyboard_arrow_down</span>
+    <span class="material-symbols-outlined text-base animate-bounce" aria-hidden="true">keyboard_arrow_down</span>
     <span class="text-xs tracking-widest uppercase font-medium">Scroll</span>
-    <span class="material-symbols-outlined text-base animate-bounce">keyboard_arrow_down</span>
+    <span class="material-symbols-outlined text-base animate-bounce" aria-hidden="true">keyboard_arrow_down</span>
   </div>
 
   <!-- About Section -->
@@ -755,7 +757,7 @@
           <div class="grid grid-cols-2 gap-4">
             <div class="space-y-4">
               <div class="aspect-[3/4] rounded-2xl bg-primary-container/30 overflow-hidden">
-                <img alt="Spectrum Counseling therapy room" class="w-full h-full object-cover grayscale-[30%]" src="assets/about-hero.jpg" />
+                <img alt="Comfortable therapy room at Spectrum Counseling in Gilbert Arizona" class="w-full h-full object-cover grayscale-[30%]" src="assets/about-hero.jpg" />
               </div>
               <div class="aspect-square rounded-2xl bg-primary shadow-lg overflow-hidden flex items-center justify-center p-6 sm:p-8 text-on-primary">
                 <div class="text-center">
@@ -766,10 +768,10 @@
             </div>
             <div class="pt-8 sm:pt-12 space-y-4">
               <div class="aspect-square rounded-2xl bg-tertiary-container shadow-sm overflow-hidden">
-                <img alt="Spectrum Counseling waiting area with flowers" class="w-full h-full object-cover" src="assets/specialties-hero.jpg" />
+                <img alt="Welcoming waiting area with fresh flowers at Spectrum Counseling Gilbert AZ" class="w-full h-full object-cover" src="assets/specialties-hero.jpg" />
               </div>
               <div class="aspect-[3/4] rounded-2xl bg-surface-container-high overflow-hidden">
-                <img alt="Dr. Haddox credentials and office decor" class="w-full h-full object-cover opacity-70" src="assets/certificate.jpg" />
+                <img alt="Dr. Marie Haddox Ph.D. credentials and professional certifications" class="w-full h-full object-cover opacity-70" src="assets/certificate.jpg" />
               </div>
             </div>
           </div>
@@ -788,23 +790,23 @@
             </p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
               <div class="flex items-center gap-3 text-primary font-bold">
-                <span class="material-symbols-outlined text-primary-dim">school</span>
+                <span class="material-symbols-outlined text-primary-dim" aria-hidden="true">school</span>
                 <span class="text-sm">PhD &amp; MA from USIU San Diego</span>
               </div>
               <div class="flex items-center gap-3 text-primary font-bold">
-                <span class="material-symbols-outlined text-primary-dim">history_edu</span>
+                <span class="material-symbols-outlined text-primary-dim" aria-hidden="true">history_edu</span>
                 <span class="text-sm">BS from Arizona State University</span>
               </div>
               <div class="flex items-center gap-3 text-primary font-bold">
-                <span class="material-symbols-outlined text-primary-dim">health_and_safety</span>
+                <span class="material-symbols-outlined text-primary-dim" aria-hidden="true">health_and_safety</span>
                 <span class="text-sm">Banner Desert Medical Center Exp.</span>
               </div>
               <div class="flex items-center gap-3 text-primary font-bold">
-                <span class="material-symbols-outlined text-primary-dim">diversity_1</span>
+                <span class="material-symbols-outlined text-primary-dim" aria-hidden="true">diversity_1</span>
                 <span class="text-sm">Holistic &amp; Affirming Care</span>
               </div>
               <div class="flex items-center gap-3 text-primary font-bold">
-                <span class="material-symbols-outlined text-primary-dim">transgender</span>
+                <span class="material-symbols-outlined text-primary-dim" aria-hidden="true">transgender</span>
                 <span class="text-sm">WPATH Member</span>
               </div>
             </div>
@@ -827,19 +829,19 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8 mb-8">
         <!-- Service 1 -->
         <div class="p-7 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] bg-surface-container-lowest shadow-sm fade-in">
-          <span class="material-symbols-outlined text-3xl sm:text-4xl text-primary mb-5 sm:mb-8 block">person_4</span>
+          <span class="material-symbols-outlined text-3xl sm:text-4xl text-primary mb-5 sm:mb-8 block" aria-hidden="true">person_4</span>
           <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-on-surface">Individual Counseling</h3>
           <p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">Personalized support for anxiety, depression, and personal growth through a trauma-informed lens.</p>
         </div>
         <!-- Service 2 -->
         <div class="p-7 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] bg-surface-container-lowest shadow-sm fade-in">
-          <span class="material-symbols-outlined text-3xl sm:text-4xl text-primary mb-5 sm:mb-8 block">favorite</span>
+          <span class="material-symbols-outlined text-3xl sm:text-4xl text-primary mb-5 sm:mb-8 block" aria-hidden="true">favorite</span>
           <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-on-surface">Relationships</h3>
           <p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">Strengthening connections, resolving conflict, and rebuilding intimacy through effective communication.</p>
         </div>
         <!-- Service 3 -->
         <div class="p-7 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] bg-surface-container-lowest shadow-sm fade-in sm:last:col-span-2 lg:last:col-span-1">
-          <span class="material-symbols-outlined text-3xl sm:text-4xl text-primary mb-5 sm:mb-8 block">groups</span>
+          <span class="material-symbols-outlined text-3xl sm:text-4xl text-primary mb-5 sm:mb-8 block" aria-hidden="true">groups</span>
           <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-on-surface">Family Systems</h3>
           <p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">Navigating transitional periods and improving dynamics within the nuclear or extended family unit.</p>
         </div>
@@ -847,7 +849,7 @@
       <!-- LGBTQ Specialization Highlight -->
       <div class="relative overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[3rem] bg-gradient-to-r from-primary to-primary-dim p-8 sm:p-12 md:p-20 text-on-primary mt-8 sm:mt-12 fade-in">
         <div class="absolute top-0 right-0 w-1/3 h-full opacity-10 hidden sm:block">
-          <span class="material-symbols-outlined text-[20rem] translate-x-1/2 translate-y-1/4">diversity_1</span>
+          <span class="material-symbols-outlined text-[20rem] translate-x-1/2 translate-y-1/4" aria-hidden="true">diversity_1</span>
         </div>
         <div class="max-w-3xl relative z-10">
           <span class="inline-block px-3 sm:px-4 py-1 bg-white/20 rounded-full text-[0.65rem] sm:text-xs font-bold tracking-widest uppercase mb-4 sm:mb-6">Expert Specialization</span>
@@ -876,46 +878,46 @@
         <!-- Button column -->
         <div class="flex flex-row sm:flex-col gap-2 sm:gap-2.5 sm:w-[190px] lg:w-[210px] flex-shrink-0" id="spec-list">
           <button class="spec-indicator active flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="0">
-            <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">rainy</span>
+            <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon" aria-hidden="true">rainy</span>
             <span class="hidden sm:inline">Depression</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-            <span class="material-symbols-outlined spec-state-icon icon-pause">pause</span>
-            <span class="material-symbols-outlined spec-state-icon icon-play">play_arrow</span>
+            <span class="material-symbols-outlined spec-state-icon icon-pause" aria-hidden="true">pause</span>
+            <span class="material-symbols-outlined spec-state-icon icon-play" aria-hidden="true">play_arrow</span>
           </button>
           <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="1">
-            <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">psychology</span>
+            <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon" aria-hidden="true">psychology</span>
             <span class="hidden sm:inline">Anxiety</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-            <span class="material-symbols-outlined spec-state-icon icon-pause">pause</span>
-            <span class="material-symbols-outlined spec-state-icon icon-play">play_arrow</span>
+            <span class="material-symbols-outlined spec-state-icon icon-pause" aria-hidden="true">pause</span>
+            <span class="material-symbols-outlined spec-state-icon icon-play" aria-hidden="true">play_arrow</span>
           </button>
           <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="2">
-            <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">group</span>
+            <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon" aria-hidden="true">group</span>
             <span class="hidden sm:inline">Relationships</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-            <span class="material-symbols-outlined spec-state-icon icon-pause">pause</span>
-            <span class="material-symbols-outlined spec-state-icon icon-play">play_arrow</span>
+            <span class="material-symbols-outlined spec-state-icon icon-pause" aria-hidden="true">pause</span>
+            <span class="material-symbols-outlined spec-state-icon icon-play" aria-hidden="true">play_arrow</span>
           </button>
           <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="3">
-            <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">favorite</span>
+            <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon" aria-hidden="true">favorite</span>
             <span class="hidden sm:inline">Sexuality</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-            <span class="material-symbols-outlined spec-state-icon icon-pause">pause</span>
-            <span class="material-symbols-outlined spec-state-icon icon-play">play_arrow</span>
+            <span class="material-symbols-outlined spec-state-icon icon-pause" aria-hidden="true">pause</span>
+            <span class="material-symbols-outlined spec-state-icon icon-play" aria-hidden="true">play_arrow</span>
           </button>
           <button class="spec-indicator flex-1 flex items-center gap-2.5 px-3 sm:px-5 py-3 sm:py-0 rounded-xl text-on-surface-variant text-xs sm:text-sm font-semibold justify-center sm:justify-start" data-spec="4">
-            <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon">transgender</span>
+            <span class="material-symbols-outlined text-lg sm:text-xl spec-ind-icon" aria-hidden="true">transgender</span>
             <span class="hidden sm:inline">Gender</span>
             <div class="spec-timer-track"><div class="spec-timer-bar"></div></div>
-            <span class="material-symbols-outlined spec-state-icon icon-pause">pause</span>
-            <span class="material-symbols-outlined spec-state-icon icon-play">play_arrow</span>
+            <span class="material-symbols-outlined spec-state-icon icon-pause" aria-hidden="true">pause</span>
+            <span class="material-symbols-outlined spec-state-icon icon-play" aria-hidden="true">play_arrow</span>
           </button>
         </div>
         <!-- Image slider -->
         <div class="relative h-[300px] sm:h-full sm:flex-1 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden" id="spec-slider">
           <!-- Slide 0: Depression -->
           <div class="spec-slide active" data-spec="0">
-            <img alt="Spectrum Counseling therapy room" src="assets/about-hero.jpg" />
+            <img alt="Comfortable therapy room at Spectrum Counseling in Gilbert Arizona" src="assets/about-hero.jpg" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Depression Treatment</h3>
@@ -924,7 +926,7 @@
           </div>
           <!-- Slide 1: Anxiety -->
           <div class="spec-slide" data-spec="1">
-            <img alt="Spectrum Counseling waiting area with flowers" src="assets/specialties-hero.jpg" />
+            <img alt="Welcoming waiting area with fresh flowers at Spectrum Counseling Gilbert AZ" src="assets/specialties-hero.jpg" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Anxiety &amp; Stress</h3>
@@ -933,7 +935,7 @@
           </div>
           <!-- Slide 2: Relationships -->
           <div class="spec-slide" data-spec="2">
-            <img alt="Dr. Haddox credentials and office decor" src="assets/certificate.jpg" />
+            <img alt="Dr. Marie Haddox Ph.D. credentials and professional certifications" src="assets/certificate.jpg" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Relationships &amp; Couples</h3>
@@ -942,7 +944,7 @@
           </div>
           <!-- Slide 3: Sexuality -->
           <div class="spec-slide" data-spec="3">
-            <img alt="Spectrum Counseling office with credentials" src="assets/contact-hero.jpg" />
+            <img alt="Licensed psychologist office with professional credentials in Gilbert Arizona" src="assets/contact-hero.jpg" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Sexuality</h3>
@@ -951,7 +953,7 @@
           </div>
           <!-- Slide 4: Gender -->
           <div class="spec-slide" data-spec="4">
-            <img alt="Spectrum Counseling full therapy room" src="assets/room.webp" />
+            <img alt="Full view of private therapy room at Spectrum Counseling Gilbert AZ" src="assets/room.webp" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Gender Identity &amp; Transition Support</h3>
@@ -979,7 +981,7 @@
           </p>
           <div class="flex items-center gap-3 sm:gap-4 mt-auto">
             <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary-fixed flex-shrink-0 flex items-center justify-center">
-              <span class="material-symbols-outlined text-on-surface-variant/40 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-on-surface-variant/40 text-lg" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">star</span>
             </div>
             <div>
               <p class="font-bold text-sm sm:text-base text-on-surface">Kavita Hatten, MS, LPC</p>
@@ -995,7 +997,7 @@
           </p>
           <div class="flex items-center gap-3 sm:gap-4 mt-auto">
             <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary-fixed flex-shrink-0 flex items-center justify-center">
-              <span class="material-symbols-outlined text-on-surface-variant/40 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-on-surface-variant/40 text-lg" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">star</span>
             </div>
             <div>
               <p class="font-bold text-sm sm:text-base text-on-surface">J.L.</p>
@@ -1011,7 +1013,7 @@
           </p>
           <div class="flex items-center gap-3 sm:gap-4 mt-auto">
             <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-tertiary-fixed flex-shrink-0 flex items-center justify-center">
-              <span class="material-symbols-outlined text-on-surface-variant/40 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-on-surface-variant/40 text-lg" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">star</span>
             </div>
             <div>
               <p class="font-bold text-sm sm:text-base text-on-surface">B.F.</p>
@@ -1034,14 +1036,14 @@
           </p>
           <address class="not-italic space-y-4 mb-8">
             <div class="flex items-start gap-3">
-              <span class="material-symbols-outlined text-primary text-2xl mt-0.5">location_on</span>
+              <span class="material-symbols-outlined text-primary text-2xl mt-0.5" aria-hidden="true">location_on</span>
               <div>
                 <p class="font-bold text-on-surface">428 S Gilbert Rd. Ste. #105 (Bldg. 3)</p>
                 <p class="text-on-surface-variant">Gilbert, AZ 85296</p>
               </div>
             </div>
             <div class="flex items-start gap-3">
-              <span class="material-symbols-outlined text-primary text-2xl mt-0.5">schedule</span>
+              <span class="material-symbols-outlined text-primary text-2xl mt-0.5" aria-hidden="true">schedule</span>
               <div>
                 <p class="font-bold text-on-surface">Office Hours</p>
                 <p class="text-on-surface-variant">Monday – Friday, 9:00 AM – 5:00 PM</p>
@@ -1049,7 +1051,7 @@
             </div>
           </address>
           <a href="https://maps.app.goo.gl/2ZQNhKLbCcT1tTy28" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold text-sm sm:text-base hover:bg-primary-dim hover:scale-[1.01] hover:shadow-lg hover:shadow-primary/25 transition-all duration-200 active:scale-95 shadow-md shadow-primary/10">
-            <span class="material-symbols-outlined text-lg">open_in_new</span>
+            <span class="material-symbols-outlined text-lg" aria-hidden="true">open_in_new</span>
             Open in Google Maps
           </a>
         </div>
@@ -1080,50 +1082,50 @@
       <div class="grid grid-cols-1 md:grid-cols-5 gap-6 sm:gap-8 fade-in" id="faq-list">
         <!-- Question buttons -->
         <div class="md:col-span-2 space-y-2">
-          <button class="faq-btn active w-full px-5 py-4 text-left flex items-center gap-3 rounded-xl" data-faq="0">
-            <span class="material-symbols-outlined text-lg faq-icon-btn flex-shrink-0">payments</span>
+          <button class="faq-btn active w-full px-5 py-4 text-left flex items-center gap-3 rounded-xl" data-faq="0" aria-expanded="true" aria-controls="faq-answer-0">
+            <span class="material-symbols-outlined text-lg faq-icon-btn flex-shrink-0" aria-hidden="true">payments</span>
             <span class="text-base font-semibold">Do you take insurance?</span>
           </button>
-          <button class="faq-btn w-full px-5 py-4 text-left flex items-center gap-3 rounded-xl" data-faq="1">
-            <span class="material-symbols-outlined text-lg faq-icon-btn flex-shrink-0">event_note</span>
+          <button class="faq-btn w-full px-5 py-4 text-left flex items-center gap-3 rounded-xl" data-faq="1" aria-expanded="false" aria-controls="faq-answer-1">
+            <span class="material-symbols-outlined text-lg faq-icon-btn flex-shrink-0" aria-hidden="true">event_note</span>
             <span class="text-base font-semibold">What should I expect in my first session?</span>
           </button>
-          <button class="faq-btn w-full px-5 py-4 text-left flex items-center gap-3 rounded-xl" data-faq="2">
-            <span class="material-symbols-outlined text-lg faq-icon-btn flex-shrink-0">schedule</span>
+          <button class="faq-btn w-full px-5 py-4 text-left flex items-center gap-3 rounded-xl" data-faq="2" aria-expanded="false" aria-controls="faq-answer-2">
+            <span class="material-symbols-outlined text-lg faq-icon-btn flex-shrink-0" aria-hidden="true">schedule</span>
             <span class="text-base font-semibold">How long are the sessions?</span>
           </button>
-          <button class="faq-btn w-full px-5 py-4 text-left flex items-center gap-3 rounded-xl" data-faq="3">
-            <span class="material-symbols-outlined text-lg faq-icon-btn flex-shrink-0">videocam</span>
+          <button class="faq-btn w-full px-5 py-4 text-left flex items-center gap-3 rounded-xl" data-faq="3" aria-expanded="false" aria-controls="faq-answer-3">
+            <span class="material-symbols-outlined text-lg faq-icon-btn flex-shrink-0" aria-hidden="true">videocam</span>
             <span class="text-base font-semibold">Do you offer telehealth sessions?</span>
           </button>
-          <button class="faq-btn w-full px-5 py-4 text-left flex items-center gap-3 rounded-xl" data-faq="4">
-            <span class="material-symbols-outlined text-lg faq-icon-btn flex-shrink-0">event_busy</span>
+          <button class="faq-btn w-full px-5 py-4 text-left flex items-center gap-3 rounded-xl" data-faq="4" aria-expanded="false" aria-controls="faq-answer-4">
+            <span class="material-symbols-outlined text-lg faq-icon-btn flex-shrink-0" aria-hidden="true">event_busy</span>
             <span class="text-base font-semibold">What is your cancellation policy?</span>
           </button>
         </div>
         <!-- Answer panel -->
         <div class="md:col-span-3 relative bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/10 p-8 sm:p-10 flex items-start overflow-hidden transition-[min-height] duration-350 ease-in-out" id="faq-answer-panel">
-          <div class="faq-panel active" data-faq="0">
+          <div class="faq-panel active" data-faq="0" id="faq-answer-0">
             <span class="inline-block px-3 py-1 bg-primary-container/40 text-primary text-[0.65rem] font-bold tracking-widest uppercase rounded-full mb-4">Insurance &amp; Billing</span>
             <h3 class="text-xl sm:text-2xl font-bold text-on-surface mb-4" style="font-family: 'Noto Serif', serif;">Insurance &amp; Payment at Spectrum Counseling</h3>
             <p class="text-sm sm:text-base text-on-surface-variant leading-[1.8]">Dr. Haddox is considered <strong class="text-on-surface">out-of-network for all insurance plans</strong> and does not submit claims directly to insurance companies. However, we can provide a diagnosis and procedure code to help you submit a claim for potential <strong class="text-on-surface">out-of-network reimbursement</strong>. See our <a href="contact.html" class="text-primary hover:underline font-semibold">contact page</a> for full rate and payment details.</p>
           </div>
-          <div class="faq-panel" data-faq="1">
+          <div class="faq-panel" data-faq="1" id="faq-answer-1">
             <span class="inline-block px-3 py-1 bg-primary-container/40 text-primary text-[0.65rem] font-bold tracking-widest uppercase rounded-full mb-4">Getting Started</span>
             <h3 class="text-xl sm:text-2xl font-bold text-on-surface mb-4" style="font-family: 'Noto Serif', serif;">Your First Session with Dr. Haddox</h3>
             <p class="text-sm sm:text-base text-on-surface-variant leading-[1.8]">The initial consultation is an intake session where we discuss your history, goals, and determine if our practice is the right fit for your needs. This session typically lasts <strong class="text-on-surface">60 minutes</strong>, and there's no pressure — it's a conversation to help us both understand how we can work together most effectively.</p>
           </div>
-          <div class="faq-panel" data-faq="2">
+          <div class="faq-panel" data-faq="2" id="faq-answer-2">
             <span class="inline-block px-3 py-1 bg-primary-container/40 text-primary text-[0.65rem] font-bold tracking-widest uppercase rounded-full mb-4">Session Details</span>
             <h3 class="text-xl sm:text-2xl font-bold text-on-surface mb-4" style="font-family: 'Noto Serif', serif;">How Long Are Counseling Sessions?</h3>
             <p class="text-sm sm:text-base text-on-surface-variant leading-[1.8]">All sessions — individual, couples, and family — are <strong class="text-on-surface">60 minutes</strong>. Extended sessions can be arranged for intensive therapeutic work when needed.</p>
           </div>
-          <div class="faq-panel" data-faq="3">
+          <div class="faq-panel" data-faq="3" id="faq-answer-3">
             <span class="inline-block px-3 py-1 bg-primary-container/40 text-primary text-[0.65rem] font-bold tracking-widest uppercase rounded-full mb-4">Virtual Care</span>
             <h3 class="text-xl sm:text-2xl font-bold text-on-surface mb-4" style="font-family: 'Noto Serif', serif;">Telehealth Therapy Across Arizona</h3>
             <p class="text-sm sm:text-base text-on-surface-variant leading-[1.8]">Yes, we offer secure telehealth sessions for clients <strong class="text-on-surface">throughout Arizona</strong>. Virtual sessions follow the same structure as in-person appointments and are conducted through a <strong class="text-on-surface">HIPAA-compliant platform</strong>. Many clients find the flexibility of telehealth helpful for maintaining consistency in their care.</p>
           </div>
-          <div class="faq-panel" data-faq="4">
+          <div class="faq-panel" data-faq="4" id="faq-answer-4">
             <span class="inline-block px-3 py-1 bg-primary-container/40 text-primary text-[0.65rem] font-bold tracking-widest uppercase rounded-full mb-4">Policies</span>
             <h3 class="text-xl sm:text-2xl font-bold text-on-surface mb-4" style="font-family: 'Noto Serif', serif;">Our Cancellation Policy</h3>
             <p class="text-sm sm:text-base text-on-surface-variant leading-[1.8]">We ask for at least <strong class="text-on-surface">24 hours' notice</strong> if you need to cancel or reschedule your appointment. Late cancellations or no-shows may be subject to a fee. We understand that life happens and will always work with you when unexpected circumstances arise.</p>
@@ -1154,6 +1156,8 @@
     </div>
   </section>
 
+  </main>
+
   <!-- Footer -->
   <footer class="w-full py-10 sm:py-16 px-5 sm:px-8 bg-primary text-on-primary">
     <div class="flex flex-col md:flex-row justify-between items-center gap-6 sm:gap-8 max-w-7xl mx-auto">
@@ -1167,8 +1171,8 @@
         <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="terms.html">Terms of Service</a>
       </div>
       <div class="flex gap-4">
-        <span class="material-symbols-outlined text-on-primary/60">diversity_3</span>
-        <span class="material-symbols-outlined text-on-primary/60">spa</span>
+        <span class="material-symbols-outlined text-on-primary/60" aria-hidden="true">diversity_3</span>
+        <span class="material-symbols-outlined text-on-primary/60" aria-hidden="true">spa</span>
       </div>
     </div>
   </footer>
@@ -1191,9 +1195,10 @@
       }
 
       function activateFaq(index, shouldScroll) {
-        faqBtns.forEach(function(b) { b.classList.remove('active'); });
+        faqBtns.forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-expanded', 'false'); });
         faqPanels.forEach(function(p) { p.classList.remove('active'); });
         faqBtns[index].classList.add('active');
+        faqBtns[index].setAttribute('aria-expanded', 'true');
         faqPanels[index].classList.add('active');
         resizeFaqPanel(faqPanels[index]);
         if (shouldScroll && window.innerWidth < 768 && faqAnswerContainer) {
@@ -1415,12 +1420,12 @@
       [188, 186, 233],
     ];
     var waveColorsDark = [
-      [147, 178, 220],
-      [118, 152, 200],
+      [70, 110, 165],
+      [55, 90, 140],
       [225, 185, 240],
       [205, 160, 220],
-      [100, 130, 180],
-      [130, 160, 210],
+      [80, 115, 160],
+      [100, 140, 190],
       [210, 175, 230],
       [190, 150, 210],
     ];
