@@ -670,8 +670,8 @@
     <div class="absolute inset-0 -z-10">
       <!-- Mobile: image only covers the top portion, solid surface below -->
       <div class="relative w-full h-[45%] sm:h-full">
-        <img id="hero-light" alt="Water lilies on a serene pond" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500" src="assets/hero.jpg" />
-        <img id="hero-dark" alt="Dark lotus flowers" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-0" src="assets/hero-dark.jpg" />
+        <img id="hero-light" alt="Water lilies on a serene pond" class="absolute inset-0 w-full h-full object-cover" src="assets/hero.jpg" />
+        <img id="hero-dark" alt="Dark lotus flowers" class="absolute inset-0 w-full h-full object-cover opacity-0" src="assets/hero-dark.jpg" />
       </div>
       <div class="absolute inset-0 bg-gradient-to-b from-transparent via-surface via-[40%] to-surface sm:hidden"></div>
       <!-- Desktop overlay: left-to-right fade for side-aligned content -->
@@ -1662,12 +1662,9 @@
       function applyTheme(dark, animate) {
         if (animate) {
           html.classList.add('theme-transitioning');
-          requestAnimationFrame(function() {
-            requestAnimationFrame(function() {
-              doApply(dark);
-              setTimeout(function() { html.classList.remove('theme-transitioning'); }, 600);
-            });
-          });
+          void html.offsetHeight; // force reflow so transitions register before changes
+          doApply(dark);
+          setTimeout(function() { html.classList.remove('theme-transitioning'); }, 600);
         } else {
           doApply(dark);
         }

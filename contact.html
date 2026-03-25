@@ -550,12 +550,9 @@
     function applyTheme(dark, animate) {
       if (animate) {
         html.classList.add('theme-transitioning');
-        requestAnimationFrame(function() {
-          requestAnimationFrame(function() {
-            doApply(dark);
-            setTimeout(function() { html.classList.remove('theme-transitioning'); }, 600);
-          });
-        });
+        void html.offsetHeight; // force reflow so transitions register before changes
+        doApply(dark);
+        setTimeout(function() { html.classList.remove('theme-transitioning'); }, 600);
       } else {
         doApply(dark);
       }
