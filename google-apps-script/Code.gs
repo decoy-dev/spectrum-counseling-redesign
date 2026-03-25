@@ -150,7 +150,7 @@ function buildDocument(body, f) {
   titlePara.setSpacingBefore(0);
   titlePara.setSpacingAfter(2);
 
-  addPara(body, 'Marie Haddox, Ph.D. \u2014 Licensed Psychologist',
+  addPara(body, 'Marie Haddox, Ph.D.',
     'Times New Roman', 11, false, BRAND.textMuted, 'CENTER', 0, 2);
   addPara(body, '428 S. Gilbert Rd. Ste. #105 (Bldg. 3) \u2022 Gilbert, AZ 85296 \u2022 (480) 782-0113',
     'Times New Roman', 9, false, BRAND.labelGrey, 'CENTER', 0, 8);
