@@ -33,6 +33,60 @@ var BRAND = {
   bgLight:     '#f5f7f8'
 };
 
+// ── Input sanitization & validation helpers ─────────────────
+function sanitize(str, maxLen) {
+  if (!str || typeof str !== 'string') return '';
+  // Strip HTML tags and trim
+  return str.replace(/<[^>]*>/g, '').trim().substring(0, maxLen || 500);
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isValidPhone(phone) {
+  return /^[\d\s\-\(\)\+\.]{7,20}$/.test(phone);
+}
+
+function isValidDate(dateStr) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return false;
+  var d = new Date(dateStr);
+  return !isNaN(d.getTime());
+}
+
+function isNotFutureDate(dateStr) {
+  var d = new Date(dateStr);
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return d <= today;
+}
+
+function isValidName(name) {
+  return /^[A-Za-z][A-Za-z \.\-']{1,149}$/.test(name);
+}
+
+function isValidInitials(initials) {
+  return /^[A-Za-z]{1,5}$/.test(initials);
+}
+
+var VALID_CONCERNS = [
+  'Nervousness', 'Anxiety', 'Depression', 'Stress', 'Anger', 'Sleep Issues',
+  'Hopelessness', 'Low Self-Esteem', 'Irritability', 'Loneliness',
+  'Relationship Issues', 'Sexual Difficulties', 'Excessive Worry',
+  'Excessive Fears', 'Obsessive Thoughts', 'Racing Thoughts',
+  'Suicidal Thoughts', 'Lack of Motivation', 'Loss of Energy',
+  'Poor Concentration', 'Memory Loss', 'Impulsivity', 'Drug Use',
+  'Alcohol Use', 'Appetite Changes', 'Weight Changes',
+  'Social Difficulties', 'Job Difficulties', 'Shyness', 'Nightmares',
+  'Stomach Problems', 'Muscle Tension'
+];
+
+var VALID_PAYMENTS = [
+  'Self-pay, no insurance benefits',
+  'Would like Good Faith Estimate',
+  'Applying for out-of-network reimbursement'
+];
+
 function doPost(e) {
   try {
     var p = e.parameter;
@@ -43,46 +97,109 @@ function doPost(e) {
       return redirect();
     }
 
-    var clientName = ((p['Client First Name'] || '') + ' ' + (p['Client Last Name'] || '')).trim();
-    var concerns = ps['Concerns'] ? ps['Concerns'].join(', ') : 'None selected';
+    // ── Server-side validation ──────────────────────────────────
+    var errors = [];
+
+    // Required text fields
+    var clientFirst = sanitize(p['Client First Name'], 100);
+    var clientLast  = sanitize(p['Client Last Name'], 100);
+    var clientPhone = sanitize(p['Client Phone'], 20);
+    var clientEmail = sanitize(p['Client Email'], 254);
+    var clientAddr  = sanitize(p['Client Address'], 300);
+    var reason      = sanitize(p['Reason for Counseling'], 2000);
+    var payment     = sanitize(p['Payment Preference'], 100);
+    var finSig      = sanitize(p['Financial Responsibility Signature'], 150);
+    var finDate     = sanitize(p['Financial Responsibility Date'], 10);
+    var hipaaSig    = sanitize(p['HIPAA Signature'], 150);
+    var hipaaDate   = sanitize(p['HIPAA Signature Date'], 10);
+    var ack1        = sanitize(p['Ack Initials 1 - Insurance'], 5);
+    var ack2        = sanitize(p['Ack Initials 2 - Payment'], 5);
+    var ack3        = sanitize(p['Ack Initials 3 - Consent'], 5);
+    var ack4        = sanitize(p['Ack Initials 4 - Stop Care'], 5);
+    var clientDob   = sanitize(p['Client Date of Birth'], 10);
+
+    if (!clientFirst) errors.push('Client First Name is required');
+    if (!clientLast)  errors.push('Client Last Name is required');
+    if (!clientDob || !isValidDate(clientDob)) errors.push('Valid Date of Birth is required');
+    if (clientDob && isValidDate(clientDob) && !isNotFutureDate(clientDob)) errors.push('Date of Birth cannot be in the future');
+    if (!clientPhone || !isValidPhone(clientPhone)) errors.push('Valid phone number is required');
+    if (!clientEmail || !isValidEmail(clientEmail)) errors.push('Valid email is required');
+    if (!clientAddr)  errors.push('Address is required');
+    if (!reason)      errors.push('Reason for Counseling is required');
+    if (!payment || VALID_PAYMENTS.indexOf(payment) === -1) errors.push('Valid payment preference is required');
+    if (!finSig || !isValidName(finSig)) errors.push('Valid financial responsibility signature is required');
+    if (!finDate || !isValidDate(finDate) || !isNotFutureDate(finDate)) errors.push('Valid financial signature date is required');
+    if (!hipaaSig || !isValidName(hipaaSig)) errors.push('Valid HIPAA signature is required');
+    if (!hipaaDate || !isValidDate(hipaaDate) || !isNotFutureDate(hipaaDate)) errors.push('Valid HIPAA signature date is required');
+    if (!ack1 || !isValidInitials(ack1)) errors.push('Valid initials required for acknowledgment 1');
+    if (!ack2 || !isValidInitials(ack2)) errors.push('Valid initials required for acknowledgment 2');
+    if (!ack3 || !isValidInitials(ack3)) errors.push('Valid initials required for acknowledgment 3');
+    if (!ack4 || !isValidInitials(ack4)) errors.push('Valid initials required for acknowledgment 4');
+
+    // Validate optional partner email if provided
+    var partnerEmail = sanitize(p['Partner Email'], 254);
+    if (partnerEmail && !isValidEmail(partnerEmail)) errors.push('Partner email is not valid');
+
+    // Validate optional partner DOB if provided
+    var partnerDob = sanitize(p['Partner Date of Birth'], 10);
+    if (partnerDob && (!isValidDate(partnerDob) || !isNotFutureDate(partnerDob))) errors.push('Partner date of birth is not valid');
+
+    // Filter concerns to only allowed values
+    var rawConcerns = ps['Concerns'] || [];
+    var validConcerns = [];
+    for (var c = 0; c < rawConcerns.length; c++) {
+      var concern = sanitize(rawConcerns[c], 50);
+      if (VALID_CONCERNS.indexOf(concern) !== -1) {
+        validConcerns.push(concern);
+      }
+    }
+    var concerns = validConcerns.length > 0 ? validConcerns.join(', ') : 'None selected';
+
+    // Reject if any validation errors
+    if (errors.length > 0) {
+      Logger.log('Validation failed: ' + errors.join('; '));
+      return redirect();
+    }
+
+    var clientName = (clientFirst + ' ' + clientLast).trim();
     var submissionDate = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'MMMM d, yyyy');
 
-    // Collect all field values
+    // Collect all sanitized field values
     var f = {
-      clientFirst:    p['Client First Name'] || '',
-      clientLast:     p['Client Last Name'] || '',
-      preferredName:  p['Client Preferred Name'] || '',
-      pronouns:       p['Client Pronouns'] || '',
-      dob:            p['Client Date of Birth'] || '',
-      phone:          p['Client Phone'] || '',
-      email:          p['Client Email'] || '',
-      address:        p['Client Address'] || '',
-      employer:       p['Employer'] || '',
-      occupation:     p['Occupation'] || '',
-      partnerFirst:   p['Partner First Name'] || '',
-      partnerLast:    p['Partner Last Name'] || '',
-      partnerPref:    p['Partner Preferred Name'] || '',
-      partnerPro:     p['Partner Pronouns'] || '',
-      partnerDob:     p['Partner Date of Birth'] || '',
-      partnerEmail:   p['Partner Email'] || '',
-      parentNames:    p['Parent Guardian Names'] || '',
-      school:         p['School'] || '',
-      grade:          p['Grade'] || '',
-      reason:         p['Reason for Counseling'] || '',
-      referredBy:     p['Referred By'] || '',
-      prevCounseling: p['Previous Counseling'] || '',
-      medications:    p['Current Medications'] || '',
-      medical:        p['Medical Problems'] || '',
+      clientFirst:    clientFirst,
+      clientLast:     clientLast,
+      preferredName:  sanitize(p['Client Preferred Name'], 100),
+      pronouns:       sanitize(p['Client Pronouns'], 50),
+      dob:            clientDob,
+      phone:          clientPhone,
+      email:          clientEmail,
+      address:        clientAddr,
+      employer:       sanitize(p['Employer'], 150),
+      occupation:     sanitize(p['Occupation'], 150),
+      partnerFirst:   sanitize(p['Partner First Name'], 100),
+      partnerLast:    sanitize(p['Partner Last Name'], 100),
+      partnerPref:    sanitize(p['Partner Preferred Name'], 100),
+      partnerPro:     sanitize(p['Partner Pronouns'], 50),
+      partnerDob:     partnerDob,
+      partnerEmail:   partnerEmail,
+      parentNames:    sanitize(p['Parent Guardian Names'], 200),
+      school:         sanitize(p['School'], 150),
+      grade:          sanitize(p['Grade'], 20),
+      reason:         reason,
+      referredBy:     sanitize(p['Referred By'], 150),
+      prevCounseling: sanitize(p['Previous Counseling'], 2000),
+      medications:    sanitize(p['Current Medications'], 2000),
+      medical:        sanitize(p['Medical Problems'], 2000),
       concerns:       concerns,
-      payment:        p['Payment Preference'] || '',
-      finSig:         p['Financial Responsibility Signature'] || '',
-      finDate:        p['Financial Responsibility Date'] || '',
-      hipaaSig:       p['HIPAA Signature'] || '',
-      hipaaDate:      p['HIPAA Signature Date'] || '',
-      ack1:           p['Ack Initials 1 - Insurance'] || '',
-      ack2:           p['Ack Initials 2 - Payment'] || '',
-      ack3:           p['Ack Initials 3 - Consent'] || '',
-      ack4:           p['Ack Initials 4 - Stop Care'] || '',
+      payment:        payment,
+      finSig:         finSig,
+      finDate:        finDate,
+      hipaaSig:       hipaaSig,
+      hipaaDate:      hipaaDate,
+      ack1:           ack1,
+      ack2:           ack2,
+      ack3:           ack3,
+      ack4:           ack4,
       submissionDate: submissionDate
     };
 

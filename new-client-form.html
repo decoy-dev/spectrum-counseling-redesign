@@ -249,7 +249,7 @@
             </div>
             <div>
               <label class="form-label" for="client-dob">Date of Birth <span class="text-error">*</span></label>
-              <input class="form-input" type="date" id="client-dob" name="Client Date of Birth" required />
+              <input class="form-input" type="date" id="client-dob" name="Client Date of Birth" required min="1900-01-01" />
             </div>
             <div>
               <label class="form-label" for="client-phone">Phone Number <span class="text-error">*</span></label>
@@ -301,11 +301,11 @@
             </div>
             <div>
               <label class="form-label" for="partner-dob">Partner Date of Birth</label>
-              <input class="form-input" type="date" id="partner-dob" name="Partner Date of Birth" />
+              <input class="form-input" type="date" id="partner-dob" name="Partner Date of Birth" min="1900-01-01" />
             </div>
             <div>
               <label class="form-label" for="partner-email">Partner Email</label>
-              <input class="form-input" type="email" id="partner-email" name="Partner Email" />
+              <input class="form-input" type="email" id="partner-email" name="Partner Email" maxlength="254" />
             </div>
             <div class="sm:col-span-2">
               <label class="form-label" for="parent-names">Parent/Guardian Names (for minor clients)</label>
@@ -425,7 +425,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
               <div>
                 <label class="form-label" for="financial-signature">Signature (Type Full Name) <span class="text-error">*</span></label>
-                <input class="form-input" type="text" id="financial-signature" name="Financial Responsibility Signature" required placeholder="Type your full legal name" maxlength="150" />
+                <input class="form-input" type="text" id="financial-signature" name="Financial Responsibility Signature" required placeholder="Type your full legal name" maxlength="150" pattern="[A-Za-z][A-Za-z \.\-']{1,149}" title="Enter your full legal name (letters, spaces, hyphens, apostrophes)" />
               </div>
               <div>
                 <label class="form-label" for="financial-date">Date <span class="text-error">*</span></label>
@@ -491,7 +491,7 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="form-label" for="hipaa-signature">Signature (Type Full Name) <span class="text-error">*</span></label>
-                  <input class="form-input" type="text" id="hipaa-signature" name="HIPAA Signature" required placeholder="Type your full legal name" maxlength="150" />
+                  <input class="form-input" type="text" id="hipaa-signature" name="HIPAA Signature" required placeholder="Type your full legal name" maxlength="150" pattern="[A-Za-z][A-Za-z \.\-']{1,149}" title="Enter your full legal name (letters, spaces, hyphens, apostrophes)" />
                 </div>
                 <div>
                   <label class="form-label" for="hipaa-date">Date <span class="text-error">*</span></label>
@@ -665,27 +665,43 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
 
-    // Form validation and double-submit prevention
+    // Form validation, anti-spam, and double-submit prevention
     (function() {
       var form = document.getElementById('client-form');
       var submitBtn = document.getElementById('submit-btn');
       if (!form || !submitBtn) return;
 
+      var lastSubmitTime = 0;
+      var COOLDOWN_MS = 30000; // 30-second cooldown between submissions
+
       form.addEventListener('submit', function(e) {
         // Prevent double submission
         if (submitBtn.disabled) { e.preventDefault(); return; }
 
-        // Validate DOB is not in the future
-        var dob = document.getElementById('client-dob');
-        if (dob && dob.value) {
-          var dobDate = new Date(dob.value);
-          var today = new Date();
-          today.setHours(0, 0, 0, 0);
-          if (dobDate > today) {
-            e.preventDefault();
-            alert('Date of Birth cannot be in the future.');
-            dob.focus();
-            return;
+        // Submission cooldown — block rapid-fire submissions
+        var now = Date.now();
+        if (now - lastSubmitTime < COOLDOWN_MS) {
+          e.preventDefault();
+          alert('Please wait before submitting again.');
+          return;
+        }
+
+        // Validate all date-of-birth fields are not in the future
+        var dobFields = [
+          { el: document.getElementById('client-dob'), label: 'Client Date of Birth' },
+          { el: document.getElementById('partner-dob'), label: 'Partner Date of Birth' }
+        ];
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        for (var d = 0; d < dobFields.length; d++) {
+          if (dobFields[d].el && dobFields[d].el.value) {
+            var dobDate = new Date(dobFields[d].el.value);
+            if (dobDate > today) {
+              e.preventDefault();
+              alert(dobFields[d].label + ' cannot be in the future.');
+              dobFields[d].el.focus();
+              return;
+            }
           }
         }
 
@@ -697,9 +713,7 @@
         for (var i = 0; i < sigDates.length; i++) {
           if (sigDates[i] && sigDates[i].value) {
             var sigDate = new Date(sigDates[i].value);
-            var now = new Date();
-            now.setHours(0, 0, 0, 0);
-            if (sigDate > now) {
+            if (sigDate > today) {
               e.preventDefault();
               alert('Signature date cannot be in the future.');
               sigDates[i].focus();
@@ -719,7 +733,22 @@
           }
         }
 
+        // Validate signatures look like real names (not just symbols/numbers)
+        var sigFields = [
+          document.getElementById('financial-signature'),
+          document.getElementById('hipaa-signature')
+        ];
+        for (var s = 0; s < sigFields.length; s++) {
+          if (sigFields[s] && sigFields[s].value && !/^[A-Za-z][A-Za-z \.\-']{1,149}$/.test(sigFields[s].value)) {
+            e.preventDefault();
+            alert('Please enter a valid name for your signature.');
+            sigFields[s].focus();
+            return;
+          }
+        }
+
         // Disable button to prevent double submit
+        lastSubmitTime = now;
         submitBtn.disabled = true;
         submitBtn.textContent = 'Submitting...';
         submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
