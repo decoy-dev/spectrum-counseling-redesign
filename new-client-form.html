@@ -178,6 +178,40 @@
     .dark .theme-toggle .material-symbols-outlined {
       transform: rotate(360deg);
     }
+    .theme-toggle-wrap {
+      position: relative;
+    }
+    .theme-tooltip {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgb(var(--color-on-surface));
+      color: rgb(var(--color-surface));
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: 60;
+    }
+    .theme-tooltip::before {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-bottom-color: rgb(var(--color-on-surface));
+    }
+    .theme-toggle-wrap:hover .theme-tooltip,
+    .theme-tooltip.show {
+      opacity: 1;
+    }
     .dark footer {
       --color-primary: 15 18 28;
       --color-on-primary: 210 215 225;
@@ -305,9 +339,12 @@
         <a href="new-client-form.html" class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dim hover:scale-[1.01] hover:shadow-lg hover:shadow-primary/25 transition-all duration-200 active:scale-95 shadow-md shadow-primary/10">
           New Client Form
         </a>
-        <button id="theme-toggle-desktop" class="theme-toggle ml-1" aria-label="Toggle dark mode">
-          <span class="material-symbols-outlined">dark_mode</span>
-        </button>
+        <div class="theme-toggle-wrap ml-1">
+          <button id="theme-toggle-desktop" class="theme-toggle" aria-label="Toggle dark mode">
+            <span class="material-symbols-outlined">dark_mode</span>
+          </button>
+          <span id="theme-tooltip-desktop" class="theme-tooltip">Dark Mode</span>
+        </div>
       </div>
       <button id="mobile-menu-btn" class="lg:hidden flex items-center text-on-surface-variant" aria-label="Toggle menu">
         <span class="material-symbols-outlined text-2xl">menu</span>
@@ -964,6 +1001,8 @@
         var span = toggleMobile.querySelector('span:last-child');
         if (span) span.textContent = label;
       }
+      var tooltip = document.getElementById('theme-tooltip-desktop');
+      if (tooltip) tooltip.textContent = label;
     }
 
     function doApply(dark) {
@@ -998,6 +1037,21 @@
     var d = isDark();
     updateLogo(d);
     updateToggles(d);
+
+    // First-visit tooltip popup
+    if (!localStorage.getItem('theme-tooltip-shown')) {
+      var tip = document.getElementById('theme-tooltip-desktop');
+      if (tip) {
+        setTimeout(function() {
+          tip.textContent = d ? 'Dark Mode' : 'Light Mode';
+          tip.classList.add('show');
+          setTimeout(function() {
+            tip.classList.remove('show');
+            localStorage.setItem('theme-tooltip-shown', '1');
+          }, 3000);
+        }, 1500);
+      }
+    }
   })();
 
   // === Page Transitions ===
