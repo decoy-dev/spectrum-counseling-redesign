@@ -121,7 +121,7 @@
       --color-surface-container-highest: 45 52 70;
       --color-surface-variant: 40 50 65;
       --color-on-surface: 220 225 235;
-      --color-on-surface-variant: 170 178 190;
+      --color-on-surface-variant: 190 200 215;
       --color-on-background: 220 225 235;
       --color-background: 18 22 32;
       --color-outline: 100 110 125;
@@ -255,6 +255,14 @@
     .nav-link { position: relative; }
     .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: currentColor; opacity: 0; transition: opacity 0.25s ease; }
     .nav-link:hover::after { opacity: 1; }
+    :focus-visible {
+      outline: 2px solid rgb(var(--color-primary));
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+    :focus:not(:focus-visible) {
+      outline: none;
+    }
     /* Form styling */
     .form-input {
       width: 100%;
@@ -347,7 +355,7 @@
           <span id="theme-tooltip-desktop" class="theme-tooltip">Dark Mode</span>
         </div>
       </div>
-      <button id="mobile-menu-btn" class="lg:hidden flex items-center text-on-surface-variant" aria-label="Toggle menu">
+      <button id="mobile-menu-btn" class="lg:hidden flex items-center text-on-surface-variant" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
         <span class="material-symbols-outlined text-2xl">menu</span>
       </button>
     </div>
@@ -401,11 +409,11 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <label class="form-label" for="client-first">First Name <span class="text-error">*</span></label>
-              <input class="form-input" type="text" id="client-first" name="Client First Name" required minlength="2" maxlength="100" />
+              <input class="form-input" type="text" id="client-first" name="Client First Name" autocomplete="given-name" required minlength="2" maxlength="100" />
             </div>
             <div>
               <label class="form-label" for="client-last">Last Name <span class="text-error">*</span></label>
-              <input class="form-input" type="text" id="client-last" name="Client Last Name" required minlength="2" maxlength="100" />
+              <input class="form-input" type="text" id="client-last" name="Client Last Name" autocomplete="family-name" required minlength="2" maxlength="100" />
             </div>
             <div>
               <label class="form-label" for="client-preferred">Preferred Name</label>
@@ -417,27 +425,27 @@
             </div>
             <div>
               <label class="form-label" for="client-dob">Date of Birth <span class="text-error">*</span></label>
-              <input class="form-input" type="date" id="client-dob" name="Client Date of Birth" required min="1900-01-01" />
+              <input class="form-input" type="date" id="client-dob" name="Client Date of Birth" autocomplete="bday" required min="1900-01-01" />
             </div>
             <div>
               <label class="form-label" for="client-phone">Phone Number <span class="text-error">*</span></label>
-              <input class="form-input" type="tel" id="client-phone" name="Client Phone" required maxlength="20" pattern="[\d\s\-\(\)\+\.]{7,20}" title="Enter a valid phone number" />
+              <input class="form-input" type="tel" id="client-phone" name="Client Phone" autocomplete="tel" required maxlength="20" pattern="[\d\s\-\(\)\+\.]{7,20}" title="Enter a valid phone number" />
             </div>
             <div class="sm:col-span-2">
               <label class="form-label" for="client-email">Email <span class="text-error">*</span></label>
-              <input class="form-input" type="email" id="client-email" name="Client Email" required maxlength="254" />
+              <input class="form-input" type="email" id="client-email" name="Client Email" autocomplete="email" required maxlength="254" />
             </div>
             <div class="sm:col-span-2">
               <label class="form-label" for="client-address">Address <span class="text-error">*</span></label>
-              <input class="form-input" type="text" id="client-address" name="Client Address" required maxlength="300" />
+              <input class="form-input" type="text" id="client-address" name="Client Address" autocomplete="street-address" required maxlength="300" />
             </div>
             <div>
               <label class="form-label" for="client-employer">Employer</label>
-              <input class="form-input" type="text" id="client-employer" name="Employer" maxlength="150" />
+              <input class="form-input" type="text" id="client-employer" name="Employer" autocomplete="organization" maxlength="150" />
             </div>
             <div>
               <label class="form-label" for="client-occupation">Occupation</label>
-              <input class="form-input" type="text" id="client-occupation" name="Occupation" maxlength="150" />
+              <input class="form-input" type="text" id="client-occupation" name="Occupation" autocomplete="organization-title" maxlength="150" />
             </div>
           </div>
           <p class="text-xs text-on-surface-variant mt-4">By submitting this form, you agree to receive SMS from Spectrum Counseling, LLC. Carrier and data rates may apply. Reply STOP to end or HELP for info.</p>
@@ -593,7 +601,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
               <div>
                 <label class="form-label" for="financial-signature">Signature (Type Full Name) <span class="text-error">*</span></label>
-                <input class="form-input" type="text" id="financial-signature" name="Financial Responsibility Signature" required placeholder="Type your full legal name" maxlength="150" pattern="[A-Za-z][A-Za-z \.\-']{1,149}" title="Enter your full legal name (letters, spaces, hyphens, apostrophes)" />
+                <input class="form-input" type="text" id="financial-signature" name="Financial Responsibility Signature" autocomplete="name" required placeholder="Type your full legal name" maxlength="150" pattern="[A-Za-z][A-Za-z \.\-']{1,149}" title="Enter your full legal name (letters, spaces, hyphens, apostrophes)" />
               </div>
               <div>
                 <label class="form-label" for="financial-date">Date <span class="text-error">*</span></label>
@@ -659,7 +667,7 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="form-label" for="hipaa-signature">Signature (Type Full Name) <span class="text-error">*</span></label>
-                  <input class="form-input" type="text" id="hipaa-signature" name="HIPAA Signature" required placeholder="Type your full legal name" maxlength="150" pattern="[A-Za-z][A-Za-z \.\-']{1,149}" title="Enter your full legal name (letters, spaces, hyphens, apostrophes)" />
+                  <input class="form-input" type="text" id="hipaa-signature" name="HIPAA Signature" autocomplete="name" required placeholder="Type your full legal name" maxlength="150" pattern="[A-Za-z][A-Za-z \.\-']{1,149}" title="Enter your full legal name (letters, spaces, hyphens, apostrophes)" />
                 </div>
                 <div>
                   <label class="form-label" for="hipaa-date">Date <span class="text-error">*</span></label>
@@ -730,7 +738,7 @@
       </form>
 
       <!-- Success Message (shown after redirect back) -->
-      <div id="form-success" class="form-success fade-in visible text-center py-20">
+      <div id="form-success" class="form-success fade-in visible text-center py-20" role="status" aria-live="polite">
         <span class="material-symbols-outlined text-6xl text-primary mb-6 block" aria-hidden="true">check_circle</span>
         <h2 class="text-2xl sm:text-3xl font-bold text-on-surface mb-4">Form Submitted Successfully</h2>
         <p class="text-on-surface-variant mb-8 max-w-lg mx-auto">Thank you for submitting your new client information. Dr. Haddox will review your form and contact you to schedule your first session.</p>
@@ -830,6 +838,7 @@
         mainNav.classList.add('rounded-[2.5rem]');
       }
       menuBtn.querySelector('.material-symbols-outlined').textContent = open ? 'close' : 'menu';
+      document.getElementById('mobile-menu-btn').setAttribute('aria-expanded', mobileMenu.classList.contains('open'));
     }
     menuBtn.addEventListener('click', function() {
       setMenuOpen(!mobileMenu.classList.contains('open'));

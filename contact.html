@@ -137,7 +137,7 @@
       --color-surface-container-highest: 45 52 70;
       --color-surface-variant: 40 50 65;
       --color-on-surface: 220 225 235;
-      --color-on-surface-variant: 170 178 190;
+      --color-on-surface-variant: 190 200 215;
       --color-on-background: 220 225 235;
       --color-background: 18 22 32;
       --color-outline: 100 110 125;
@@ -271,6 +271,14 @@
     .nav-link { position: relative; }
     .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: currentColor; opacity: 0; transition: opacity 0.25s ease; }
     .nav-link:hover::after { opacity: 1; }
+    :focus-visible {
+      outline: 2px solid rgb(var(--color-primary));
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+    :focus:not(:focus-visible) {
+      outline: none;
+    }
   </style>
 </head>
 <body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
@@ -307,7 +315,7 @@
           <span id="theme-tooltip-desktop" class="theme-tooltip">Dark Mode</span>
         </div>
       </div>
-      <button id="mobile-menu-btn" class="lg:hidden flex items-center text-on-surface-variant" aria-label="Toggle menu">
+      <button id="mobile-menu-btn" class="lg:hidden flex items-center text-on-surface-variant" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
         <span class="material-symbols-outlined text-2xl">menu</span>
       </button>
     </div>
@@ -533,6 +541,7 @@
         mainNav.classList.add('rounded-[2.5rem]');
       }
       menuBtn.querySelector('.material-symbols-outlined').textContent = open ? 'close' : 'menu';
+      document.getElementById('mobile-menu-btn').setAttribute('aria-expanded', mobileMenu.classList.contains('open'));
     }
     menuBtn.addEventListener('click', function() {
       setMenuOpen(!mobileMenu.classList.contains('open'));
