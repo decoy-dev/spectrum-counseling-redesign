@@ -6,12 +6,12 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://spectrumcounseling.net/contact.html</loc>
+    <loc>https://spectrumcounseling.net/contact/</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://spectrumcounseling.net/new-client-form.html</loc>
+    <loc>https://spectrumcounseling.net/new-client-form/</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
