@@ -22,7 +22,7 @@
   <meta name="twitter:image" content="https://spectrumcounseling.net/assets/sc_og_image.png" />
   <link id="favicon" rel="icon" type="image/png" href="assets/favicon.png" />
   <script>
-    (function(){var t=localStorage.getItem('theme');var d=(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)||t==='dark';document.documentElement.classList.toggle('dark',d);document.documentElement.classList.toggle('light',!d);var f=document.getElementById('favicon');if(f)f.href=d?'assets/favicon-light.png':'assets/favicon.png';})();
+    (function(){var t=localStorage.getItem('theme');var d=(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)||t==='dark';document.documentElement.classList.toggle('dark',d);document.documentElement.classList.toggle('light',!d);var f=document.getElementById('favicon');if(f)f.href=d?'assets/favicon-light.png':'assets/favicon.png';document.addEventListener('DOMContentLoaded',function(){var l=document.getElementById('nav-logo');if(l)l.src=d?'assets/SC_logo_white.png':'assets/SC_logo.png';});})();
   </script>
   <meta name="geo.region" content="US-AZ" />
   <meta name="geo.placename" content="Gilbert, Arizona" />
@@ -272,15 +272,15 @@
       --color-on-secondary-container: 180 195 215;
       --color-on-secondary-fixed: 190 200 215;
       --color-on-secondary-fixed-variant: 160 175 195;
-      --color-tertiary: 200 152 208;
-      --color-tertiary-dim: 170 120 180;
-      --color-tertiary-container: 70 50 85;
-      --color-tertiary-fixed: 90 65 105;
-      --color-tertiary-fixed-dim: 110 80 125;
+      --color-tertiary: 225 185 240;
+      --color-tertiary-dim: 205 160 220;
+      --color-tertiary-container: 80 55 95;
+      --color-tertiary-fixed: 105 75 120;
+      --color-tertiary-fixed-dim: 125 95 140;
       --color-on-tertiary: 25 18 30;
-      --color-on-tertiary-container: 215 180 220;
-      --color-on-tertiary-fixed: 220 200 225;
-      --color-on-tertiary-fixed-variant: 195 170 205;
+      --color-on-tertiary-container: 235 200 245;
+      --color-on-tertiary-fixed: 230 210 240;
+      --color-on-tertiary-fixed-variant: 210 180 225;
       --color-surface: 18 22 32;
       --color-surface-dim: 14 17 25;
       --color-surface-bright: 35 42 58;
@@ -305,14 +305,14 @@
       --color-inverse-surface: 220 225 235;
       --color-inverse-on-surface: 45 51 53;
       --color-inverse-primary: 50 80 120;
-      --color-nav-glass: 28 34 48;
+      --color-nav-glass: 42 50 68;
     }
     /* Theme transition smoothing */
     html.theme-transitioning,
     html.theme-transitioning *,
     html.theme-transitioning *::before,
     html.theme-transitioning *::after {
-      transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, fill 0.5s ease, stroke 0.5s ease, box-shadow 0.5s ease !important;
+      transition: all 0.5s ease !important;
     }
     /* Dark map filter */
     .dark iframe[src*="maps"] {
@@ -377,6 +377,11 @@
     }
     .dark .theme-toggle .material-symbols-outlined {
       transform: rotate(360deg);
+    }
+    /* Footer override in dark mode */
+    .dark footer {
+      --color-primary: 15 18 28;
+      --color-on-primary: 210 215 225;
     }
   </style>
   <style>
@@ -610,7 +615,7 @@
     <div class="flex justify-between items-center px-4 sm:px-6 py-3">
       <div class="flex items-center">
         <a href="https://spectrumcounseling.net/">
-          <img alt="Spectrum Counseling Logo" class="h-10 lg:h-12 w-auto object-contain" src="assets/SC_logo.png" />
+          <img id="nav-logo" alt="Spectrum Counseling Logo" class="h-10 lg:h-12 w-auto object-contain transition-opacity duration-300" src="assets/SC_logo.png" />
         </a>
       </div>
       <div class="hidden lg:flex flex-1 justify-center gap-6 xl:gap-8 items-center">
@@ -665,8 +670,8 @@
     <div class="absolute inset-0 -z-10">
       <!-- Mobile: image only covers the top portion, solid surface below -->
       <div class="relative w-full h-[45%] sm:h-full">
-        <img id="hero-light" alt="Water lilies on a serene pond" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700" src="assets/hero.jpg" />
-        <img id="hero-dark" alt="Dark lotus flowers" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0" src="assets/hero-dark.jpg" />
+        <img id="hero-light" alt="Water lilies on a serene pond" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500" src="assets/hero.jpg" />
+        <img id="hero-dark" alt="Dark lotus flowers" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-0" src="assets/hero-dark.jpg" />
       </div>
       <div class="absolute inset-0 bg-gradient-to-b from-transparent via-surface via-[40%] to-surface sm:hidden"></div>
       <!-- Desktop overlay: left-to-right fade for side-aligned content -->
@@ -1374,12 +1379,12 @@
     var waveColorsDark = [
       [147, 178, 220],
       [118, 152, 200],
-      [200, 152, 208],
-      [170, 120, 180],
+      [225, 185, 240],
+      [205, 160, 220],
       [100, 130, 180],
       [130, 160, 210],
-      [180, 140, 200],
-      [150, 110, 170],
+      [210, 175, 230],
+      [190, 150, 210],
     ];
     var waveColors = document.documentElement.classList.contains('dark') ? waveColorsDark.slice() : waveColorsLight.slice();
 
@@ -1604,8 +1609,13 @@
       var heroLight = document.getElementById('hero-light');
       var heroDark = document.getElementById('hero-dark');
       var favicon = document.getElementById('favicon');
+      var navLogo = document.getElementById('nav-logo');
 
       function isDark() { return html.classList.contains('dark'); }
+
+      function updateLogo(dark) {
+        if (navLogo) navLogo.src = dark ? 'assets/SC_logo_white.png' : 'assets/SC_logo.png';
+      }
 
       function updateHero(dark) {
         if (heroLight && heroDark) {
@@ -1647,6 +1657,7 @@
         html.classList.toggle('light', !dark);
         updateHero(dark);
         updateFavicon(dark);
+        updateLogo(dark);
         updateWaveColors(dark);
         updateToggles(dark);
         localStorage.setItem('theme', dark ? 'dark' : 'light');
@@ -1662,9 +1673,10 @@
         if (!localStorage.getItem('theme')) applyTheme(e.matches, true);
       });
 
-      // Initial state sync (hero, favicon, wave colors, toggle icons)
+      // Initial state sync (hero, favicon, logo, wave colors, toggle icons)
       var dark = isDark();
       updateHero(dark);
+      updateLogo(dark);
       updateWaveColors(dark);
       updateToggles(dark);
     })();

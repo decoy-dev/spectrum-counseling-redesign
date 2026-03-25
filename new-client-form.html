@@ -16,7 +16,7 @@
   <meta name="twitter:image" content="https://spectrumcounseling.net/assets/sc_og_image.png" />
   <link id="favicon" rel="icon" type="image/png" href="assets/favicon.png" />
   <script>
-    (function(){var t=localStorage.getItem('theme');var d=(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)||t==='dark';document.documentElement.classList.toggle('dark',d);document.documentElement.classList.toggle('light',!d);var f=document.getElementById('favicon');if(f)f.href=d?'assets/favicon-light.png':'assets/favicon.png';})();
+    (function(){var t=localStorage.getItem('theme');var d=(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)||t==='dark';document.documentElement.classList.toggle('dark',d);document.documentElement.classList.toggle('light',!d);var f=document.getElementById('favicon');if(f)f.href=d?'assets/favicon-light.png':'assets/favicon.png';document.addEventListener('DOMContentLoaded',function(){var l=document.getElementById('nav-logo');if(l)l.src=d?'assets/SC_logo_white.png':'assets/SC_logo.png';});})();
   </script>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -127,13 +127,13 @@
       --color-outline: 100 110 125;
       --color-outline-variant: 55 65 80;
       --color-error: 240 130 130;
-      --color-nav-glass: 28 34 48;
+      --color-nav-glass: 42 50 68;
     }
     html.theme-transitioning,
     html.theme-transitioning *,
     html.theme-transitioning *::before,
     html.theme-transitioning *::after {
-      transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease !important;
+      transition: all 0.5s ease !important;
     }
     .nav-glass {
       background-color: rgb(var(--color-nav-glass) / 0.85);
@@ -177,6 +177,10 @@
     }
     .dark .theme-toggle .material-symbols-outlined {
       transform: rotate(360deg);
+    }
+    .dark footer {
+      --color-primary: 15 18 28;
+      --color-on-primary: 210 215 225;
     }
   </style>
   <style>
@@ -283,7 +287,7 @@
     <div class="flex justify-between items-center px-4 sm:px-6 py-3">
       <div class="flex items-center">
         <a href="https://spectrumcounseling.net/">
-          <img alt="Spectrum Counseling Logo" class="h-10 lg:h-12 w-auto object-contain" src="assets/SC_logo.png" />
+          <img id="nav-logo" alt="Spectrum Counseling Logo" class="h-10 lg:h-12 w-auto object-contain transition-opacity duration-300" src="assets/SC_logo.png" />
         </a>
       </div>
       <div class="hidden lg:flex flex-1 justify-center gap-6 xl:gap-8 items-center">
@@ -939,11 +943,16 @@
     var toggleDesktop = document.getElementById('theme-toggle-desktop');
     var toggleMobile = document.getElementById('theme-toggle-mobile');
     var favicon = document.getElementById('favicon');
+    var navLogo = document.getElementById('nav-logo');
 
     function isDark() { return html.classList.contains('dark'); }
 
     function updateFavicon(dark) {
       if (favicon) favicon.href = dark ? 'assets/favicon-light.png' : 'assets/favicon.png';
+    }
+
+    function updateLogo(dark) {
+      if (navLogo) navLogo.src = dark ? 'assets/SC_logo_white.png' : 'assets/SC_logo.png';
     }
 
     function updateToggles(dark) {
@@ -965,6 +974,7 @@
       html.classList.toggle('dark', dark);
       html.classList.toggle('light', !dark);
       updateFavicon(dark);
+      updateLogo(dark);
       updateToggles(dark);
       localStorage.setItem('theme', dark ? 'dark' : 'light');
     }
@@ -978,7 +988,9 @@
       if (!localStorage.getItem('theme')) applyTheme(e.matches, true);
     });
 
-    updateToggles(isDark());
+    var d = isDark();
+    updateLogo(d);
+    updateToggles(d);
   })();
 
   // === Page Transitions ===
