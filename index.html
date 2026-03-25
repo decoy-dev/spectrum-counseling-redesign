@@ -618,7 +618,7 @@
           <img id="nav-logo" alt="Spectrum Counseling Logo" class="h-10 lg:h-12 w-auto object-contain transition-opacity duration-300" src="assets/SC_logo.png" />
         </a>
       </div>
-      <div class="hidden lg:flex flex-1 justify-center gap-6 xl:gap-8 items-center">
+      <div class="hidden lg:flex flex-1 justify-center gap-6 xl:gap-8 items-center ml-6">
         <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="#about">About</a>
         <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="#services">How We Help</a>
         <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="#specializations">Specializations</a>
@@ -626,7 +626,7 @@
         <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="#location">Location</a>
         <a class="nav-link text-on-surface-variant hover:text-primary transition-colors duration-200 font-medium text-sm tracking-wide" href="#faq">FAQ</a>
       </div>
-      <div class="hidden lg:flex items-center gap-2">
+      <div class="hidden lg:flex items-center gap-2 ml-6">
         <a href="contact.html" class="btn-contact text-on-surface-variant hover:text-primary hover:bg-primary-container hover:border-primary/30 hover:scale-[1.01] hover:shadow-md px-4 py-2 rounded-full text-sm font-semibold shadow-sm border border-outline-variant/20 transition-all duration-200">
           Contact
         </a>
@@ -1648,11 +1648,7 @@
         }
       }
 
-      function applyTheme(dark, animate) {
-        if (animate) {
-          html.classList.add('theme-transitioning');
-          setTimeout(function() { html.classList.remove('theme-transitioning'); }, 600);
-        }
+      function doApply(dark) {
         html.classList.toggle('dark', dark);
         html.classList.toggle('light', !dark);
         updateHero(dark);
@@ -1661,6 +1657,20 @@
         updateWaveColors(dark);
         updateToggles(dark);
         localStorage.setItem('theme', dark ? 'dark' : 'light');
+      }
+
+      function applyTheme(dark, animate) {
+        if (animate) {
+          html.classList.add('theme-transitioning');
+          requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+              doApply(dark);
+              setTimeout(function() { html.classList.remove('theme-transitioning'); }, 600);
+            });
+          });
+        } else {
+          doApply(dark);
+        }
       }
 
       function toggle() { applyTheme(!isDark(), true); }
