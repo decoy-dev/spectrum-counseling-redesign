@@ -223,6 +223,8 @@
       <form id="client-form" action="https://script.google.com/macros/s/AKfycbzrNHAfkxFZsAfHtZmhlnKME56BGFUxki3FLGawHd0SNE272uLV7LfOaYPkcQtk8Cka/exec" method="POST">
         <!-- Honeypot spam protection — hidden from real users -->
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+        <!-- Bot timing detection — set by JS on page load, validated server-side -->
+        <input type="hidden" name="_loaded" id="_loaded" value="" />
 
         <!-- Section 1: Client Information -->
         <div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 md:p-10 shadow-sm mb-6">
@@ -233,11 +235,11 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <label class="form-label" for="client-first">First Name <span class="text-error">*</span></label>
-              <input class="form-input" type="text" id="client-first" name="Client First Name" required maxlength="100" />
+              <input class="form-input" type="text" id="client-first" name="Client First Name" required minlength="2" maxlength="100" />
             </div>
             <div>
               <label class="form-label" for="client-last">Last Name <span class="text-error">*</span></label>
-              <input class="form-input" type="text" id="client-last" name="Client Last Name" required maxlength="100" />
+              <input class="form-input" type="text" id="client-last" name="Client Last Name" required minlength="2" maxlength="100" />
             </div>
             <div>
               <label class="form-label" for="client-preferred">Preferred Name</label>
@@ -331,7 +333,7 @@
           <div class="space-y-4 sm:space-y-5">
             <div>
               <label class="form-label" for="reason">Reason for Counseling <span class="text-error">*</span></label>
-              <textarea class="form-input" id="reason" name="Reason for Counseling" rows="3" required maxlength="2000"></textarea>
+              <textarea class="form-input" id="reason" name="Reason for Counseling" rows="3" required minlength="20" maxlength="2000"></textarea>
             </div>
             <div>
               <label class="form-label" for="referred-by">Referred By</label>
@@ -605,6 +607,12 @@
       }
     })();
 
+    // Record page-load timestamp for bot timing detection
+    (function() {
+      var el = document.getElementById('_loaded');
+      if (el) el.value = String(Date.now());
+    })();
+
     // Submit form via fetch so the browser stays on the page
     document.getElementById('client-form').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -673,16 +681,51 @@
 
       var lastSubmitTime = 0;
       var COOLDOWN_MS = 30000; // 30-second cooldown between submissions
+      var MIN_TIME_ON_PAGE_MS = 15000; // Must spend at least 15 seconds on page
 
       form.addEventListener('submit', function(e) {
         // Prevent double submission
         if (submitBtn.disabled) { e.preventDefault(); return; }
 
-        // Submission cooldown — block rapid-fire submissions
         var now = Date.now();
+
+        // Minimum time on page — no human fills a 7-section intake form in under 15 seconds
+        var loadedAt = parseInt(document.getElementById('_loaded').value, 10);
+        if (loadedAt && (now - loadedAt) < MIN_TIME_ON_PAGE_MS) {
+          e.preventDefault();
+          alert('Please take your time completing the form before submitting.');
+          return;
+        }
+
+        // Submission cooldown — block rapid-fire submissions
         if (now - lastSubmitTime < COOLDOWN_MS) {
           e.preventDefault();
           alert('Please wait before submitting again.');
+          return;
+        }
+
+        // Validate name minimum lengths
+        var firstName = document.getElementById('client-first');
+        if (firstName && firstName.value.trim().length < 2) {
+          e.preventDefault();
+          alert('First name must be at least 2 characters.');
+          firstName.focus();
+          return;
+        }
+        var lastName = document.getElementById('client-last');
+        if (lastName && lastName.value.trim().length < 2) {
+          e.preventDefault();
+          alert('Last name must be at least 2 characters.');
+          lastName.focus();
+          return;
+        }
+
+        // Validate reason for counseling has meaningful content
+        var reasonField = document.getElementById('reason');
+        if (reasonField && reasonField.value.trim().length < 20) {
+          e.preventDefault();
+          alert('Please describe your reason for seeking counseling in at least a few words.');
+          reasonField.focus();
           return;
         }
 
@@ -705,20 +748,18 @@
           }
         }
 
-        // Validate signature dates are today or earlier
-        var sigDates = [
-          document.getElementById('financial-date'),
-          document.getElementById('hipaa-date')
+        // Validate signature dates are today (not past, not future)
+        var todayStr = today.toISOString().split('T')[0]; // YYYY-MM-DD
+        var sigDateFields = [
+          { el: document.getElementById('financial-date'), label: 'Financial signature date' },
+          { el: document.getElementById('hipaa-date'), label: 'HIPAA signature date' }
         ];
-        for (var i = 0; i < sigDates.length; i++) {
-          if (sigDates[i] && sigDates[i].value) {
-            var sigDate = new Date(sigDates[i].value);
-            if (sigDate > today) {
-              e.preventDefault();
-              alert('Signature date cannot be in the future.');
-              sigDates[i].focus();
-              return;
-            }
+        for (var i = 0; i < sigDateFields.length; i++) {
+          if (sigDateFields[i].el && sigDateFields[i].el.value !== todayStr) {
+            e.preventDefault();
+            alert(sigDateFields[i].label + ' must be today\u2019s date.');
+            sigDateFields[i].el.focus();
+            return;
           }
         }
 

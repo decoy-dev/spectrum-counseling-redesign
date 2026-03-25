@@ -61,6 +61,11 @@ function isNotFutureDate(dateStr) {
   return d <= today;
 }
 
+function isToday(dateStr) {
+  var today = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd');
+  return dateStr === today;
+}
+
 function isValidName(name) {
   return /^[A-Za-z][A-Za-z \.\-']{1,149}$/.test(name);
 }
@@ -97,6 +102,27 @@ function doPost(e) {
       return redirect();
     }
 
+    // Bot timing detection — reject if form was filled in under 10 seconds
+    var loadedTs = parseInt(p['_loaded'], 10);
+    var nowTs = Date.now();
+    if (!loadedTs || isNaN(loadedTs) || (nowTs - loadedTs) < 10000) {
+      Logger.log('Bot timing check failed: loaded=' + loadedTs + ' now=' + nowTs);
+      return redirect();
+    }
+
+    // Rate limiting — max 3 submissions per email per hour
+    var rateLimitEmail = (p['Client Email'] || '').trim().toLowerCase();
+    if (rateLimitEmail) {
+      var cache = CacheService.getScriptCache();
+      var cacheKey = 'intake_' + rateLimitEmail.replace(/[^a-z0-9@.]/g, '');
+      var submissions = parseInt(cache.get(cacheKey), 10) || 0;
+      if (submissions >= 3) {
+        Logger.log('Rate limit exceeded for: ' + rateLimitEmail);
+        return redirect();
+      }
+      cache.put(cacheKey, String(submissions + 1), 3600); // expires in 1 hour
+    }
+
     // ── Server-side validation ──────────────────────────────────
     var errors = [];
 
@@ -118,23 +144,27 @@ function doPost(e) {
     var ack4        = sanitize(p['Ack Initials 4 - Stop Care'], 5);
     var clientDob   = sanitize(p['Client Date of Birth'], 10);
 
-    if (!clientFirst) errors.push('Client First Name is required');
-    if (!clientLast)  errors.push('Client Last Name is required');
+    if (!clientFirst || clientFirst.length < 2) errors.push('Client First Name is required (min 2 characters)');
+    if (!clientLast || clientLast.length < 2)  errors.push('Client Last Name is required (min 2 characters)');
     if (!clientDob || !isValidDate(clientDob)) errors.push('Valid Date of Birth is required');
     if (clientDob && isValidDate(clientDob) && !isNotFutureDate(clientDob)) errors.push('Date of Birth cannot be in the future');
     if (!clientPhone || !isValidPhone(clientPhone)) errors.push('Valid phone number is required');
     if (!clientEmail || !isValidEmail(clientEmail)) errors.push('Valid email is required');
-    if (!clientAddr)  errors.push('Address is required');
-    if (!reason)      errors.push('Reason for Counseling is required');
+    if (!clientAddr || clientAddr.length < 5)  errors.push('Valid address is required');
+    if (!reason || reason.length < 20)      errors.push('Reason for Counseling must be at least 20 characters');
     if (!payment || VALID_PAYMENTS.indexOf(payment) === -1) errors.push('Valid payment preference is required');
     if (!finSig || !isValidName(finSig)) errors.push('Valid financial responsibility signature is required');
-    if (!finDate || !isValidDate(finDate) || !isNotFutureDate(finDate)) errors.push('Valid financial signature date is required');
+    if (!finDate || !isValidDate(finDate) || !isToday(finDate)) errors.push('Financial signature date must be today');
     if (!hipaaSig || !isValidName(hipaaSig)) errors.push('Valid HIPAA signature is required');
-    if (!hipaaDate || !isValidDate(hipaaDate) || !isNotFutureDate(hipaaDate)) errors.push('Valid HIPAA signature date is required');
+    if (!hipaaDate || !isValidDate(hipaaDate) || !isToday(hipaaDate)) errors.push('HIPAA signature date must be today');
     if (!ack1 || !isValidInitials(ack1)) errors.push('Valid initials required for acknowledgment 1');
     if (!ack2 || !isValidInitials(ack2)) errors.push('Valid initials required for acknowledgment 2');
     if (!ack3 || !isValidInitials(ack3)) errors.push('Valid initials required for acknowledgment 3');
     if (!ack4 || !isValidInitials(ack4)) errors.push('Valid initials required for acknowledgment 4');
+
+    // Acknowledgment checkbox must be checked
+    var ackCheckbox = sanitize(p['Acknowledgment'], 20);
+    if (ackCheckbox !== 'Acknowledged') errors.push('Acknowledgment checkbox is required');
 
     // Validate optional partner email if provided
     var partnerEmail = sanitize(p['Partner Email'], 254);
