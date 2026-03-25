@@ -17,7 +17,7 @@
 
 var CONFIG = {
   RECIPIENT_EMAIL: 'mhaddox@spectrumcounseling.net',
-  REDIRECT_URL: 'https://decoy-dev.github.io/spectrum-counseling-redesign/new-client-form.html?submitted=true'
+  REDIRECT_URL: 'https://spectrumcounseling.net/new-client-form.html?submitted=true'
 };
 
 // ── Brand colors ──────────────────────────────────────────────

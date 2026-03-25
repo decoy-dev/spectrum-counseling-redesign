@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Spectrum Counseling is a static website for Dr. Marie Haddox's therapy practice in Gilbert, AZ. It is hosted on GitHub Pages and deployed automatically on push to `master` via `.github/workflows/static.yml`.
 
-**Live site:** https://decoy-dev.github.io/spectrum-counseling-redesign/
+**Live site:** https://spectrumcounseling.net/
 
 ## Architecture
 
