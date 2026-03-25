@@ -102,6 +102,27 @@ function doPost(e) {
       return redirect();
     }
 
+    // Cloudflare Turnstile verification
+    var turnstileToken = p['cf-turnstile-response'] || '';
+    if (!turnstileToken) {
+      Logger.log('Turnstile token missing');
+      return redirect();
+    }
+    var turnstileResult = UrlFetchApp.fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'post',
+      contentType: 'application/x-www-form-urlencoded',
+      payload: {
+        secret: '0x4AAAAAACvpvBo8NSS4cXVq9R5wnFWHuP8',
+        response: turnstileToken
+      },
+      muteHttpExceptions: true
+    });
+    var turnstileData = JSON.parse(turnstileResult.getContentText());
+    if (!turnstileData.success) {
+      Logger.log('Turnstile verification failed: ' + JSON.stringify(turnstileData));
+      return redirect();
+    }
+
     // Bot timing detection — reject if form was filled in under 10 seconds
     var loadedTs = parseInt(p['_loaded'], 10);
     var nowTs = Date.now();

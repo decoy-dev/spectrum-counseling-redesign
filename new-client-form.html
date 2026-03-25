@@ -15,6 +15,7 @@
   <meta name="twitter:title" content="New Client Form | Spectrum Counseling" />
   <meta name="twitter:image" content="https://spectrumcounseling.net/assets/sc_og_image.png" />
   <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@300;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
@@ -549,6 +550,11 @@
           </div>
         </div>
 
+        <!-- Turnstile CAPTCHA -->
+        <div class="flex justify-center mb-6 fade-in">
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAACvpvMdO8ZDUgz8y" data-theme="light"></div>
+        </div>
+
         <!-- Submit -->
         <div class="text-center fade-in">
           <button id="submit-btn" type="submit" class="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-10 sm:px-14 py-4 rounded-full text-lg font-bold shadow-xl shadow-primary/10 hover:shadow-2xl hover:shadow-primary/30 hover:scale-[1.01] hover:brightness-110 transition-all duration-200 active:scale-95">
@@ -688,6 +694,14 @@
         if (submitBtn.disabled) { e.preventDefault(); return; }
 
         var now = Date.now();
+
+        // Turnstile CAPTCHA — ensure token is present
+        var turnstileResponse = form.querySelector('[name="cf-turnstile-response"]');
+        if (!turnstileResponse || !turnstileResponse.value) {
+          e.preventDefault();
+          alert('Please complete the CAPTCHA verification.');
+          return;
+        }
 
         // Minimum time on page — no human fills a 7-section intake form in under 15 seconds
         var loadedAt = parseInt(document.getElementById('_loaded').value, 10);
