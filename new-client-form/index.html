@@ -394,7 +394,7 @@
   <section class="py-12 sm:py-16 md:py-20 bg-surface">
     <div class="max-w-4xl mx-auto px-5 sm:px-8">
       <!-- ACTION: Replace the URL below with your deployed Google Apps Script web app URL -->
-      <form id="client-form" action="https://script.google.com/macros/s/AKfycbzrNHAfkxFZsAfHtZmhlnKME56BGFUxki3FLGawHd0SNE272uLV7LfOaYPkcQtk8Cka/exec" method="POST">
+      <form id="client-form" action="https://script.google.com/macros/s/AKfycbzrNHAfkxFZsAfHtZmhlnKME56BGFUxki3FLGawHd0SNE272uLV7LfOaYPkcQtk8Cka/exec" method="POST" novalidate>
         <!-- Honeypot spam protection — hidden from real users -->
         <input type="text" name="_honey" aria-hidden="true" tabindex="-1" style="position:absolute;left:-9999px" autocomplete="off" />
         <!-- Bot timing detection — set by JS on page load, validated server-side -->
@@ -810,6 +810,40 @@
         if (submitBtn.disabled) return;
 
         var now = Date.now();
+
+        // Check all required fields (since novalidate skips browser checks)
+        var requiredFields = form.querySelectorAll('[required]');
+        for (var r = 0; r < requiredFields.length; r++) {
+          var field = requiredFields[r];
+          // Skip Turnstile hidden input — checked separately below
+          if (field.name === 'cf-turnstile-response') continue;
+          // Radio buttons: check that at least one in the group is selected
+          if (field.type === 'radio') {
+            if (!form.querySelector('input[name="' + field.name + '"]:checked')) {
+              alert('Please select an option for: ' + field.name);
+              field.focus();
+              return;
+            }
+            continue;
+          }
+          // Checkboxes: must be checked
+          if (field.type === 'checkbox') {
+            if (!field.checked) {
+              alert('Please check the required acknowledgment.');
+              field.focus();
+              return;
+            }
+            continue;
+          }
+          // Text/email/date/textarea: must have a value
+          if (!field.value.trim()) {
+            var label = form.querySelector('label[for="' + field.id + '"]');
+            var labelText = label ? label.textContent.replace(/\s*\*\s*$/, '').trim() : field.name;
+            alert('Please fill out: ' + labelText);
+            field.focus();
+            return;
+          }
+        }
 
         // Turnstile CAPTCHA — ensure token is present
         var turnstileResponse = form.querySelector('[name="cf-turnstile-response"]');
