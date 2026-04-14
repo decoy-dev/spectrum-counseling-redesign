@@ -275,6 +275,9 @@
       color: rgb(var(--color-on-surface));
       transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
     }
+    .dark .form-input {
+      border-color: rgb(var(--color-outline-variant) / 0.4);
+    }
     .form-input:focus {
       outline: none;
       border-color: rgb(var(--color-primary-fixed-dim));
@@ -283,6 +286,9 @@
     }
     .form-input::placeholder {
       color: rgb(var(--color-outline-variant));
+    }
+    .dark .form-input::placeholder {
+      color: rgb(var(--color-outline));
     }
     textarea.form-input {
       resize: vertical;
