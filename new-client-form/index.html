@@ -513,8 +513,7 @@
           <div class="space-y-4 sm:space-y-5">
             <div>
               <label class="form-label" for="reason">Reason for Counseling <span class="text-error">*</span></label>
-              <textarea class="form-input" id="reason" name="Reason for Counseling" rows="3" required minlength="20" maxlength="2000" placeholder="Please briefly describe what brings you to counseling (minimum 20 characters)"></textarea>
-              <p class="text-xs text-on-surface-variant mt-1">Minimum 20 characters</p>
+              <textarea class="form-input" id="reason" name="Reason for Counseling" rows="3" required maxlength="500" placeholder="Please briefly describe what brings you to counseling"></textarea>
             </div>
             <div>
               <label class="form-label" for="referred-by">Referred By</label>
@@ -522,15 +521,15 @@
             </div>
             <div>
               <label class="form-label" for="previous-counseling">Previous Counseling Experience</label>
-              <textarea class="form-input" id="previous-counseling" name="Previous Counseling" rows="2" maxlength="2000"></textarea>
+              <textarea class="form-input" id="previous-counseling" name="Previous Counseling" rows="2" maxlength="500"></textarea>
             </div>
             <div>
               <label class="form-label" for="medications">Current Medications &amp; Reasons</label>
-              <textarea class="form-input" id="medications" name="Current Medications" rows="2" maxlength="2000"></textarea>
+              <textarea class="form-input" id="medications" name="Current Medications" rows="2" maxlength="500"></textarea>
             </div>
             <div>
               <label class="form-label" for="medical-concerns">Medical Problems / Concerns</label>
-              <textarea class="form-input" id="medical-concerns" name="Medical Problems" rows="2" maxlength="2000"></textarea>
+              <textarea class="form-input" id="medical-concerns" name="Medical Problems" rows="2" maxlength="500"></textarea>
             </div>
           </div>
         </div>
@@ -869,14 +868,6 @@
         // Submission cooldown — block rapid-fire submissions
         if (now - lastSubmitTime < COOLDOWN_MS) {
           alert('Please wait before submitting again.');
-          return;
-        }
-
-        // Validate reason for counseling has meaningful content
-        var reasonField = document.getElementById('reason');
-        if (reasonField && reasonField.value.trim().length < 20) {
-          alert('Please describe your reason for seeking counseling in at least a few words.');
-          reasonField.focus();
           return;
         }
 
