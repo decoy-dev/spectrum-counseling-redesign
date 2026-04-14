@@ -409,11 +409,11 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <label class="form-label" for="client-first">First Name <span class="text-error">*</span></label>
-              <input class="form-input" type="text" id="client-first" name="Client First Name" autocomplete="given-name" required minlength="2" maxlength="100" />
+              <input class="form-input" type="text" id="client-first" name="Client First Name" autocomplete="given-name" required maxlength="100" />
             </div>
             <div>
               <label class="form-label" for="client-last">Last Name <span class="text-error">*</span></label>
-              <input class="form-input" type="text" id="client-last" name="Client Last Name" autocomplete="family-name" required minlength="2" maxlength="100" />
+              <input class="form-input" type="text" id="client-last" name="Client Last Name" autocomplete="family-name" required maxlength="100" />
             </div>
             <div>
               <label class="form-label" for="client-preferred">Preferred Name</label>
@@ -863,20 +863,6 @@
         // Submission cooldown — block rapid-fire submissions
         if (now - lastSubmitTime < COOLDOWN_MS) {
           alert('Please wait before submitting again.');
-          return;
-        }
-
-        // Validate name minimum lengths
-        var firstName = document.getElementById('client-first');
-        if (firstName && firstName.value.trim().length < 2) {
-          alert('First name must be at least 2 characters.');
-          firstName.focus();
-          return;
-        }
-        var lastName = document.getElementById('client-last');
-        if (lastName && lastName.value.trim().length < 2) {
-          alert('Last name must be at least 2 characters.');
-          lastName.focus();
           return;
         }
 
