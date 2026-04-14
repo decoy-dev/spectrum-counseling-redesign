@@ -705,28 +705,28 @@
               <div class="flex items-start gap-3 bg-surface-container-low rounded-xl p-4">
                 <div class="flex-shrink-0 w-16">
                   <label class="text-[0.65rem] font-bold text-on-surface-variant uppercase tracking-wide" for="ack-initials-1">Initials <span class="text-error">*</span></label>
-                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-1" name="Ack Initials 1 - Insurance" required maxlength="5" placeholder="___" />
+                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-1" name="Ack Initials 1 - Insurance" required maxlength="5" pattern="[A-Za-z]{1,5}" placeholder="___" />
                 </div>
                 <p class="pt-2">I understand Dr. Haddox does not accept any health insurance and will not submit claims for reimbursement.</p>
               </div>
               <div class="flex items-start gap-3 bg-surface-container-low rounded-xl p-4">
                 <div class="flex-shrink-0 w-16">
                   <label class="text-[0.65rem] font-bold text-on-surface-variant uppercase tracking-wide" for="ack-initials-2">Initials <span class="text-error">*</span></label>
-                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-2" name="Ack Initials 2 - Payment" required maxlength="5" placeholder="___" />
+                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-2" name="Ack Initials 2 - Payment" required maxlength="5" pattern="[A-Za-z]{1,5}" placeholder="___" />
                 </div>
                 <p class="pt-2">I am responsible for payment of professional services at the time they are rendered.</p>
               </div>
               <div class="flex items-start gap-3 bg-surface-container-low rounded-xl p-4">
                 <div class="flex-shrink-0 w-16">
                   <label class="text-[0.65rem] font-bold text-on-surface-variant uppercase tracking-wide" for="ack-initials-3">Initials <span class="text-error">*</span></label>
-                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-3" name="Ack Initials 3 - Consent" required maxlength="5" placeholder="___" />
+                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-3" name="Ack Initials 3 - Consent" required maxlength="5" pattern="[A-Za-z]{1,5}" placeholder="___" />
                 </div>
                 <p class="pt-2">I voluntarily agree to receive mental health assessment, care, treatment, or services.</p>
               </div>
               <div class="flex items-start gap-3 bg-surface-container-low rounded-xl p-4">
                 <div class="flex-shrink-0 w-16">
                   <label class="text-[0.65rem] font-bold text-on-surface-variant uppercase tracking-wide" for="ack-initials-4">Initials <span class="text-error">*</span></label>
-                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-4" name="Ack Initials 4 - Stop Care" required maxlength="5" placeholder="___" />
+                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-4" name="Ack Initials 4 - Stop Care" required maxlength="5" pattern="[A-Za-z]{1,5}" placeholder="___" />
                 </div>
                 <p class="pt-2">I understand I may stop care at any time.</p>
               </div>
@@ -808,6 +808,15 @@
       if (el) el.value = String(Date.now());
     })();
 
+    // Auto-fill signature date fields with today's date
+    (function() {
+      var today = new Date().toISOString().split('T')[0];
+      var finDate = document.getElementById('financial-date');
+      var hipaaDate = document.getElementById('hipaa-date');
+      if (finDate) finDate.value = today;
+      if (hipaaDate) hipaaDate.value = today;
+    })();
+
     // Submit form via fetch so the browser stays on the page
     (function() {
       var form = document.getElementById('client-form');
@@ -850,7 +859,7 @@
             }
             continue;
           }
-          // Text/email/date/textarea: must have a value
+          // Text/email/date/textarea: must have a value and pass type/pattern validation
           if (!field.value.trim()) {
             var label = form.querySelector('label[for="' + field.id + '"]');
             var labelText = label ? label.textContent.replace(/\s*\*\s*$/, '').trim() : field.name;
@@ -858,6 +867,28 @@
             field.focus();
             return;
           }
+          if (!field.checkValidity()) {
+            var label = form.querySelector('label[for="' + field.id + '"]');
+            var labelText = label ? label.textContent.replace(/\s*\*\s*$/, '').trim() : field.name;
+            alert('Please enter a valid value for: ' + labelText);
+            field.focus();
+            return;
+          }
+        }
+
+        // Signature dates must be today
+        var today = new Date().toISOString().split('T')[0];
+        var finDateField = document.getElementById('financial-date');
+        var hipaaDateField = document.getElementById('hipaa-date');
+        if (finDateField && finDateField.value !== today) {
+          alert('Financial signature date must be today\'s date.');
+          finDateField.focus();
+          return;
+        }
+        if (hipaaDateField && hipaaDateField.value !== today) {
+          alert('HIPAA signature date must be today\'s date.');
+          hipaaDateField.focus();
+          return;
         }
 
         // Turnstile CAPTCHA — ensure token is present
@@ -951,10 +982,7 @@
           document.getElementById('form-success').classList.add('show');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }).catch(function() {
-          form.style.display = 'none';
-          document.getElementById('form-success').classList.add('show');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }).finally(function() {
+          alert('There was a problem submitting your form. Please try again or call (480) 782-0113.');
           submitBtn.disabled = false;
           submitBtn.textContent = originalText;
           submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
