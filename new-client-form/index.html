@@ -794,32 +794,146 @@
     })();
 
     // Submit form via fetch so the browser stays on the page
-    document.getElementById('client-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      var form = e.target;
-      var btn = document.getElementById('submit-btn');
-      var originalText = btn.textContent;
-      btn.disabled = true;
-      btn.textContent = 'Submitting...';
+    (function() {
+      var form = document.getElementById('client-form');
+      var submitBtn = document.getElementById('submit-btn');
+      if (!form || !submitBtn) return;
 
-      fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        mode: 'no-cors'
-      }).then(function() {
-        form.style.display = 'none';
-        document.getElementById('form-success').classList.add('show');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }).catch(function() {
-        // no-cors means we can't read the response, but the request still goes through
-        form.style.display = 'none';
-        document.getElementById('form-success').classList.add('show');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }).finally(function() {
-        btn.disabled = false;
-        btn.textContent = originalText;
+      var lastSubmitTime = 0;
+      var COOLDOWN_MS = 30000;
+      var MIN_TIME_ON_PAGE_MS = 15000;
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Prevent double submission
+        if (submitBtn.disabled) return;
+
+        var now = Date.now();
+
+        // Turnstile CAPTCHA — ensure token is present
+        var turnstileResponse = form.querySelector('[name="cf-turnstile-response"]');
+        if (!turnstileResponse || !turnstileResponse.value) {
+          alert('Please complete the CAPTCHA verification.');
+          return;
+        }
+
+        // Minimum time on page — no human fills a 7-section intake form in under 15 seconds
+        var loadedAt = parseInt(document.getElementById('_loaded').value, 10);
+        if (loadedAt && (now - loadedAt) < MIN_TIME_ON_PAGE_MS) {
+          alert('Please take your time completing the form before submitting.');
+          return;
+        }
+
+        // Submission cooldown — block rapid-fire submissions
+        if (now - lastSubmitTime < COOLDOWN_MS) {
+          alert('Please wait before submitting again.');
+          return;
+        }
+
+        // Validate name minimum lengths
+        var firstName = document.getElementById('client-first');
+        if (firstName && firstName.value.trim().length < 2) {
+          alert('First name must be at least 2 characters.');
+          firstName.focus();
+          return;
+        }
+        var lastName = document.getElementById('client-last');
+        if (lastName && lastName.value.trim().length < 2) {
+          alert('Last name must be at least 2 characters.');
+          lastName.focus();
+          return;
+        }
+
+        // Validate reason for counseling has meaningful content
+        var reasonField = document.getElementById('reason');
+        if (reasonField && reasonField.value.trim().length < 20) {
+          alert('Please describe your reason for seeking counseling in at least a few words.');
+          reasonField.focus();
+          return;
+        }
+
+        // Validate all date-of-birth fields are not in the future
+        var dobFields = [
+          { el: document.getElementById('client-dob'), label: 'Client Date of Birth' },
+          { el: document.getElementById('partner-dob'), label: 'Partner Date of Birth' }
+        ];
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        for (var d = 0; d < dobFields.length; d++) {
+          if (dobFields[d].el && dobFields[d].el.value) {
+            var dobDate = new Date(dobFields[d].el.value);
+            if (dobDate > today) {
+              alert(dobFields[d].label + ' cannot be in the future.');
+              dobFields[d].el.focus();
+              return;
+            }
+          }
+        }
+
+        // Validate signature dates are today (not past, not future)
+        var todayStr = today.toISOString().split('T')[0];
+        var sigDateFields = [
+          { el: document.getElementById('financial-date'), label: 'Financial signature date' },
+          { el: document.getElementById('hipaa-date'), label: 'HIPAA signature date' }
+        ];
+        for (var i = 0; i < sigDateFields.length; i++) {
+          if (sigDateFields[i].el && sigDateFields[i].el.value !== todayStr) {
+            alert(sigDateFields[i].label + ' must be today\u2019s date.');
+            sigDateFields[i].el.focus();
+            return;
+          }
+        }
+
+        // Validate initials contain only letters
+        var initials = document.querySelectorAll('[id^="ack-initials-"]');
+        for (var j = 0; j < initials.length; j++) {
+          if (initials[j].value && !/^[A-Za-z]{1,5}$/.test(initials[j].value)) {
+            alert('Initials should contain only letters (A-Z).');
+            initials[j].focus();
+            return;
+          }
+        }
+
+        // Validate signatures look like real names (not just symbols/numbers)
+        var sigFields = [
+          document.getElementById('financial-signature'),
+          document.getElementById('hipaa-signature')
+        ];
+        for (var s = 0; s < sigFields.length; s++) {
+          if (sigFields[s] && sigFields[s].value && !/^[A-Za-z][A-Za-z \.\-']{1,149}$/.test(sigFields[s].value)) {
+            alert('Please enter a valid name for your signature.');
+            sigFields[s].focus();
+            return;
+          }
+        }
+
+        // All validation passed — submit via fetch
+        lastSubmitTime = now;
+        var originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+        submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
+
+        fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          mode: 'no-cors'
+        }).then(function() {
+          form.style.display = 'none';
+          document.getElementById('form-success').classList.add('show');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }).catch(function() {
+          form.style.display = 'none';
+          document.getElementById('form-success').classList.add('show');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }).finally(function() {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+          submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+        });
       });
-    });
+    })();
 
     // Mobile menu
     var menuBtn = document.getElementById('mobile-menu-btn');
@@ -854,136 +968,6 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
 
-    // Form validation, anti-spam, and double-submit prevention
-    (function() {
-      var form = document.getElementById('client-form');
-      var submitBtn = document.getElementById('submit-btn');
-      if (!form || !submitBtn) return;
-
-      var lastSubmitTime = 0;
-      var COOLDOWN_MS = 30000; // 30-second cooldown between submissions
-      var MIN_TIME_ON_PAGE_MS = 15000; // Must spend at least 15 seconds on page
-
-      form.addEventListener('submit', function(e) {
-        // Prevent double submission
-        if (submitBtn.disabled) { e.preventDefault(); return; }
-
-        var now = Date.now();
-
-        // Turnstile CAPTCHA — ensure token is present
-        var turnstileResponse = form.querySelector('[name="cf-turnstile-response"]');
-        if (!turnstileResponse || !turnstileResponse.value) {
-          e.preventDefault();
-          alert('Please complete the CAPTCHA verification.');
-          return;
-        }
-
-        // Minimum time on page — no human fills a 7-section intake form in under 15 seconds
-        var loadedAt = parseInt(document.getElementById('_loaded').value, 10);
-        if (loadedAt && (now - loadedAt) < MIN_TIME_ON_PAGE_MS) {
-          e.preventDefault();
-          alert('Please take your time completing the form before submitting.');
-          return;
-        }
-
-        // Submission cooldown — block rapid-fire submissions
-        if (now - lastSubmitTime < COOLDOWN_MS) {
-          e.preventDefault();
-          alert('Please wait before submitting again.');
-          return;
-        }
-
-        // Validate name minimum lengths
-        var firstName = document.getElementById('client-first');
-        if (firstName && firstName.value.trim().length < 2) {
-          e.preventDefault();
-          alert('First name must be at least 2 characters.');
-          firstName.focus();
-          return;
-        }
-        var lastName = document.getElementById('client-last');
-        if (lastName && lastName.value.trim().length < 2) {
-          e.preventDefault();
-          alert('Last name must be at least 2 characters.');
-          lastName.focus();
-          return;
-        }
-
-        // Validate reason for counseling has meaningful content
-        var reasonField = document.getElementById('reason');
-        if (reasonField && reasonField.value.trim().length < 20) {
-          e.preventDefault();
-          alert('Please describe your reason for seeking counseling in at least a few words.');
-          reasonField.focus();
-          return;
-        }
-
-        // Validate all date-of-birth fields are not in the future
-        var dobFields = [
-          { el: document.getElementById('client-dob'), label: 'Client Date of Birth' },
-          { el: document.getElementById('partner-dob'), label: 'Partner Date of Birth' }
-        ];
-        var today = new Date();
-        today.setHours(0, 0, 0, 0);
-        for (var d = 0; d < dobFields.length; d++) {
-          if (dobFields[d].el && dobFields[d].el.value) {
-            var dobDate = new Date(dobFields[d].el.value);
-            if (dobDate > today) {
-              e.preventDefault();
-              alert(dobFields[d].label + ' cannot be in the future.');
-              dobFields[d].el.focus();
-              return;
-            }
-          }
-        }
-
-        // Validate signature dates are today (not past, not future)
-        var todayStr = today.toISOString().split('T')[0]; // YYYY-MM-DD
-        var sigDateFields = [
-          { el: document.getElementById('financial-date'), label: 'Financial signature date' },
-          { el: document.getElementById('hipaa-date'), label: 'HIPAA signature date' }
-        ];
-        for (var i = 0; i < sigDateFields.length; i++) {
-          if (sigDateFields[i].el && sigDateFields[i].el.value !== todayStr) {
-            e.preventDefault();
-            alert(sigDateFields[i].label + ' must be today\u2019s date.');
-            sigDateFields[i].el.focus();
-            return;
-          }
-        }
-
-        // Validate initials contain only letters
-        var initials = document.querySelectorAll('[id^="ack-initials-"]');
-        for (var j = 0; j < initials.length; j++) {
-          if (initials[j].value && !/^[A-Za-z]{1,5}$/.test(initials[j].value)) {
-            e.preventDefault();
-            alert('Initials should contain only letters (A-Z).');
-            initials[j].focus();
-            return;
-          }
-        }
-
-        // Validate signatures look like real names (not just symbols/numbers)
-        var sigFields = [
-          document.getElementById('financial-signature'),
-          document.getElementById('hipaa-signature')
-        ];
-        for (var s = 0; s < sigFields.length; s++) {
-          if (sigFields[s] && sigFields[s].value && !/^[A-Za-z][A-Za-z \.\-']{1,149}$/.test(sigFields[s].value)) {
-            e.preventDefault();
-            alert('Please enter a valid name for your signature.');
-            sigFields[s].focus();
-            return;
-          }
-        }
-
-        // Disable button to prevent double submit
-        lastSubmitTime = now;
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Submitting...';
-        submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
-      });
-    })();
   </script>
   <script>
   // === Theme Toggle ===
