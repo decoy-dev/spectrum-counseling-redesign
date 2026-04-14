@@ -275,15 +275,22 @@
       color: rgb(var(--color-on-surface));
       transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .dark .form-input {
+    .dark .form-input,
+    .dark .form-input[type="text"],
+    .dark .form-input[type="email"],
+    .dark .form-input[type="tel"],
+    .dark .form-input[type="date"],
+    .dark textarea.form-input {
       border-color: rgb(var(--color-outline-variant) / 0.4);
-      color: rgb(var(--color-on-surface));
+      color: #dce1eb !important;
+      background: rgb(var(--color-surface-container-low)) !important;
       color-scheme: dark;
+      -webkit-text-fill-color: #dce1eb;
     }
     .form-input:focus {
       outline: none;
       border-color: rgb(var(--color-primary-fixed-dim));
-      background: rgb(var(--color-surface-container-lowest));
+      background: rgb(var(--color-surface-container-lowest)) !important;
       box-shadow: 0 0 0 3px rgb(var(--color-primary-fixed-dim) / 0.3);
     }
     .form-input::placeholder {
