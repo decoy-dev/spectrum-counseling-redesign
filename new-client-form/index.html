@@ -440,7 +440,7 @@
             </div>
             <div>
               <label class="form-label" for="client-dob">Date of Birth <span class="text-error">*</span></label>
-              <input class="form-input" type="date" id="client-dob" name="Client Date of Birth" autocomplete="bday" required min="1900-01-01" />
+              <input class="form-input" type="date" id="client-dob" name="Client Date of Birth" autocomplete="bday" required />
             </div>
             <div>
               <label class="form-label" for="client-phone">Phone Number <span class="text-error">*</span></label>
@@ -492,7 +492,7 @@
             </div>
             <div>
               <label class="form-label" for="partner-dob">Partner Date of Birth</label>
-              <input class="form-input" type="date" id="partner-dob" name="Partner Date of Birth" min="1900-01-01" />
+              <input class="form-input" type="date" id="partner-dob" name="Partner Date of Birth" />
             </div>
             <div>
               <label class="form-label" for="partner-email">Partner Email</label>
@@ -876,20 +876,6 @@
           }
         }
 
-        // Signature dates must be today
-        var today = new Date().toISOString().split('T')[0];
-        var finDateField = document.getElementById('financial-date');
-        var hipaaDateField = document.getElementById('hipaa-date');
-        if (finDateField && finDateField.value !== today) {
-          alert('Financial signature date must be today\'s date.');
-          finDateField.focus();
-          return;
-        }
-        if (hipaaDateField && hipaaDateField.value !== today) {
-          alert('HIPAA signature date must be today\'s date.');
-          hipaaDateField.focus();
-          return;
-        }
 
         // Turnstile CAPTCHA — ensure token is present
         var turnstileResponse = form.querySelector('[name="cf-turnstile-response"]');
@@ -911,37 +897,6 @@
           return;
         }
 
-        // Validate all date-of-birth fields are not in the future
-        var dobFields = [
-          { el: document.getElementById('client-dob'), label: 'Client Date of Birth' },
-          { el: document.getElementById('partner-dob'), label: 'Partner Date of Birth' }
-        ];
-        var today = new Date();
-        today.setHours(0, 0, 0, 0);
-        for (var d = 0; d < dobFields.length; d++) {
-          if (dobFields[d].el && dobFields[d].el.value) {
-            var dobDate = new Date(dobFields[d].el.value);
-            if (dobDate > today) {
-              alert(dobFields[d].label + ' cannot be in the future.');
-              dobFields[d].el.focus();
-              return;
-            }
-          }
-        }
-
-        // Validate signature dates are today (not past, not future)
-        var todayStr = today.toISOString().split('T')[0];
-        var sigDateFields = [
-          { el: document.getElementById('financial-date'), label: 'Financial signature date' },
-          { el: document.getElementById('hipaa-date'), label: 'HIPAA signature date' }
-        ];
-        for (var i = 0; i < sigDateFields.length; i++) {
-          if (sigDateFields[i].el && sigDateFields[i].el.value !== todayStr) {
-            alert(sigDateFields[i].label + ' must be today\u2019s date.');
-            sigDateFields[i].el.focus();
-            return;
-          }
-        }
 
         // Validate initials contain only letters
         var initials = document.querySelectorAll('[id^="ack-initials-"]');
