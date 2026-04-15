@@ -808,14 +808,6 @@
       if (el) el.value = String(Date.now());
     })();
 
-    // Auto-fill signature date fields with today's date
-    (function() {
-      var today = new Date().toISOString().split('T')[0];
-      var finDate = document.getElementById('financial-date');
-      var hipaaDate = document.getElementById('hipaa-date');
-      if (finDate) finDate.value = today;
-      if (hipaaDate) hipaaDate.value = today;
-    })();
 
     // Submit form via fetch so the browser stays on the page
     (function() {
