@@ -40,8 +40,9 @@ function sanitize(str, maxLen) {
   return str.replace(/<[^>]*>/g, '').trim().substring(0, maxLen || 500);
 }
 
-// Retry a function up to maxAttempts times with linear backoff on failure.
-// Used to recover from transient Google Apps Script service errors.
+// Retry a function up to maxAttempts times with exponential backoff on failure.
+// Used to recover from transient Google Apps Script service errors
+// (e.g. "Service Documents failed while accessing document").
 function retry(fn, maxAttempts, baseDelayMs) {
   var attempts = 0;
   while (true) {
@@ -50,7 +51,8 @@ function retry(fn, maxAttempts, baseDelayMs) {
     } catch (err) {
       attempts++;
       if (attempts >= maxAttempts) throw err;
-      Utilities.sleep(baseDelayMs * attempts);
+      // Exponential backoff: baseDelay * 2^(attempts-1)
+      Utilities.sleep(baseDelayMs * Math.pow(2, attempts - 1));
     }
   }
 }
@@ -190,12 +192,19 @@ function doPost(e) {
 
     buildDocument(body, f);
 
-    // Save and export — retry to recover from transient DocumentApp failures
-    retry(function() { doc.saveAndClose(); }, 3, 1000);
+    // Save and export — retry to recover from transient DocumentApp failures.
+    // The Docs backend occasionally throws "Service Documents failed while
+    // accessing document" for ~5–15s after a large build; exponential backoff
+    // (2s, 4s, 8s, 16s, 32s) reliably rides out the window.
+    var docId = doc.getId();
+    retry(function() { doc.saveAndClose(); }, 6, 2000);
+
+    // Small delay so Drive sees the saved doc before we request the export.
+    Utilities.sleep(1500);
 
     var pdf = retry(function() {
-      return DriveApp.getFileById(doc.getId()).getAs('application/pdf');
-    }, 3, 1000);
+      return DriveApp.getFileById(docId).getAs('application/pdf');
+    }, 6, 2000);
     var safeName = (f.clientLast || 'Unknown').replace(/[^a-zA-Z0-9]/g, '')
                  + '_'
                  + (f.clientFirst || '').replace(/[^a-zA-Z0-9]/g, '');
@@ -217,7 +226,7 @@ function doPost(e) {
     );
 
     // Delete the temporary Google Doc
-    DriveApp.getFileById(doc.getId()).setTrashed(true);
+    DriveApp.getFileById(docId).setTrashed(true);
 
   } catch (error) {
     try {
