@@ -40,11 +40,29 @@ function sanitize(str, maxLen) {
   return str.replace(/<[^>]*>/g, '').trim().substring(0, maxLen || 500);
 }
 
+// Retry a function up to maxAttempts times with linear backoff on failure.
+// Used to recover from transient Google Apps Script service errors.
+function retry(fn, maxAttempts, baseDelayMs) {
+  var attempts = 0;
+  while (true) {
+    try {
+      return fn();
+    } catch (err) {
+      attempts++;
+      if (attempts >= maxAttempts) throw err;
+      Utilities.sleep(baseDelayMs * attempts);
+    }
+  }
+}
+
 
 function doPost(e) {
+  var f = null;
+  var rawData = null;
   try {
     var p = e.parameter;
     var ps = e.parameters;
+    rawData = p;
 
     // Honeypot — if filled, it's a bot
     if (p['_honey']) {
@@ -122,7 +140,7 @@ function doPost(e) {
     var submissionDate = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'MMMM d, yyyy');
 
     // Collect all sanitized field values
-    var f = {
+    f = {
       clientFirst:    clientFirst,
       clientLast:     clientLast,
       preferredName:  sanitize(p['Client Preferred Name'], 100),
@@ -172,10 +190,12 @@ function doPost(e) {
 
     buildDocument(body, f);
 
-    doc.saveAndClose();
+    // Save and export — retry to recover from transient DocumentApp failures
+    retry(function() { doc.saveAndClose(); }, 3, 1000);
 
-    // Export as PDF
-    var pdf = DriveApp.getFileById(doc.getId()).getAs('application/pdf');
+    var pdf = retry(function() {
+      return DriveApp.getFileById(doc.getId()).getAs('application/pdf');
+    }, 3, 1000);
     var safeName = (f.clientLast || 'Unknown').replace(/[^a-zA-Z0-9]/g, '')
                  + '_'
                  + (f.clientFirst || '').replace(/[^a-zA-Z0-9]/g, '');
@@ -201,12 +221,30 @@ function doPost(e) {
 
   } catch (error) {
     try {
+      var dataStr = '(no data captured)';
+      if (f) {
+        dataStr = '';
+        for (var fk in f) {
+          dataStr += fk + ': ' + (f[fk] || '(empty)') + '\n';
+        }
+      } else if (rawData) {
+        dataStr = '';
+        for (var rk in rawData) {
+          if (rk === '_honey' || rk === 'cf-turnstile-response' || rk === '_loaded') continue;
+          dataStr += rk + ': ' + rawData[rk] + '\n';
+        }
+      }
       GmailApp.sendEmail(
         CONFIG.RECIPIENT_EMAIL,
         'INTAKE FORM ERROR',
-        'Error: ' + error.toString() + '\n\nStack: ' + (error.stack || 'no stack')
+        'Error: ' + error.toString() + '\n\n' +
+        'Stack: ' + (error.stack || 'no stack') + '\n\n' +
+        '===== SUBMITTED FORM DATA =====\n' +
+        'The PDF generation failed, but the client\'s data is preserved below. ' +
+        'Reach out to them to acknowledge receipt.\n\n' +
+        dataStr
       );
-    } catch (e) {}
+    } catch (e2) {}
     throw error;
   }
 
@@ -400,17 +438,14 @@ function addFieldPair(body, label1, value1, label2, value2) {
   var row = table.getRow(0);
   styleFieldCell(row.getCell(0), label1, val1, 0, 12);
   styleFieldCell(row.getCell(1), label2, val2, 12, 0);
-
-  // Add a light rule after the field pair
-  addLightDivider(body);
 }
 
 /**
  * Style a table cell with label + value.
  */
 function styleFieldCell(cell, label, value, paddingLeft, paddingRight) {
-  cell.setPaddingTop(4);
-  cell.setPaddingBottom(6);
+  cell.setPaddingTop(6);
+  cell.setPaddingBottom(10);
   cell.setPaddingLeft(paddingLeft);
   cell.setPaddingRight(paddingRight);
 
@@ -438,8 +473,8 @@ function addFieldFull(body, label, value) {
   table.setBorderWidth(0);
 
   var cell = table.getRow(0).getCell(0);
-  cell.setPaddingTop(4);
-  cell.setPaddingBottom(6);
+  cell.setPaddingTop(6);
+  cell.setPaddingBottom(10);
   cell.setPaddingLeft(0);
   cell.setPaddingRight(0);
 
@@ -455,29 +490,6 @@ function addFieldFull(body, label, value) {
   styleText(valuePara, 'Times New Roman', 11, false, BRAND.textDark);
   valuePara.setSpacingBefore(0);
   valuePara.setSpacingAfter(0);
-
-  // Light divider
-  addLightDivider(body);
-}
-
-/**
- * Thin light-grey full-width divider between fields.
- */
-function addLightDivider(body) {
-  var table = body.appendTable([['']]);
-  table.setBorderWidth(0);
-
-  var cell = table.getRow(0).getCell(0);
-  cell.setBackgroundColor(BRAND.ruleLight);
-  cell.setPaddingTop(0);
-  cell.setPaddingBottom(0);
-  cell.setPaddingLeft(0);
-  cell.setPaddingRight(0);
-
-  var para = cell.getChild(0).asParagraph();
-  styleText(para, 'Times New Roman', 1, false, BRAND.ruleLight);
-  para.setSpacingBefore(0);
-  para.setSpacingAfter(0);
 }
 
 /**
