@@ -17,10 +17,7 @@
 
 var CONFIG = {
   RECIPIENT_EMAIL: 'mhaddox@spectrumcounseling.net',
-  REDIRECT_URL: 'https://spectrumcounseling.net/new-client-form/?submitted=true',
-  // Temporary: diagnostic email for debugging the "all 32 concerns submitted"
-  // bug. Sends raw POST data per submission to dev. Remove once root-caused.
-  DIAGNOSTIC_EMAIL: 'chris@hvddox.com'
+  REDIRECT_URL: 'https://spectrumcounseling.net/new-client-form/?submitted=true'
 };
 
 // ── Brand colors ──────────────────────────────────────────────
@@ -140,38 +137,6 @@ function doPost(e) {
       if (concern) concerns.push(concern);
     }
     concerns = concerns.length > 0 ? concerns.join(', ') : 'None selected';
-
-    // ── DIAGNOSTIC: capture raw submission to debug "all 32 concerns" bug ──
-    // Remove this block once root cause is identified.
-    try {
-      var rawBody = '(no postData)';
-      if (e.postData && e.postData.contents) {
-        rawBody = e.postData.contents.substring(0, 8000);
-      }
-      var psConcernsDump = '(undefined)';
-      if (ps['Concerns']) {
-        psConcernsDump = 'length=' + ps['Concerns'].length + '\n' +
-                         JSON.stringify(ps['Concerns']);
-      }
-      GmailApp.sendEmail(
-        CONFIG.DIAGNOSTIC_EMAIL,
-        'INTAKE DIAGNOSTIC — concerns count: ' + concerns.split(', ').length,
-        'Diagnostic capture for intake form submission.\n\n' +
-        '===== e.postData.type =====\n' +
-        (e.postData ? e.postData.type : '(no postData)') + '\n\n' +
-        '===== e.parameter["Concerns"] (single) =====\n' +
-        (p['Concerns'] || '(undefined)') + '\n\n' +
-        '===== e.parameters["Concerns"] (array) =====\n' +
-        psConcernsDump + '\n\n' +
-        '===== parsed/sanitized concerns string =====\n' +
-        concerns + '\n\n' +
-        '===== raw POST body (first 8000 chars) =====\n' +
-        rawBody
-      );
-    } catch (diagErr) {
-      // Never let diagnostics break the real submission flow
-    }
-    // ── END DIAGNOSTIC ────────────────────────────────────────────────────
 
     var clientName = (clientFirst + ' ' + clientLast).trim() || 'Unknown';
     var submissionDate = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'MMMM d, yyyy');
