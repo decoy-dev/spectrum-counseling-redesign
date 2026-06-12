@@ -10,6 +10,8 @@
 //    - Who has access: Anyone
 // 4. Copy the web app URL and paste it into new-client-form.html
 //    as the form's action attribute
+// 5. Set Script Property TURNSTILE_SECRET (Project Settings > Script
+//    Properties) to the Cloudflare Turnstile secret key.
 //
 // NOTE: This version builds the intake PDF programmatically —
 // no Google Docs template needed.
@@ -76,11 +78,15 @@ function doPost(e) {
     if (!turnstileToken) {
       return redirect();
     }
+    var turnstileSecret = PropertiesService.getScriptProperties().getProperty('TURNSTILE_SECRET');
+    if (!turnstileSecret) {
+      throw new Error('TURNSTILE_SECRET script property is not set');
+    }
     var turnstileResult = UrlFetchApp.fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'post',
       contentType: 'application/x-www-form-urlencoded',
       payload: {
-        secret: '0x4AAAAAACvpvBo8NSS4cXVq9R5wnFWHuP8',
+        secret: turnstileSecret,
         response: turnstileToken
       },
       muteHttpExceptions: true
