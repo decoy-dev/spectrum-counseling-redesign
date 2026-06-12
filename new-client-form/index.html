@@ -922,14 +922,25 @@
 
         fetch(form.action, {
           method: 'POST',
-          body: new FormData(form),
-          mode: 'no-cors'
-        }).then(function() {
-          form.style.display = 'none';
-          document.getElementById('form-success').classList.add('show');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }).catch(function() {
-          alert('There was a problem submitting your form. Please try again or call (480) 782-0113.');
+          body: new FormData(form)
+        }).then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data && data.ok) {
+            form.style.display = 'none';
+            document.getElementById('form-success').classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            var msg = (data && data.reason === 'captcha')
+              ? 'CAPTCHA verification failed. Please reload the page and try again, or call (480) 782-0113.'
+              : 'There was a problem submitting your form. Please try again or call (480) 782-0113. Your answers are still on this page.';
+            alert(msg);
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+            submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+          }
+        })
+        .catch(function() {
+          alert('There was a problem submitting your form. Please try again or call (480) 782-0113. Your answers are still on this page.');
           submitBtn.disabled = false;
           submitBtn.textContent = originalText;
           submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');

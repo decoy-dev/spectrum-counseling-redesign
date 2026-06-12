@@ -70,13 +70,13 @@ function doPost(e) {
 
     // Honeypot — if filled, it's a bot
     if (p['_honey']) {
-      return redirect();
+      return jsonOut({ ok: true });
     }
 
     // Cloudflare Turnstile verification
     var turnstileToken = p['cf-turnstile-response'] || '';
     if (!turnstileToken) {
-      return redirect();
+      return jsonOut({ ok: false, reason: 'captcha' });
     }
     var turnstileSecret = PropertiesService.getScriptProperties().getProperty('TURNSTILE_SECRET');
     if (!turnstileSecret) {
@@ -93,14 +93,16 @@ function doPost(e) {
     });
     var turnstileData = JSON.parse(turnstileResult.getContentText());
     if (!turnstileData.success) {
-      return redirect();
+      return jsonOut({ ok: false, reason: 'captcha' });
     }
 
-    // Bot timing detection — reject if form was filled in under 10 seconds
+    // Bot timing detection — reject only when delta is a small positive number;
+    // missing/NaN/negative deltas (e.g. client clock ahead of server) pass through
     var loadedTs = parseInt(p['_loaded'], 10);
     var nowTs = Date.now();
-    if (!loadedTs || isNaN(loadedTs) || (nowTs - loadedTs) < 10000) {
-      return redirect();
+    var fillMs = nowTs - loadedTs;
+    if (loadedTs && !isNaN(loadedTs) && fillMs >= 0 && fillMs < 10000) {
+      return jsonOut({ ok: false, reason: 'timing' });
     }
 
     // Rate limiting — max 3 submissions per email per hour
@@ -110,7 +112,7 @@ function doPost(e) {
       var cacheKey = 'intake_' + rateLimitEmail.replace(/[^a-z0-9@.]/g, '');
       var submissions = parseInt(cache.get(cacheKey), 10) || 0;
       if (submissions >= 3) {
-        return redirect();
+        return jsonOut({ ok: false, reason: 'rate-limit' });
       }
       cache.put(cacheKey, String(submissions + 1), 3600); // expires in 1 hour
     }
@@ -259,11 +261,13 @@ function doPost(e) {
         'Reach out to them to acknowledge receipt.\n\n' +
         dataStr
       );
-    } catch (e2) {}
-    throw error;
+      return jsonOut({ ok: true });   // data preserved via error email
+    } catch (e2) {
+      throw error;                    // truly lost — client must see failure
+    }
   }
 
-  return redirect();
+  return jsonOut({ ok: true });
 }
 
 
@@ -602,6 +606,11 @@ function redirect() {
     '<meta http-equiv="refresh" content="0;url=' + CONFIG.REDIRECT_URL + '">' +
     '</head><body><p>Redirecting&hellip;</p></body></html>'
   );
+}
+
+function jsonOut(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 function doGet() {
