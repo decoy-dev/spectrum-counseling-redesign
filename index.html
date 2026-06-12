@@ -716,8 +716,15 @@
     <div class="absolute inset-0 -z-10">
       <!-- Mobile: image only covers the top portion, solid surface below -->
       <div class="relative w-full h-[45%] sm:h-full">
-        <img id="hero-light" alt="Serene water lily pond — Spectrum Counseling Gilbert AZ therapy practice" class="absolute inset-0 w-full h-full object-cover" src="assets/hero.jpg" />
-        <img id="hero-dark" alt="Lotus flowers at dusk — Spectrum Counseling dark theme" class="absolute inset-0 w-full h-full object-cover opacity-0" src="assets/hero-dark.jpg" />
+        <img id="hero-light" alt="Serene water lily pond — Spectrum Counseling Gilbert AZ therapy practice" class="absolute inset-0 w-full h-full object-cover" data-src="assets/hero.webp" />
+        <img id="hero-dark" alt="Lotus flowers at dusk — Spectrum Counseling dark theme" class="absolute inset-0 w-full h-full object-cover opacity-0" data-src="assets/hero-dark.webp" />
+        <script>
+(function(){
+  var dark = document.documentElement.classList.contains('dark');
+  var img = document.getElementById(dark ? 'hero-dark' : 'hero-light');
+  if (img) { img.src = img.getAttribute('data-src'); img.setAttribute('fetchpriority','high'); }
+})();
+</script>
       </div>
       <div class="absolute inset-0 bg-gradient-to-b from-transparent via-surface via-[40%] to-surface sm:hidden"></div>
       <!-- Desktop overlay: left-to-right fade for side-aligned content -->
@@ -763,7 +770,7 @@
           <div class="grid grid-cols-2 gap-4">
             <div class="space-y-4">
               <div class="aspect-[3/4] rounded-2xl bg-primary-container/30 overflow-hidden">
-                <img alt="Comfortable therapy room at Spectrum Counseling in Gilbert Arizona" class="w-full h-full object-cover grayscale-[30%]" src="assets/about-hero.jpg" />
+                <img alt="Comfortable therapy room at Spectrum Counseling in Gilbert Arizona" class="w-full h-full object-cover grayscale-[30%]" src="assets/about-hero.webp" loading="lazy" decoding="async" />
               </div>
               <div class="aspect-square rounded-2xl bg-primary shadow-lg overflow-hidden flex items-center justify-center p-6 sm:p-8 text-on-primary">
                 <div class="text-center">
@@ -774,10 +781,10 @@
             </div>
             <div class="pt-8 sm:pt-12 space-y-4">
               <div class="aspect-square rounded-2xl bg-tertiary-container shadow-sm overflow-hidden">
-                <img alt="Welcoming waiting area with fresh flowers at Spectrum Counseling Gilbert AZ" class="w-full h-full object-cover" src="assets/specialties-hero.jpg" />
+                <img alt="Welcoming waiting area with fresh flowers at Spectrum Counseling Gilbert AZ" class="w-full h-full object-cover" src="assets/specialties-hero.webp" loading="lazy" decoding="async" />
               </div>
               <div class="aspect-[3/4] rounded-2xl bg-surface-container-high overflow-hidden">
-                <img alt="Dr. Marie Haddox Ph.D. credentials and professional certifications" class="w-full h-full object-cover opacity-70" src="assets/certificate.jpg" />
+                <img alt="Dr. Marie Haddox Ph.D. credentials and professional certifications" class="w-full h-full object-cover opacity-70" src="assets/certificate.webp" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
@@ -920,7 +927,7 @@
         <div class="relative h-[300px] sm:h-full sm:flex-1 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden" id="spec-slider">
           <!-- Slide 0: Depression -->
           <div class="spec-slide active" data-spec="0">
-            <img alt="Comfortable therapy room at Spectrum Counseling in Gilbert Arizona" src="assets/about-hero.jpg" />
+            <img alt="Comfortable therapy room at Spectrum Counseling in Gilbert Arizona" src="assets/about-hero.webp" loading="lazy" decoding="async" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Depression Treatment</h3>
@@ -929,7 +936,7 @@
           </div>
           <!-- Slide 1: Anxiety -->
           <div class="spec-slide" data-spec="1">
-            <img alt="Welcoming waiting area with fresh flowers at Spectrum Counseling Gilbert AZ" src="assets/specialties-hero.jpg" />
+            <img alt="Welcoming waiting area with fresh flowers at Spectrum Counseling Gilbert AZ" src="assets/specialties-hero.webp" loading="lazy" decoding="async" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Anxiety &amp; Stress</h3>
@@ -938,7 +945,7 @@
           </div>
           <!-- Slide 2: Relationships -->
           <div class="spec-slide" data-spec="2">
-            <img alt="Dr. Marie Haddox Ph.D. credentials and professional certifications" src="assets/certificate.jpg" />
+            <img alt="Dr. Marie Haddox Ph.D. credentials and professional certifications" src="assets/certificate.webp" loading="lazy" decoding="async" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Relationships &amp; Couples</h3>
@@ -947,7 +954,7 @@
           </div>
           <!-- Slide 3: Sexuality -->
           <div class="spec-slide" data-spec="3">
-            <img alt="Licensed psychologist office with professional credentials in Gilbert Arizona" src="assets/contact-hero.jpg" />
+            <img alt="Licensed psychologist office with professional credentials in Gilbert Arizona" src="assets/contact-hero.webp" loading="lazy" decoding="async" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Sexuality</h3>
@@ -956,7 +963,7 @@
           </div>
           <!-- Slide 4: Gender -->
           <div class="spec-slide" data-spec="4">
-            <img alt="Full view of private therapy room at Spectrum Counseling Gilbert AZ" src="assets/room.webp" />
+            <img alt="Full view of private therapy room at Spectrum Counseling Gilbert AZ" src="assets/room.webp" loading="lazy" decoding="async" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Gender Identity &amp; Transition Support</h3>
@@ -1666,8 +1673,13 @@
 
       function updateHero(dark) {
         if (heroLight && heroDark) {
-          heroLight.style.opacity = dark ? '0' : '1';
-          heroDark.style.opacity = dark ? '1' : '0';
+          var active = dark ? heroDark : heroLight;
+          var inactive = dark ? heroLight : heroDark;
+          if (!active.src && active.getAttribute('data-src')) {
+            active.src = active.getAttribute('data-src');
+          }
+          active.style.opacity = '1';
+          inactive.style.opacity = '0';
         }
       }
 
