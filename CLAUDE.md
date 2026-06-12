@@ -20,17 +20,21 @@ Spectrum Counseling is a static website for Dr. Marie Haddox's therapy practice 
 
 | File | Purpose |
 |---|---|
-| `index.html` | Landing page — hero, services, about, testimonials, FAQ, contact |
-| `contact.html` | Contact/booking page |
-| `new-client-form.html` | Multi-step intake form with client info, consent, HIPAA acknowledgment |
+| `index.html` | Landing page — hero, services, about, testimonials, FAQ, location |
+| `contact/index.html` | Contact page (phone/email/address cards — no form) |
+| `new-client-form/index.html` | Multi-step intake form with client info, consent, HIPAA acknowledgment |
+| `privacy/index.html` | Privacy policy |
+| `terms/index.html` | Terms of service |
+| `404.html` | Not-found page |
+| `sitemap.xml` | Sitemap (update when adding indexed pages) |
 
 ### Backend (Google Apps Script)
 
-`google-apps-script/Code.gs` — Deployed as a Google Apps Script web app. Receives POST submissions from `new-client-form.html`, clones a Google Docs intake template, fills in placeholders (`{{Field Name}}`), exports to PDF, emails it to the practice, then deletes the temp doc. The HTML email template is in `google-apps-script/intake-template.html`.
+`google-apps-script/Code.gs` — Deployed manually as a Google Apps Script web app (NOT deployed by GitHub Actions; changes require a new deployment version in script.google.com). Receives POST submissions from `new-client-form/index.html`, verifies a Cloudflare Turnstile token (secret read from the `TURNSTILE_SECRET` Script Property), applies spam checks (honeypot, timing, per-email rate limit), builds the intake PDF programmatically with DocumentApp (`buildDocument()`), emails it to the practice via GmailApp, then trashes the temp doc. Responds with JSON (`{ok: true/false, reason}`), which the form's fetch handler reads to show success or an error.
 
 ### Reference Design
 
-`stitch_spectrum_counseling_landing_page/` contains the original AI-generated design mockup (`code.html`, `screen.png`) and its `DESIGN.md` specification ("Editorial Serenity" design system). Use this as the design reference for color palette, typography pairing, spacing philosophy, and component patterns.
+`stitch_spectrum_counseling_landing_page/` contains the original AI-generated design mockup (`code.html`, `screen.png`) and its `DESIGN.md` specification ("Editorial Serenity" design system). Use this as the design reference for color palette, typography pairing, spacing philosophy, and component patterns. Note: this folder is intentionally untracked local reference material — it is not in git and not deployed.
 
 ## Design System Key Rules
 
