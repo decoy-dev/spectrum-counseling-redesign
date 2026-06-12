@@ -616,7 +616,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
               <div>
                 <label class="form-label" for="financial-signature">Signature (Type Full Name) <span class="text-error">*</span></label>
-                <input class="form-input" type="text" id="financial-signature" name="Financial Responsibility Signature" autocomplete="name" required placeholder="Type your full legal name" maxlength="150" pattern="[A-Za-z][A-Za-z \.\-']{1,149}" title="Enter your full legal name (letters, spaces, hyphens, apostrophes)" />
+                <input class="form-input" type="text" id="financial-signature" name="Financial Responsibility Signature" autocomplete="name" required placeholder="Type your full legal name" maxlength="150" pattern="[\p{L}][\p{L} .'\-]{1,149}" title="Enter your full legal name (letters, spaces, hyphens, apostrophes)" />
               </div>
               <div>
                 <label class="form-label" for="financial-date">Date <span class="text-error">*</span></label>
@@ -682,7 +682,7 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="form-label" for="hipaa-signature">Signature (Type Full Name) <span class="text-error">*</span></label>
-                  <input class="form-input" type="text" id="hipaa-signature" name="HIPAA Signature" autocomplete="name" required placeholder="Type your full legal name" maxlength="150" pattern="[A-Za-z][A-Za-z \.\-']{1,149}" title="Enter your full legal name (letters, spaces, hyphens, apostrophes)" />
+                  <input class="form-input" type="text" id="hipaa-signature" name="HIPAA Signature" autocomplete="name" required placeholder="Type your full legal name" maxlength="150" pattern="[\p{L}][\p{L} .'\-]{1,149}" title="Enter your full legal name (letters, spaces, hyphens, apostrophes)" />
                 </div>
                 <div>
                   <label class="form-label" for="hipaa-date">Date <span class="text-error">*</span></label>
@@ -705,28 +705,28 @@
               <div class="flex items-start gap-3 bg-surface-container-low rounded-xl p-4">
                 <div class="flex-shrink-0 w-16">
                   <label class="text-[0.65rem] font-bold text-on-surface-variant uppercase tracking-wide" for="ack-initials-1">Initials <span class="text-error">*</span></label>
-                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-1" name="Ack Initials 1 - Insurance" required maxlength="5" pattern="[A-Za-z]{1,5}" placeholder="___" />
+                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-1" name="Ack Initials 1 - Insurance" required maxlength="5" pattern="[\p{L}]{1,5}" placeholder="___" />
                 </div>
                 <p class="pt-2">I understand Dr. Haddox does not accept any health insurance and will not submit claims for reimbursement.</p>
               </div>
               <div class="flex items-start gap-3 bg-surface-container-low rounded-xl p-4">
                 <div class="flex-shrink-0 w-16">
                   <label class="text-[0.65rem] font-bold text-on-surface-variant uppercase tracking-wide" for="ack-initials-2">Initials <span class="text-error">*</span></label>
-                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-2" name="Ack Initials 2 - Payment" required maxlength="5" pattern="[A-Za-z]{1,5}" placeholder="___" />
+                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-2" name="Ack Initials 2 - Payment" required maxlength="5" pattern="[\p{L}]{1,5}" placeholder="___" />
                 </div>
                 <p class="pt-2">I am responsible for payment of professional services at the time they are rendered.</p>
               </div>
               <div class="flex items-start gap-3 bg-surface-container-low rounded-xl p-4">
                 <div class="flex-shrink-0 w-16">
                   <label class="text-[0.65rem] font-bold text-on-surface-variant uppercase tracking-wide" for="ack-initials-3">Initials <span class="text-error">*</span></label>
-                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-3" name="Ack Initials 3 - Consent" required maxlength="5" pattern="[A-Za-z]{1,5}" placeholder="___" />
+                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-3" name="Ack Initials 3 - Consent" required maxlength="5" pattern="[\p{L}]{1,5}" placeholder="___" />
                 </div>
                 <p class="pt-2">I voluntarily agree to receive mental health assessment, care, treatment, or services.</p>
               </div>
               <div class="flex items-start gap-3 bg-surface-container-low rounded-xl p-4">
                 <div class="flex-shrink-0 w-16">
                   <label class="text-[0.65rem] font-bold text-on-surface-variant uppercase tracking-wide" for="ack-initials-4">Initials <span class="text-error">*</span></label>
-                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-4" name="Ack Initials 4 - Stop Care" required maxlength="5" pattern="[A-Za-z]{1,5}" placeholder="___" />
+                  <input class="form-input text-center text-sm py-1.5 px-2 mt-1" type="text" id="ack-initials-4" name="Ack Initials 4 - Stop Care" required maxlength="5" pattern="[\p{L}]{1,5}" placeholder="___" />
                 </div>
                 <p class="pt-2">I understand I may stop care at any time.</p>
               </div>
@@ -893,8 +893,8 @@
         // Validate initials contain only letters
         var initials = document.querySelectorAll('[id^="ack-initials-"]');
         for (var j = 0; j < initials.length; j++) {
-          if (initials[j].value && !/^[A-Za-z]{1,5}$/.test(initials[j].value)) {
-            alert('Initials should contain only letters (A-Z).');
+          if (initials[j].value && !/^[\p{L}]{1,5}$/u.test(initials[j].value)) {
+            alert('Initials should contain only letters.');
             initials[j].focus();
             return;
           }
@@ -906,7 +906,7 @@
           document.getElementById('hipaa-signature')
         ];
         for (var s = 0; s < sigFields.length; s++) {
-          if (sigFields[s] && sigFields[s].value && !/^[A-Za-z][A-Za-z \.\-']{1,149}$/.test(sigFields[s].value)) {
+          if (sigFields[s] && sigFields[s].value && !/^[\p{L}][\p{L} .'\-]{1,149}$/u.test(sigFields[s].value)) {
             alert('Please enter a valid name for your signature.');
             sigFields[s].focus();
             return;
