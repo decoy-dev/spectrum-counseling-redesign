@@ -720,13 +720,15 @@
     <div class="absolute inset-0 -z-10">
       <!-- Mobile: image only covers the top portion, solid surface below -->
       <div class="relative w-full h-[45%] sm:h-full">
-        <img id="hero-light" alt="Serene water lily pond — Spectrum Counseling Gilbert AZ therapy practice" class="absolute inset-0 w-full h-full object-cover" data-src="assets/hero.webp" />
-        <img id="hero-dark" alt="Lotus flowers at dusk — Spectrum Counseling dark theme" class="absolute inset-0 w-full h-full object-cover opacity-0" data-src="assets/hero-dark.webp" />
+        <img id="hero-light" alt="Serene water lily pond — Spectrum Counseling Gilbert AZ therapy practice" class="absolute inset-0 w-full h-full object-cover" src="assets/hero.webp" />
+        <img id="hero-dark" alt="Lotus flowers at dusk — Spectrum Counseling dark theme" class="absolute inset-0 w-full h-full object-cover opacity-0" src="assets/hero-dark.webp" />
         <script>
 (function(){
   var dark = document.documentElement.classList.contains('dark');
-  var img = document.getElementById(dark ? 'hero-dark' : 'hero-light');
-  if (img) { img.src = img.getAttribute('data-src'); img.setAttribute('fetchpriority','high'); }
+  var active = document.getElementById(dark ? 'hero-dark' : 'hero-light');
+  var inactive = document.getElementById(dark ? 'hero-light' : 'hero-dark');
+  if (active) active.setAttribute('fetchpriority', 'high');
+  if (inactive) inactive.setAttribute('fetchpriority', 'low');
 })();
 </script>
       </div>
@@ -1677,13 +1679,8 @@
 
       function updateHero(dark) {
         if (heroLight && heroDark) {
-          var active = dark ? heroDark : heroLight;
-          var inactive = dark ? heroLight : heroDark;
-          if (!active.src && active.getAttribute('data-src')) {
-            active.src = active.getAttribute('data-src');
-          }
-          active.style.opacity = '1';
-          inactive.style.opacity = '0';
+          heroLight.style.opacity = dark ? '0' : '1';
+          heroDark.style.opacity = dark ? '1' : '0';
         }
       }
 
