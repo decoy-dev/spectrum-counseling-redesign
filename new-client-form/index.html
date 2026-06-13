@@ -334,6 +334,18 @@
     .form-success.show {
       display: block;
     }
+    .submit-spinner {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      border: 3px solid rgb(var(--color-primary) / 0.25);
+      border-top-color: rgb(var(--color-primary));
+      animation: submit-spin 0.8s linear infinite;
+    }
+    @keyframes submit-spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
@@ -749,6 +761,13 @@
             Submit Client Form
           </button>
           <p class="text-xs text-on-surface-variant mt-4">Your information is transmitted securely and kept confidential.</p>
+          <div id="submit-status" class="hidden mt-6 mx-auto max-w-md rounded-xl bg-surface-container-low px-6 py-5 text-left" role="status" aria-live="polite">
+            <div class="flex items-center gap-3">
+              <span class="submit-spinner" aria-hidden="true"></span>
+              <span id="submit-status-text" class="text-sm font-semibold text-on-surface">Verifying your information&hellip;</span>
+            </div>
+            <p class="text-xs text-on-surface-variant mt-2">This can take up to 15 seconds &mdash; please keep this page open.</p>
+          </div>
         </div>
       </form>
 
@@ -917,8 +936,27 @@
         lastSubmitTime = now;
         var originalText = submitBtn.textContent;
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Submitting...';
+        submitBtn.textContent = 'Submitting…';
         submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
+
+        var statusEl = document.getElementById('submit-status');
+        var statusTextEl = document.getElementById('submit-status-text');
+        var statusTimers = [];
+        function clearStatusTimers() {
+          for (var i = 0; i < statusTimers.length; i++) { clearTimeout(statusTimers[i]); }
+          statusTimers = [];
+        }
+        statusTextEl.textContent = 'Verifying your information…';
+        statusEl.classList.remove('hidden');
+        statusTimers.push(setTimeout(function() {
+          statusTextEl.textContent = 'Securely generating your intake packet…';
+        }, 2500));
+        statusTimers.push(setTimeout(function() {
+          statusTextEl.textContent = 'Almost done — finalizing your submission…';
+        }, 7000));
+        statusTimers.push(setTimeout(function() {
+          statusTextEl.textContent = 'Still working — thank you for your patience…';
+        }, 14000));
 
         fetch(form.action, {
           method: 'POST',
@@ -926,6 +964,8 @@
         }).then(function(r) { return r.json(); })
         .then(function(data) {
           if (data && data.ok) {
+            clearStatusTimers();
+            statusEl.classList.add('hidden');
             form.style.display = 'none';
             document.getElementById('form-success').classList.add('show');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -934,6 +974,9 @@
               ? 'CAPTCHA verification failed. Please reload the page and try again, or call (480) 782-0113.'
               : 'There was a problem submitting your form. Please try again or call (480) 782-0113. Your answers are still on this page.';
             alert(msg);
+            clearStatusTimers();
+            statusEl.classList.add('hidden');
+            statusTextEl.textContent = 'Verifying your information…';
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;
             submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
@@ -941,6 +984,9 @@
         })
         .catch(function() {
           alert('There was a problem submitting your form. Please try again or call (480) 782-0113. Your answers are still on this page.');
+          clearStatusTimers();
+          statusEl.classList.add('hidden');
+          statusTextEl.textContent = 'Verifying your information…';
           submitBtn.disabled = false;
           submitBtn.textContent = originalText;
           submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
