@@ -2,17 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://spectrumcounseling.net/</loc>
-    <priority>1.0</priority>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-06-12</lastmod>
   </url>
   <url>
     <loc>https://spectrumcounseling.net/contact/</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-06-12</lastmod>
   </url>
   <url>
-    <loc>https://spectrumcounseling.net/new-client-form/</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
+    <loc>https://spectrumcounseling.net/privacy/</loc>
+    <lastmod>2026-06-12</lastmod>
+  </url>
+  <url>
+    <loc>https://spectrumcounseling.net/terms/</loc>
+    <lastmod>2026-06-12</lastmod>
   </url>
 </urlset>
