@@ -18,6 +18,7 @@ rotation, Apps Script redeploy) that an executor agent cannot perform alone.
 | 004  | Accept accented/non-ASCII names in signatures | P2 | S | — | DONE (on `advisor/004-005-fixes`, stacked on 001-002) |
 | 005  | Truth-up CLAUDE.md; delete dead intake-template.html | P2 | S | — | DONE (on `advisor/004-005-fixes`) |
 | 006  | Live staged feedback while the intake form submits | P2 | S | 002 | DONE (merged to master at 501c8b0) |
+| 007  | SEO cleanup — robots.txt, sitemap, Psychologist schema, OG gaps | P3 | S | — | DONE (merged to master) |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) |
 REJECTED (with one-line rationale).
