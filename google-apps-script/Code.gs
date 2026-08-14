@@ -131,8 +131,9 @@ function doPost(e) {
     var hipaaDate   = sanitize(p['HIPAA Signature Date'], 10);
     var ack1        = sanitize(p['Ack Initials 1 - Insurance'], 5);
     var ack2        = sanitize(p['Ack Initials 2 - Payment'], 5);
-    var ack3        = sanitize(p['Ack Initials 3 - Consent'], 5);
-    var ack4        = sanitize(p['Ack Initials 4 - Stop Care'], 5);
+    var ack3        = sanitize(p['Ack Initials 3 - Cancellation'], 5);
+    var ack4        = sanitize(p['Ack Initials 4 - Consent'], 5);
+    var ack5        = sanitize(p['Ack Initials 5 - Stop Care'], 5);
     var clientDob   = sanitize(p['Client Date of Birth'], 10);
     var partnerEmail = sanitize(p['Partner Email'], 254);
     var partnerDob  = sanitize(p['Partner Date of Birth'], 10);
@@ -185,6 +186,7 @@ function doPost(e) {
       ack2:           ack2,
       ack3:           ack3,
       ack4:           ack4,
+      ack5:           ack5,
       submissionDate: submissionDate
     };
 
@@ -370,8 +372,9 @@ function buildDocument(body, f) {
 
   addAckItem(body, f.ack1, 'I understand Dr. Haddox does not accept any health insurance and will not submit claims for reimbursement.');
   addAckItem(body, f.ack2, 'I am responsible for payment of professional services at the time they are rendered.');
-  addAckItem(body, f.ack3, 'I voluntarily agree to receive mental health assessment, care, treatment, or services.');
-  addAckItem(body, f.ack4, 'I understand I may stop care at any time.');
+  addAckItem(body, f.ack3, 'I understand that appointments cancelled without 24-hour notice will be billed at a rate of $75. Third and subsequent late cancellations, as well as appointments missed without any notice, will be billed the full session fee. These fees may be charged to the credit card on file.');
+  addAckItem(body, f.ack4, 'I voluntarily agree to receive mental health assessment, care, treatment, or services.');
+  addAckItem(body, f.ack5, 'I understand I may stop care at any time.');
 
 
   // ── FOOTER ────────────────────────────────────────────────────
