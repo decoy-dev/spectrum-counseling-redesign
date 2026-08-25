@@ -105,16 +105,18 @@ function doPost(e) {
       return jsonOut({ ok: false, reason: 'timing' });
     }
 
-    // Rate limiting — max 3 submissions per email per hour
+    // Rate limiting — max 3 submissions per email per hour. The counter is
+    // incremented only after the intake email sends (end of the try block),
+    // so attempts that fail through no fault of the client don't burn quota.
     var rateLimitEmail = (p['Client Email'] || '').trim().toLowerCase();
+    var rateCache = null;
+    var rateCacheKey = null;
     if (rateLimitEmail) {
-      var cache = CacheService.getScriptCache();
-      var cacheKey = 'intake_' + rateLimitEmail.replace(/[^a-z0-9@.]/g, '');
-      var submissions = parseInt(cache.get(cacheKey), 10) || 0;
-      if (submissions >= 3) {
+      rateCache = CacheService.getScriptCache();
+      rateCacheKey = 'intake_' + rateLimitEmail.replace(/[^a-z0-9@.]/g, '');
+      if ((parseInt(rateCache.get(rateCacheKey), 10) || 0) >= 3) {
         return jsonOut({ ok: false, reason: 'rate-limit' });
       }
-      cache.put(cacheKey, String(submissions + 1), 3600); // expires in 1 hour
     }
 
     // ── Sanitize all fields ──────────────────────────────────────
@@ -235,6 +237,12 @@ function doPost(e) {
       }
     );
 
+    // Count this successful submission toward the hourly rate limit
+    if (rateCache) {
+      var sent = parseInt(rateCache.get(rateCacheKey), 10) || 0;
+      rateCache.put(rateCacheKey, String(sent + 1), 3600); // expires in 1 hour
+    }
+
     // Delete the temporary Google Doc
     DriveApp.getFileById(docId).setTrashed(true);
 
@@ -253,16 +261,23 @@ function doPost(e) {
           dataStr += rk + ': ' + rawData[rk] + '\n';
         }
       }
-      GmailApp.sendEmail(
-        CONFIG.RECIPIENT_EMAIL,
-        'INTAKE FORM ERROR',
+      var errSubject = 'INTAKE FORM ERROR';
+      var errBody =
         'Error: ' + error.toString() + '\n\n' +
         'Stack: ' + (error.stack || 'no stack') + '\n\n' +
         '===== SUBMITTED FORM DATA =====\n' +
         'The PDF generation failed, but the client\'s data is preserved below. ' +
         'Reach out to them to acknowledge receipt.\n\n' +
-        dataStr
-      );
+        dataStr;
+      // This email is the last line of defense for the client's data, and
+      // Gmail can glitch during the same service disruptions that break
+      // DocumentApp — retry it, then fall back to MailApp, a separate
+      // service that may be up when GmailApp is not.
+      try {
+        retry(function() { GmailApp.sendEmail(CONFIG.RECIPIENT_EMAIL, errSubject, errBody); }, 3, 1000);
+      } catch (gmailErr) {
+        retry(function() { MailApp.sendEmail(CONFIG.RECIPIENT_EMAIL, errSubject, errBody); }, 3, 1000);
+      }
       return jsonOut({ ok: true });   // data preserved via error email
     } catch (e2) {
       throw error;                    // truly lost — client must see failure

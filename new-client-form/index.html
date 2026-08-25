@@ -979,9 +979,11 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
           } else {
             var msg = (data && data.reason === 'captcha')
-              ? 'CAPTCHA verification failed. Please reload the page and try again, or call (480) 782-0113.'
+              ? 'CAPTCHA verification failed. Please try submitting again, or call (480) 782-0113.'
               : 'There was a problem submitting your form. Please try again or call (480) 782-0113. Your answers are still on this page.';
             alert(msg);
+            // Turnstile tokens are single-use — get a fresh one so a retry can pass
+            if (window.turnstile) { turnstile.reset(); }
             clearStatusTimers();
             statusEl.classList.add('hidden');
             statusTextEl.textContent = 'Verifying your information…';
@@ -992,6 +994,8 @@
         })
         .catch(function() {
           alert('There was a problem submitting your form. Please try again or call (480) 782-0113. Your answers are still on this page.');
+          // Turnstile tokens are single-use — get a fresh one so a retry can pass
+          if (window.turnstile) { turnstile.reset(); }
           clearStatusTimers();
           statusEl.classList.add('hidden');
           statusTextEl.textContent = 'Verifying your information…';
