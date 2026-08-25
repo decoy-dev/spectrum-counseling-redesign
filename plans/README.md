@@ -20,6 +20,7 @@ rotation, Apps Script redeploy) that an executor agent cannot perform alone.
 | 006  | Live staged feedback while the intake form submits | P2 | S | 002 | DONE (merged to master at 501c8b0) |
 | 007  | SEO cleanup — robots.txt, sitemap, Psychologist schema, OG gaps | P3 | S | — | DONE (merged to master) |
 | 008  | Restore eager dual-hero loading for smooth theme crossfade | P2 | S | 003 | DONE (merged to master) |
+| 009  | Intake outage incident & fixes — retrospective 2026-08-24 | P1 | S | — | DONE (merged at 9863c6f; Apps Script redeployed) — operator follow-ups listed in plan |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) |
 REJECTED (with one-line rationale).
