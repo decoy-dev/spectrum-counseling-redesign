@@ -22,17 +22,21 @@ var CONFIG = {
   REDIRECT_URL: 'https://spectrumcounseling.net/new-client-form/?submitted=true'
 };
 
-// ── Brand colors ──────────────────────────────────────────────
+// ── Brand colors — "A2 Neutral (max contrast)" palette ────────
+// Readability-tuned: text is near-black instead of light grey so it
+// stays legible on white and on the light box background after PDF
+// export/print. Same Times New Roman, same layout. Brand blue is kept
+// for the large headings and divider rules only.
 var BRAND = {
-  primary:     '#567a96',
-  primaryDark: '#365671',
-  textDark:    '#2d3335',
-  textMuted:   '#5a6062',
-  labelGrey:   '#888888',
-  ruleLight:   '#d0d0d0',
-  footerGrey:  '#999999',
+  primary:     '#567a96',  // large headings (title, form title) + all divider rules
+  primaryDark: '#2f4a63',  // section-header text + acknowledgment initials (12pt bold)
+  textDark:    '#1f2223',  // field values, ack statements, notice heading  (~15:1 on white)
+  textMuted:   '#2c2f31',  // intro, instruction, HIPAA + notice body        (~13:1 on white)
+  labelGrey:   '#242424',  // field labels, address, submitted, INITIALS lbl (~15:1 on white)
+  ruleLight:   '#767676',  // footer hairline + notice-box border (darkened so it survives export)
+  footerGrey:  '#333333',  // footer text
   white:       '#ffffff',
-  bgLight:     '#f5f7f8'
+  bgLight:     '#eef2f4'   // notice / initials cell background
 };
 
 // ── Input sanitization & validation helpers ─────────────────
@@ -455,7 +459,7 @@ function addFullWidthRule(body, color, heightPx) {
  * Section header: bold colored title with a full-width rule underneath.
  */
 function addSectionHeader(body, text) {
-  addPara(body, text, 'Times New Roman', 12, true, BRAND.primary, 'LEFT', 18, 3);
+  addPara(body, text, 'Times New Roman', 12, true, BRAND.primaryDark, 'LEFT', 18, 3);
   addFullWidthRule(body, BRAND.primary, 1);
   addSpacer(body, 4);
 }
@@ -489,7 +493,7 @@ function styleFieldCell(cell, label, value, paddingLeft, paddingRight) {
   // Label (use the auto-created paragraph)
   var labelPara = cell.getChild(0).asParagraph();
   labelPara.setText(label.toUpperCase());
-  styleText(labelPara, 'Times New Roman', 7, true, BRAND.labelGrey);
+  styleText(labelPara, 'Times New Roman', 8, true, BRAND.labelGrey);
   labelPara.setSpacingBefore(0);
   labelPara.setSpacingAfter(2);
 
@@ -518,7 +522,7 @@ function addFieldFull(body, label, value) {
   // Label
   var labelPara = cell.getChild(0).asParagraph();
   labelPara.setText(label.toUpperCase());
-  styleText(labelPara, 'Times New Roman', 7, true, BRAND.labelGrey);
+  styleText(labelPara, 'Times New Roman', 8, true, BRAND.labelGrey);
   labelPara.setSpacingBefore(0);
   labelPara.setSpacingAfter(2);
 
@@ -577,13 +581,13 @@ function addAckItem(body, initials, statement) {
 
   var initLabelPara = initCell.getChild(0).asParagraph();
   initLabelPara.setText('INITIALS');
-  styleText(initLabelPara, 'Times New Roman', 6, true, BRAND.labelGrey);
+  styleText(initLabelPara, 'Times New Roman', 7, true, BRAND.labelGrey);
   initLabelPara.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
   initLabelPara.setSpacingBefore(0);
   initLabelPara.setSpacingAfter(2);
 
   var initValPara = initCell.appendParagraph(initVal);
-  styleText(initValPara, 'Times New Roman', 12, true, BRAND.primary);
+  styleText(initValPara, 'Times New Roman', 12, true, BRAND.primaryDark);
   initValPara.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
   initValPara.setSpacingBefore(0);
   initValPara.setSpacingAfter(0);
