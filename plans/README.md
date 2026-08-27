@@ -21,6 +21,7 @@ rotation, Apps Script redeploy) that an executor agent cannot perform alone.
 | 007  | SEO cleanup — robots.txt, sitemap, Psychologist schema, OG gaps | P3 | S | — | DONE (merged to master) |
 | 008  | Restore eager dual-hero loading for smooth theme crossfade | P2 | S | 003 | DONE (merged to master) |
 | 009  | Intake outage incident & fixes — retrospective 2026-08-24 | P1 | S | — | DONE (merged at 9863c6f; Apps Script redeployed) — operator follow-ups listed in plan |
+| 010  | Intake PDF readability — darken light text (A2 palette) | P2 | S | — | DONE (merged to master at `81ebe92`) — operator follow-up: Apps Script redeploy + test submission |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) |
 REJECTED (with one-line rationale).
