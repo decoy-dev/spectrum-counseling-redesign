@@ -30,7 +30,9 @@ Spectrum Counseling is a static website for Dr. Marie Haddox's therapy practice 
 
 ### Backend (Google Apps Script)
 
-`google-apps-script/Code.gs` — Deployed manually as a Google Apps Script web app (NOT deployed by GitHub Actions; changes require a new deployment version in script.google.com). Receives POST submissions from `new-client-form/index.html`, verifies a Cloudflare Turnstile token (secret read from the `TURNSTILE_SECRET` Script Property), applies spam checks (honeypot, timing, per-email rate limit), builds the intake PDF programmatically with DocumentApp (`buildDocument()`), emails it to the practice via GmailApp, then trashes the temp doc. Responds with JSON (`{ok: true/false, reason}`), which the form's fetch handler reads to show success or an error.
+`google-apps-script/Code.gs` — Deployed manually as a Google Apps Script web app (NOT deployed by GitHub Actions; changes require a new deployment version in script.google.com). Receives POST submissions from `new-client-form/index.html`, verifies a Cloudflare Turnstile token (secret read from the `TURNSTILE_SECRET` Script Property), applies spam checks (honeypot, timing, per-email rate limit), renders the intake as an HTML string (`buildHtml()`), converts it to a PDF in one call with `Utilities.newBlob(html).getAs('application/pdf')`, and emails it to the practice via GmailApp. It deliberately uses neither DocumentApp nor DriveApp — the former Docs-based pipeline failed on Google-side Docs disruptions twice (see `plans/009` and `plans/011`); do not reintroduce a temp Doc. Responds with JSON (`{ok: true/false, reason}`), which the form's fetch handler reads to show success or an error. If PDF generation fails, the client's data is emailed as plain text instead (subject "INTAKE FORM ERROR").
+
+`google-apps-script/Code.test.js` — zero-dependency contract tests (`node --test google-apps-script/Code.test.js`) that load `Code.gs` into a `vm` sandbox with stubbed Google services. Run them after any `Code.gs` change; the `doPost` test has no `DocumentApp`/`DriveApp` in scope on purpose.
 
 ### Reference Design
 
@@ -52,6 +54,10 @@ These rules from the design spec should be followed when editing any page:
 
 Push to `master` triggers GitHub Actions to deploy. No build command needed — the workflow uploads the repo contents directly to GitHub Pages.
 
+The domain is fronted by Cloudflare. Two consequences: (1) the live `/robots.txt` is the repo file with a Cloudflare "Managed robots.txt" block prepended (blocks AI-training crawlers; Googlebot/Bingbot unaffected) — that block is controlled from the Cloudflare dashboard, not this repo; (2) redirects for legacy URLs from the previous site must be done as Cloudflare Redirect Rules — GitHub Pages has no server-side redirect mechanism (see `plans/012`).
+
+Icons: every page loads a single shared Material Symbols subset URL (`icon_names=…`, alphabetical). If you add an icon anywhere — in markup or set from JS like `light_mode` — add its name to that URL on all six pages or it will render as text.
+
 ## Development
 
-Open any HTML file directly in a browser for local preview. No dev server required. For the intake form backend, the Google Apps Script must be deployed separately per the instructions in `Code.gs`.
+Open any HTML file directly in a browser for local preview. No dev server required. For the intake form backend, the Google Apps Script must be deployed separately per the instructions in `Code.gs`; run `node --test google-apps-script/Code.test.js` first. To preview the intake PDF layout locally, dump `buildHtml(sample)` to a file and print it with headless Chrome (`--headless=new --print-to-pdf=…`); the HTML is the source of truth for the layout, though Google's converter may differ slightly from Chrome.

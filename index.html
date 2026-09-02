@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0, interactive-widget=resizes-visual" name="viewport" />
   <title>Marie Haddox, Ph.D. | Spectrum Counseling | Therapist in Gilbert &amp; Phoenix, AZ</title>
-  <meta name="description" content="Dr. Marie Haddox — Licensed psychologist in Gilbert, AZ offering LGBTQ+ affirming therapy, couples counseling, anxiety &amp; depression treatment, and individual therapy. Serving Gilbert, Mesa, Chandler, Tempe, and Greater Phoenix." />
-  <meta name="keywords" content="therapist Gilbert AZ, psychologist Gilbert Arizona, counseling Phoenix AZ, LGBTQ therapist Arizona, couples counseling Gilbert, anxiety therapist Mesa AZ, depression counselor Chandler, Dr Marie Haddox, Spectrum Counseling, marriage counseling East Valley" />
+  <meta name="description" content="Dr. Marie Haddox, LPC, offers LGBTQ+ affirming therapy, couples counseling, and anxiety &amp; depression treatment in Gilbert, AZ. In person or telehealth." />
+  <meta name="keywords" content="therapist Gilbert AZ, counselor Gilbert Arizona, counseling Phoenix AZ, LGBTQ therapist Arizona, couples counseling Gilbert, anxiety therapist Mesa AZ, depression counselor Chandler, Dr Marie Haddox, Spectrum Counseling, marriage counseling East Valley" />
   <link rel="canonical" href="https://spectrumcounseling.net/" />
   <meta property="og:title" content="Marie Haddox, Ph.D. | Spectrum Counseling | Gilbert &amp; Phoenix, AZ" />
   <meta property="og:description" content="Compassionate, LGBTQ+ affirming therapy in Gilbert, Arizona. Dr. Marie Haddox offers individual, couples, and family counseling with 20+ years of experience." />
@@ -32,8 +32,10 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Psychologist",
+    "@type": "LocalBusiness",
+    "@id": "https://spectrumcounseling.net/#organization",
     "name": "Spectrum Counseling",
+    "legalName": "Spectrum Counseling, LLC",
     "description": "Compassionate, holistic LGBTQ+ affirming therapy, couples counseling, and individual therapy in Gilbert, AZ.",
     "url": "https://spectrumcounseling.net/",
     "telephone": "+1-480-782-0113",
@@ -42,7 +44,7 @@
     "logo": "https://spectrumcounseling.net/assets/SC_logo.png",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "428 S Gilbert Rd. Ste. #105 (Bldg. 3)",
+      "streetAddress": "428 S. Gilbert Rd. Ste. #105 (Bldg. 3)",
       "addressLocality": "Gilbert",
       "addressRegion": "AZ",
       "postalCode": "85296",
@@ -53,9 +55,19 @@
       "latitude": 33.341638,
       "longitude": -111.790467
     },
-    "openingHours": "Mo-Fr 09:00-17:00",
+    "hasMap": "https://share.google/Mw9tMcAxO62nrUnmG",
+    "openingHours": "Mo,Tu,Th,Fr 10:30-18:00",
     "priceRange": "$$",
-    "areaServed": ["Gilbert", "Mesa", "Chandler", "Tempe", "Phoenix", "East Valley"],
+    "paymentAccepted": "Cash, Check, Credit Card",
+    "currenciesAccepted": "USD",
+    "areaServed": [
+      {"@type": "City", "name": "Gilbert", "containedInPlace": {"@type": "State", "name": "Arizona"}},
+      {"@type": "City", "name": "Mesa", "containedInPlace": {"@type": "State", "name": "Arizona"}},
+      {"@type": "City", "name": "Chandler", "containedInPlace": {"@type": "State", "name": "Arizona"}},
+      {"@type": "City", "name": "Tempe", "containedInPlace": {"@type": "State", "name": "Arizona"}},
+      {"@type": "City", "name": "Phoenix", "containedInPlace": {"@type": "State", "name": "Arizona"}},
+      {"@type": "State", "name": "Arizona"}
+    ],
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Counseling Services",
@@ -68,12 +80,19 @@
     },
     "founder": {
       "@type": "Person",
-      "name": "Dr. Marie Haddox",
+      "@id": "https://spectrumcounseling.net/#marie-haddox",
+      "name": "Marie Haddox",
+      "honorificPrefix": "Dr.",
       "honorificSuffix": "Ph.D.",
-      "jobTitle": "Licensed Psychologist"
+      "jobTitle": "Licensed Professional Counselor",
+      "hasCredential": {
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "Licensed Professional Counselor",
+        "identifier": "LPC-11797"
+      }
     },
     "sameAs": [
-      "https://share.google/SQVPLjnKvYBuvgcOu",
+      "https://share.google/Mw9tMcAxO62nrUnmG",
       "https://www.psychologytoday.com/us/therapists/marie-haddox-gilbert-az/35279"
     ]
   }
@@ -85,23 +104,23 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Does Spectrum Counseling in Gilbert, AZ take insurance?",
+        "name": "Do you take insurance?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Dr. Haddox is out-of-network for all insurance plans. We can provide a diagnosis and procedure code to help you submit a claim to your insurance company for potential out-of-network reimbursement."
+          "text": "Dr. Haddox is considered out-of-network for all insurance plans and does not submit claims directly to insurance companies. However, we can provide a diagnosis and procedure code to help you submit a claim for potential out-of-network reimbursement. See our contact page for full rate and payment details."
         }
       },
       {
         "@type": "Question",
-        "name": "What should I expect in my first therapy session with Dr. Marie Haddox?",
+        "name": "What should I expect in my first session?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The initial consultation is an intake session where we discuss your history, goals, and determine if our practice is the right fit for your needs. This session typically lasts 60 minutes."
+          "text": "The initial consultation is an intake session where we discuss your history, goals, and determine if our practice is the right fit for your needs. This session typically lasts 60 minutes, and there's no pressure — it's a conversation to help us both understand how we can work together most effectively."
         }
       },
       {
         "@type": "Question",
-        "name": "How long are counseling sessions at Spectrum Counseling?",
+        "name": "How long are the sessions?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "All sessions — individual, couples, and family — are 60 minutes. Extended sessions can be arranged for intensive therapeutic work when needed."
@@ -109,26 +128,28 @@
       },
       {
         "@type": "Question",
-        "name": "Does Spectrum Counseling offer telehealth therapy sessions in Arizona?",
+        "name": "Do you offer telehealth sessions?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, we offer secure telehealth sessions for clients throughout Arizona via a HIPAA-compliant platform."
+          "text": "Yes, we offer secure telehealth sessions for clients throughout Arizona. Virtual sessions follow the same structure as in-person appointments and are conducted through a HIPAA-compliant platform. Many clients find the flexibility of telehealth helpful for maintaining consistency in their care."
         }
       },
       {
         "@type": "Question",
-        "name": "What is the cancellation policy for therapy appointments?",
+        "name": "What is your cancellation policy?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We ask for at least 24 hours notice if you need to cancel or reschedule. Late cancellations or no-shows may be subject to a fee."
+          "text": "We ask for at least 24 hours' notice if you need to cancel or reschedule your appointment. Late cancellations or no-shows may be subject to a fee. We understand that life happens and will always work with you when unexpected circumstances arise."
         }
       }
     ]
   }
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@300;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&icon_names=arrow_back,calendar_today,call,check_circle,close,dark_mode,description,diversity_1,diversity_3,event_busy,event_note,explore_off,favorite,gavel,group,groups,health_and_safety,history_edu,info,keyboard_arrow_down,light_mode,location_on,mail,menu,open_in_new,pause,payments,person_4,play_arrow,psychology,rainy,schedule,school,self_improvement,shield,spa,star,transgender,videocam&display=block" rel="stylesheet" />
   <script>
     tailwind.config = {
       darkMode: "class",
@@ -661,7 +682,7 @@
     <div class="flex justify-between items-center px-4 sm:px-6 py-3">
       <div class="flex items-center">
         <a href="https://spectrumcounseling.net/">
-          <img id="nav-logo" alt="Spectrum Counseling Logo" class="h-10 lg:h-12 w-auto object-contain transition-opacity duration-300" src="assets/SC_logo.png" />
+          <img id="nav-logo" alt="Spectrum Counseling Logo" width="1500" height="368" class="h-10 lg:h-12 w-auto object-contain transition-opacity duration-300" src="assets/SC_logo.png" />
         </a>
       </div>
       <div class="hidden lg:flex flex-1 justify-center gap-4 xl:gap-6 items-center ml-4">
@@ -757,6 +778,9 @@
             How We Help
           </a>
         </div>
+        <p class="mt-5 text-sm text-on-surface-variant sm:hidden">
+          Prefer to talk? <a href="tel:+14807820113" class="text-primary font-semibold hover:underline">Call (480) 782-0113</a>
+        </p>
       </div>
     </div>
   </section>
@@ -819,6 +843,10 @@
               <div class="flex items-center gap-3 text-primary font-bold">
                 <span class="material-symbols-outlined text-primary-dim" aria-hidden="true">health_and_safety</span>
                 <span class="text-sm">Banner Desert Medical Center Exp.</span>
+              </div>
+              <div class="flex items-center gap-3 text-primary font-bold">
+                <span class="material-symbols-outlined text-primary-dim" aria-hidden="true">health_and_safety</span>
+                <span class="text-sm">Licensed Professional Counselor &middot; LPC-11797</span>
               </div>
               <div class="flex items-center gap-3 text-primary font-bold">
                 <span class="material-symbols-outlined text-primary-dim" aria-hidden="true">diversity_1</span>
@@ -933,7 +961,7 @@
         <div class="relative h-[300px] sm:h-full sm:flex-1 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden" id="spec-slider">
           <!-- Slide 0: Depression -->
           <div class="spec-slide active" data-spec="0">
-            <img alt="Comfortable therapy room at Spectrum Counseling in Gilbert Arizona" src="assets/about-hero.webp" loading="lazy" decoding="async" />
+            <img alt="" src="assets/about-hero.webp" loading="lazy" decoding="async" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Depression Treatment</h3>
@@ -942,7 +970,7 @@
           </div>
           <!-- Slide 1: Anxiety -->
           <div class="spec-slide" data-spec="1">
-            <img alt="Welcoming waiting area with fresh flowers at Spectrum Counseling Gilbert AZ" src="assets/specialties-hero.webp" loading="lazy" decoding="async" />
+            <img alt="" src="assets/specialties-hero.webp" loading="lazy" decoding="async" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Anxiety &amp; Stress</h3>
@@ -951,7 +979,7 @@
           </div>
           <!-- Slide 2: Relationships -->
           <div class="spec-slide" data-spec="2">
-            <img alt="Dr. Marie Haddox Ph.D. credentials and professional certifications" src="assets/certificate.webp" loading="lazy" decoding="async" />
+            <img alt="" src="assets/certificate.webp" loading="lazy" decoding="async" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Relationships &amp; Couples</h3>
@@ -960,7 +988,7 @@
           </div>
           <!-- Slide 3: Sexuality -->
           <div class="spec-slide" data-spec="3">
-            <img alt="Licensed psychologist office with professional credentials in Gilbert Arizona" src="assets/contact-hero.webp" loading="lazy" decoding="async" />
+            <img alt="" src="assets/contact-hero.webp" loading="lazy" decoding="async" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Sexuality</h3>
@@ -969,7 +997,7 @@
           </div>
           <!-- Slide 4: Gender -->
           <div class="spec-slide" data-spec="4">
-            <img alt="Full view of private therapy room at Spectrum Counseling Gilbert AZ" src="assets/room.webp" loading="lazy" decoding="async" />
+            <img alt="" src="assets/room.webp" loading="lazy" decoding="async" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/5"></div>
             <div class="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] p-6 sm:p-8 lg:p-12 text-white">
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4" style="font-family: 'Noto Serif', serif;">Gender Identity &amp; Transition Support</h3>
@@ -1054,7 +1082,7 @@
             <div class="flex items-start gap-3">
               <span class="material-symbols-outlined text-primary text-2xl mt-0.5" aria-hidden="true">location_on</span>
               <div>
-                <p class="font-bold text-on-surface">428 S Gilbert Rd. Ste. #105 (Bldg. 3)</p>
+                <p class="font-bold text-on-surface">428 S. Gilbert Rd. Ste. #105 (Bldg. 3)</p>
                 <p class="text-on-surface-variant">Gilbert, AZ 85296</p>
               </div>
             </div>
@@ -1062,11 +1090,25 @@
               <span class="material-symbols-outlined text-primary text-2xl mt-0.5" aria-hidden="true">schedule</span>
               <div>
                 <p class="font-bold text-on-surface">Office Hours</p>
-                <p class="text-on-surface-variant">Monday – Friday, 9:00 AM – 5:00 PM</p>
+                <p class="text-on-surface-variant">Monday, Tuesday, Thursday &amp; Friday · 10:30 AM – 6:00 PM</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary text-2xl mt-0.5" aria-hidden="true">call</span>
+              <div>
+                <p class="font-bold text-on-surface">Phone</p>
+                <p><a href="tel:+14807820113" class="text-on-surface-variant hover:text-primary transition-colors">(480) 782-0113</a></p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary text-2xl mt-0.5" aria-hidden="true">mail</span>
+              <div>
+                <p class="font-bold text-on-surface">Email</p>
+                <p><a href="mailto:mhaddox@spectrumcounseling.net" class="text-on-surface-variant hover:text-primary transition-colors break-all">mhaddox@spectrumcounseling.net</a></p>
               </div>
             </div>
           </address>
-          <a href="https://maps.app.goo.gl/2ZQNhKLbCcT1tTy28" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold text-sm sm:text-base hover:bg-primary-dim hover:scale-[1.01] hover:shadow-lg hover:shadow-primary/25 transition-all duration-200 active:scale-95 shadow-md shadow-primary/10">
+          <a href="https://share.google/Mw9tMcAxO62nrUnmG" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold text-sm sm:text-base hover:bg-primary-dim hover:scale-[1.01] hover:shadow-lg hover:shadow-primary/25 transition-all duration-200 active:scale-95 shadow-md shadow-primary/10">
             <span class="material-symbols-outlined text-lg" aria-hidden="true">open_in_new</span>
             Open in Google Maps
           </a>
@@ -1178,8 +1220,9 @@
   <footer class="w-full py-10 sm:py-16 px-5 sm:px-8 bg-primary text-on-primary">
     <div class="flex flex-col md:flex-row justify-between items-center gap-6 sm:gap-8 max-w-7xl mx-auto">
       <div class="flex flex-col items-center md:items-start">
-        <img alt="Spectrum Counseling Logo" class="h-10 sm:h-12 w-auto object-contain brightness-0 invert mb-2" src="assets/SC_logo.png" />
+        <img alt="Spectrum Counseling Logo" width="1500" height="368" class="h-10 sm:h-12 w-auto object-contain brightness-0 invert mb-2" src="assets/SC_logo.png" />
         <p class="text-on-primary/70 text-xs sm:text-sm tracking-wide">&copy; 2026 Spectrum Counseling | Marie Haddox, Ph.D.</p>
+        <p class="text-on-primary/70 text-xs sm:text-sm tracking-wide mt-1">428 S. Gilbert Rd. Ste. #105, Gilbert, AZ 85296 &middot; <a href="tel:+14807820113" class="hover:text-white underline decoration-on-primary/30 hover:decoration-white underline-offset-4 transition-all duration-200">(480) 782-0113</a></p>
       </div>
       <div class="flex flex-wrap justify-center gap-4 sm:gap-8">
         <a class="text-xs sm:text-sm tracking-wide uppercase font-medium text-on-primary/60 hover:text-white underline decoration-on-primary/30 hover:decoration-white decoration-2 underline-offset-4 transition-all duration-200" href="contact/">Contact</a>

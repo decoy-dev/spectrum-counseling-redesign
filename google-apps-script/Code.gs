@@ -13,8 +13,9 @@
 // 5. Set Script Property TURNSTILE_SECRET (Project Settings > Script
 //    Properties) to the Cloudflare Turnstile secret key.
 //
-// NOTE: This version builds the intake PDF programmatically —
-// no Google Docs template needed.
+// NOTE: The intake PDF is rendered as HTML and converted with
+// Utilities.newBlob(html).getAs('application/pdf') — no Google Doc is
+// created, so DocumentApp and DriveApp are not used at all.
 // ============================================================
 
 var CONFIG = {
@@ -47,8 +48,7 @@ function sanitize(str, maxLen) {
 }
 
 // Retry a function up to maxAttempts times with exponential backoff on failure.
-// Used to recover from transient Google Apps Script service errors
-// (e.g. "Service Documents failed while accessing document").
+// Used to recover from transient Google Apps Script service errors.
 function retry(fn, maxAttempts, baseDelayMs) {
   var attempts = 0;
   while (true) {
@@ -196,31 +196,13 @@ function doPost(e) {
       submissionDate: submissionDate
     };
 
-    // Build the Google Doc
-    var doc = DocumentApp.create('Intake - ' + (clientName || 'Unknown') + ' - ' + submissionDate);
-    var body = doc.getBody();
-
-    // Page margins (0.75 in = ~54 pt)
-    body.setMarginTop(54);
-    body.setMarginBottom(54);
-    body.setMarginLeft(54);
-    body.setMarginRight(54);
-
-    buildDocument(body, f);
-
-    // Save and export — retry to recover from transient DocumentApp failures.
-    // The Docs backend occasionally throws "Service Documents failed while
-    // accessing document" for ~5–15s after a large build; exponential backoff
-    // (2s, 4s, 8s, 16s, 32s) reliably rides out the window.
-    var docId = doc.getId();
-    retry(function() { doc.saveAndClose(); }, 6, 2000);
-
-    // Small delay so Drive sees the saved doc before we request the export.
-    Utilities.sleep(1500);
-
+    // Render the intake as HTML and convert it to a PDF in one call. This is a
+    // pure conversion — no Doc, no Drive file, nothing to clean up — so it is
+    // safe to retry (2s, 4s, 8s backoff).
     var pdf = retry(function() {
-      return DriveApp.getFileById(docId).getAs('application/pdf');
-    }, 6, 2000);
+      return Utilities.newBlob(buildHtml(f), 'text/html', 'intake.html')
+                      .getAs('application/pdf');
+    }, 4, 2000);
     var safeName = (f.clientLast || 'Unknown').replace(/[^a-zA-Z0-9]/g, '')
                  + '_'
                  + (f.clientFirst || '').replace(/[^a-zA-Z0-9]/g, '');
@@ -247,9 +229,6 @@ function doPost(e) {
       rateCache.put(rateCacheKey, String(sent + 1), 3600); // expires in 1 hour
     }
 
-    // Delete the temporary Google Doc
-    DriveApp.getFileById(docId).setTrashed(true);
-
   } catch (error) {
     try {
       var dataStr = '(no data captured)';
@@ -274,8 +253,8 @@ function doPost(e) {
         'Reach out to them to acknowledge receipt.\n\n' +
         dataStr;
       // This email is the last line of defense for the client's data, and
-      // Gmail can glitch during the same service disruptions that break
-      // DocumentApp — retry it, then fall back to MailApp, a separate
+      // Gmail can glitch during the same service disruptions that break the
+      // PDF conversion — retry it, then fall back to MailApp, a separate
       // service that may be up when GmailApp is not.
       try {
         retry(function() { GmailApp.sendEmail(CONFIG.RECIPIENT_EMAIL, errSubject, errBody); }, 3, 1000);
@@ -293,328 +272,197 @@ function doPost(e) {
 
 
 // ╔══════════════════════════════════════════════════════════════╗
-// ║  DOCUMENT BUILDER                                           ║
+// ║  HTML BUILDER                                               ║
 // ╚══════════════════════════════════════════════════════════════╝
+//
+// Mirrors the former DocumentApp layout one-to-one: same Times New Roman
+// point sizes, colors, paddings, and paragraph spacing; tables carry the
+// rules, field rows, notice box, and initials cells exactly as the Doc did.
+// All client-supplied values pass through esc() before entering markup.
 
-function buildDocument(body, f) {
+var FONT = "'Times New Roman', Times, serif";
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function buildHtml(f) {
+  var h = [];
 
   // ── HEADER ────────────────────────────────────────────────────
-  // Reuse the default paragraph (body must always have >= 1 child)
-  var titlePara = body.getChild(0).asParagraph();
-  titlePara.setText('SPECTRUM COUNSELING, LLC');
-  styleText(titlePara, 'Times New Roman', 20, true, BRAND.primary);
-  titlePara.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
-  titlePara.setSpacingBefore(0);
-  titlePara.setSpacingAfter(2);
-
-  addPara(body, 'Marie Haddox, Ph.D.',
-    'Times New Roman', 11, false, BRAND.textMuted, 'CENTER', 0, 2);
-  addPara(body, '428 S. Gilbert Rd. Ste. #105 (Bldg. 3) \u2022 Gilbert, AZ 85296 \u2022 (480) 782-0113',
-    'Times New Roman', 9, false, BRAND.labelGrey, 'CENTER', 0, 8);
-
-  // Primary colored divider
-  addFullWidthRule(body, BRAND.primary, 2);
-
-  addPara(body, 'NEW CLIENT INTAKE FORM',
-    'Times New Roman', 14, true, BRAND.primary, 'CENTER', 12, 2);
-  addPara(body, 'Submitted: ' + f.submissionDate,
-    'Times New Roman', 9, false, BRAND.labelGrey, 'CENTER', 0, 14);
-
+  h.push(para('SPECTRUM COUNSELING, LLC', 20, true, BRAND.primary, 'center', 0, 2));
+  h.push(para('Marie Haddox, Ph.D.', 11, false, BRAND.textMuted, 'center', 0, 2));
+  h.push(para('428 S. Gilbert Rd. Ste. #105 (Bldg. 3) \u2022 Gilbert, AZ 85296 \u2022 (480) 782-0113',
+    9, false, BRAND.labelGrey, 'center', 0, 8));
+  h.push(rule(BRAND.primary, 2));
+  h.push(para('NEW CLIENT INTAKE FORM', 14, true, BRAND.primary, 'center', 12, 2));
+  h.push(para('Submitted: ' + f.submissionDate, 9, false, BRAND.labelGrey, 'center', 0, 14));
 
   // ── SECTION 1: CLIENT INFORMATION ─────────────────────────────
-  addSectionHeader(body, '1 \u2014 Client Information');
-
-  addFieldPair(body, 'First Name', f.clientFirst, 'Last Name', f.clientLast);
-  addFieldPair(body, 'Preferred Name', f.preferredName, 'Pronouns', f.pronouns);
-  addFieldPair(body, 'Date of Birth', f.dob, 'Phone Number', f.phone);
-  addFieldFull(body, 'Email', f.email);
-  addFieldFull(body, 'Address', f.address);
-  addFieldPair(body, 'Employer', f.employer, 'Occupation', f.occupation);
-
+  h.push(sectionHeader('1 \u2014 Client Information'));
+  h.push(fieldPair('First Name', f.clientFirst, 'Last Name', f.clientLast));
+  h.push(fieldPair('Preferred Name', f.preferredName, 'Pronouns', f.pronouns));
+  h.push(fieldPair('Date of Birth', f.dob, 'Phone Number', f.phone));
+  h.push(fieldFull('Email', f.email));
+  h.push(fieldFull('Address', f.address));
+  h.push(fieldPair('Employer', f.employer, 'Occupation', f.occupation));
 
   // ── SECTION 2: PARTNER / MINOR INFORMATION ────────────────────
-  addSectionHeader(body, '2 \u2014 Partner / Minor Information');
-  addPara(body, 'Complete if seeking couples therapy or if client is a minor.',
-    'Times New Roman', 9, false, BRAND.textMuted, 'LEFT', 0, 6).editAsText().setItalic(true);
-
-  addFieldPair(body, 'Partner First Name', f.partnerFirst, 'Partner Last Name', f.partnerLast);
-  addFieldPair(body, 'Preferred Name', f.partnerPref, 'Pronouns', f.partnerPro);
-  addFieldPair(body, 'Partner Date of Birth', f.partnerDob, 'Partner Email', f.partnerEmail);
-  addFieldFull(body, 'Parent / Guardian Names (for minor clients)', f.parentNames);
-  addFieldPair(body, 'School', f.school, 'Grade', f.grade);
-
+  h.push(sectionHeader('2 \u2014 Partner / Minor Information'));
+  h.push(para('Complete if seeking couples therapy or if client is a minor.',
+    9, false, BRAND.textMuted, 'left', 0, 6, 'font-style:italic;'));
+  h.push(fieldPair('Partner First Name', f.partnerFirst, 'Partner Last Name', f.partnerLast));
+  h.push(fieldPair('Preferred Name', f.partnerPref, 'Pronouns', f.partnerPro));
+  h.push(fieldPair('Partner Date of Birth', f.partnerDob, 'Partner Email', f.partnerEmail));
+  h.push(fieldFull('Parent / Guardian Names (for minor clients)', f.parentNames));
+  h.push(fieldPair('School', f.school, 'Grade', f.grade));
 
   // ── SECTION 3: CLINICAL BACKGROUND ────────────────────────────
-  addSectionHeader(body, '3 \u2014 Clinical Background');
-
-  addFieldFull(body, 'Reason for Counseling', f.reason);
-  addFieldFull(body, 'Referred By', f.referredBy);
-  addFieldFull(body, 'Previous Counseling Experience', f.prevCounseling);
-  addFieldFull(body, 'Current Medications & Reasons', f.medications);
-  addFieldFull(body, 'Medical Problems / Concerns', f.medical);
-
+  h.push(sectionHeader('3 \u2014 Clinical Background'));
+  h.push(fieldFull('Reason for Counseling', f.reason));
+  h.push(fieldFull('Referred By', f.referredBy));
+  h.push(fieldFull('Previous Counseling Experience', f.prevCounseling));
+  h.push(fieldFull('Current Medications & Reasons', f.medications));
+  h.push(fieldFull('Medical Problems / Concerns', f.medical));
 
   // ── SECTION 4: AREAS OF CONCERN ───────────────────────────────
-  addSectionHeader(body, '4 \u2014 Areas of Concern');
-  addFieldFull(body, 'Selected Concerns', f.concerns);
-
+  h.push(sectionHeader('4 \u2014 Areas of Concern'));
+  h.push(fieldFull('Selected Concerns', f.concerns));
 
   // ── SECTION 5: PAYMENT & INSURANCE ────────────────────────────
-  addSectionHeader(body, '5 \u2014 Payment & Insurance');
-  addFieldFull(body, 'Payment Preference', f.payment);
-
-  // Financial responsibility notice box
-  addNoticeBox(body,
+  h.push(sectionHeader('5 \u2014 Payment & Insurance'));
+  h.push(fieldFull('Payment Preference', f.payment));
+  h.push(noticeBox(
     'Financial Responsibility Acknowledgment:',
     ' The client/responsible party is responsible for payment of professional services at the time they are rendered. ' +
     'By signing below, I certify that I, the client/responsible party, acknowledge that Dr. Haddox does not accept any ' +
     'health insurance and will not submit claims for reimbursement to any insurance company on my behalf.'
-  );
-  addSpacer(body, 4);
-  addFieldPair(body, 'Signature (Typed)', f.finSig, 'Date', f.finDate);
-
+  ));
+  h.push(spacer(4));
+  h.push(fieldPair('Signature (Typed)', f.finSig, 'Date', f.finDate));
 
   // ── SECTION 6: HIPAA ─────────────────────────────────────────
-  addSectionHeader(body, '6 \u2014 HIPAA Notice of Privacy Practices');
-
-  addPara(body,
+  h.push(sectionHeader('6 \u2014 HIPAA Notice of Privacy Practices'));
+  h.push(para(
     'By signing below, I acknowledge that I have received and reviewed the HIPAA Notice of Privacy Practices ' +
     'for Spectrum Counseling, LLC, in accordance with the Health Insurance Portability and Accountability Act (HIPAA), ' +
     'the HITECH Act, and the 2013 Omnibus Rule.',
-    'Times New Roman', 9.5, false, BRAND.textMuted, 'LEFT', 2, 8);
-
-  addFieldPair(body, 'Signature (Typed)', f.hipaaSig, 'Date', f.hipaaDate);
-
+    9.5, false, BRAND.textMuted, 'left', 2, 8));
+  h.push(fieldPair('Signature (Typed)', f.hipaaSig, 'Date', f.hipaaDate));
 
   // ── SECTION 7: ACKNOWLEDGMENT ─────────────────────────────────
-  addSectionHeader(body, '7 \u2014 Acknowledgment');
-
-  addAckItem(body, f.ack1, 'I understand Dr. Haddox does not accept any health insurance and will not submit claims for reimbursement.');
-  addAckItem(body, f.ack2, 'I am responsible for payment of professional services at the time they are rendered.');
-  addAckItem(body, f.ack3, 'I understand that appointments cancelled without 24-hour notice will be billed at a rate of $75. Third and subsequent late cancellations, as well as appointments missed without any notice, will be billed the full session fee. These fees may be charged to the credit card on file.');
-  addAckItem(body, f.ack4, 'I voluntarily agree to receive mental health assessment, care, treatment, or services.');
-  addAckItem(body, f.ack5, 'I understand I may stop care at any time.');
-
+  h.push(sectionHeader('7 \u2014 Acknowledgment'));
+  h.push(ackItem(f.ack1, 'I understand Dr. Haddox does not accept any health insurance and will not submit claims for reimbursement.'));
+  h.push(ackItem(f.ack2, 'I am responsible for payment of professional services at the time they are rendered.'));
+  h.push(ackItem(f.ack3, 'I understand that appointments cancelled without 24-hour notice will be billed at a rate of $75. Third and subsequent late cancellations, as well as appointments missed without any notice, will be billed the full session fee. These fees may be charged to the credit card on file.'));
+  h.push(ackItem(f.ack4, 'I voluntarily agree to receive mental health assessment, care, treatment, or services.'));
+  h.push(ackItem(f.ack5, 'I understand I may stop care at any time.'));
 
   // ── FOOTER ────────────────────────────────────────────────────
-  addSpacer(body, 16);
-  addFullWidthRule(body, BRAND.ruleLight, 1);
-  addPara(body,
+  h.push(spacer(16));
+  h.push(rule(BRAND.ruleLight, 1));
+  h.push(para(
     'Spectrum Counseling, LLC \u2022 Marie Haddox, Ph.D. \u2022 428 S. Gilbert Rd. Ste. #105, Gilbert, AZ 85296 \u2022 (480) 782-0113 \u2022 mhaddox@spectrumcounseling.net',
-    'Times New Roman', 8, false, BRAND.footerGrey, 'CENTER', 6, 0);
+    8, false, BRAND.footerGrey, 'center', 6, 0));
+
+  return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Intake</title>' +
+    '<style>@page{size:letter;margin:0.75in}' +
+    'body{margin:0;font-family:' + FONT + ';color:' + BRAND.textDark + '}' +
+    'table{border-collapse:collapse;width:100%}td{vertical-align:top}</style>' +
+    '</head><body>' + h.join('') + '</body></html>';
 }
 
 
 // ╔══════════════════════════════════════════════════════════════╗
-// ║  HELPER FUNCTIONS                                           ║
+// ║  HTML HELPERS                                               ║
 // ╚══════════════════════════════════════════════════════════════╝
 
-/**
- * Apply text styling to a paragraph via editAsText().
- */
-function styleText(para, fontFamily, fontSize, bold, color) {
-  var ts = para.editAsText();
-  ts.setFontFamily(fontFamily);
-  ts.setFontSize(fontSize);
-  ts.setBold(bold);
-  ts.setForegroundColor(color);
-  return ts;
+function textStyle(size, bold, color) {
+  return 'font-family:' + FONT + ';font-size:' + size + 'pt;' +
+    'font-weight:' + (bold ? 'bold' : 'normal') + ';color:' + color + ';';
 }
 
 /**
- * Add a styled paragraph. Alignment is a string: 'LEFT', 'CENTER', 'RIGHT'.
+ * Styled paragraph. spacingBefore/After are points, like the Doc API.
  */
-function addPara(body, text, fontFamily, fontSize, bold, color, align, spacingBefore, spacingAfter) {
-  var para = body.appendParagraph(text);
-  styleText(para, fontFamily, fontSize, bold, color);
-  para.setAlignment(DocumentApp.HorizontalAlignment[align || 'LEFT']);
-  para.setSpacingBefore(spacingBefore);
-  para.setSpacingAfter(spacingAfter);
-  return para;
+function para(text, size, bold, color, align, spacingBefore, spacingAfter, extra) {
+  return '<p style="' + textStyle(size, bold, color) +
+    'text-align:' + (align || 'left') + ';' +
+    'margin:' + spacingBefore + 'pt 0 ' + spacingAfter + 'pt 0;' +
+    (extra || '') + '">' + esc(text) + '</p>';
 }
 
 /**
- * Full-width horizontal rule using a 1x1 table with a colored background.
- * The cell background creates a solid bar that stretches edge to edge.
+ * Full-width horizontal rule: a 1x1 table whose cell background is the bar.
  */
-function addFullWidthRule(body, color, heightPx) {
-  var table = body.appendTable([['']]);
-  table.setBorderWidth(0);
-  table.setBorderColor(color);
+function rule(color, heightPt) {
+  return '<table cellspacing="0" cellpadding="0"><tr><td style="background-color:' + color + ';' +
+    'padding:' + (heightPt || 1) + 'pt 0 0 0;font-size:1pt;line-height:1pt;height:1pt">' +
+    '&nbsp;</td></tr></table>';
+}
 
-  var cell = table.getRow(0).getCell(0);
-  cell.setBackgroundColor(color);
-  cell.setPaddingTop(heightPx || 1);
-  cell.setPaddingBottom(0);
-  cell.setPaddingLeft(0);
-  cell.setPaddingRight(0);
-
-  var para = cell.getChild(0).asParagraph();
-  styleText(para, 'Times New Roman', 1, false, color);
-  para.setSpacingBefore(0);
-  para.setSpacingAfter(0);
+function sectionHeader(text) {
+  return para(text, 12, true, BRAND.primaryDark, 'left', 18, 3) +
+    rule(BRAND.primary, 1) +
+    spacer(4);
 }
 
 /**
- * Section header: bold colored title with a full-width rule underneath.
+ * Label + value stack inside a field cell.
  */
-function addSectionHeader(body, text) {
-  addPara(body, text, 'Times New Roman', 12, true, BRAND.primaryDark, 'LEFT', 18, 3);
-  addFullWidthRule(body, BRAND.primary, 1);
-  addSpacer(body, 4);
+function fieldCell(label, value, paddingLeft, paddingRight, width) {
+  return '<td style="padding:6pt ' + paddingRight + 'pt 10pt ' + paddingLeft + 'pt;' +
+    (width ? 'width:' + width + ';' : '') + '">' +
+    para(label.toUpperCase(), 8, true, BRAND.labelGrey, 'left', 0, 2) +
+    para(value || '\u2014', 11, false, BRAND.textDark, 'left', 0, 0) +
+    '</td>';
+}
+
+function fieldPair(label1, value1, label2, value2) {
+  return '<table cellspacing="0" cellpadding="0"><tr>' +
+    fieldCell(label1, value1, 0, 12, '50%') +
+    fieldCell(label2, value2, 12, 0, '50%') +
+    '</tr></table>';
+}
+
+function fieldFull(label, value) {
+  return '<table cellspacing="0" cellpadding="0"><tr>' +
+    fieldCell(label, value, 0, 0) +
+    '</tr></table>';
 }
 
 /**
- * Two-column field row using a 2-column table.
- * Each cell has a small uppercase label and the field value below.
- * A light bottom border separates from the next row.
+ * Bordered notice box with a bold heading run.
  */
-function addFieldPair(body, label1, value1, label2, value2) {
-  var val1 = value1 || '\u2014';
-  var val2 = value2 || '\u2014';
-
-  var table = body.appendTable([[' ', ' ']]);
-  table.setBorderWidth(0);
-
-  var row = table.getRow(0);
-  styleFieldCell(row.getCell(0), label1, val1, 0, 12);
-  styleFieldCell(row.getCell(1), label2, val2, 12, 0);
-}
-
-/**
- * Style a table cell with label + value.
- */
-function styleFieldCell(cell, label, value, paddingLeft, paddingRight) {
-  cell.setPaddingTop(6);
-  cell.setPaddingBottom(10);
-  cell.setPaddingLeft(paddingLeft);
-  cell.setPaddingRight(paddingRight);
-
-  // Label (use the auto-created paragraph)
-  var labelPara = cell.getChild(0).asParagraph();
-  labelPara.setText(label.toUpperCase());
-  styleText(labelPara, 'Times New Roman', 8, true, BRAND.labelGrey);
-  labelPara.setSpacingBefore(0);
-  labelPara.setSpacingAfter(2);
-
-  // Value
-  var valuePara = cell.appendParagraph(value);
-  styleText(valuePara, 'Times New Roman', 11, false, BRAND.textDark);
-  valuePara.setSpacingBefore(0);
-  valuePara.setSpacingAfter(0);
-}
-
-/**
- * Single full-width field with label above value.
- */
-function addFieldFull(body, label, value) {
-  var val = value || '\u2014';
-
-  var table = body.appendTable([[' ']]);
-  table.setBorderWidth(0);
-
-  var cell = table.getRow(0).getCell(0);
-  cell.setPaddingTop(6);
-  cell.setPaddingBottom(10);
-  cell.setPaddingLeft(0);
-  cell.setPaddingRight(0);
-
-  // Label
-  var labelPara = cell.getChild(0).asParagraph();
-  labelPara.setText(label.toUpperCase());
-  styleText(labelPara, 'Times New Roman', 8, true, BRAND.labelGrey);
-  labelPara.setSpacingBefore(0);
-  labelPara.setSpacingAfter(2);
-
-  // Value
-  var valuePara = cell.appendParagraph(val);
-  styleText(valuePara, 'Times New Roman', 11, false, BRAND.textDark);
-  valuePara.setSpacingBefore(0);
-  valuePara.setSpacingAfter(0);
-}
-
-/**
- * Bordered notice box with bold heading.
- */
-function addNoticeBox(body, heading, text) {
-  var table = body.appendTable([[heading + text]]);
-  table.setBorderWidth(1);
-  table.setBorderColor(BRAND.ruleLight);
-
-  var cell = table.getRow(0).getCell(0);
-  cell.setPaddingTop(8);
-  cell.setPaddingBottom(8);
-  cell.setPaddingLeft(10);
-  cell.setPaddingRight(10);
-  cell.setBackgroundColor(BRAND.bgLight);
-
-  var para = cell.getChild(0).asParagraph();
-  var ts = styleText(para, 'Times New Roman', 9.5, false, BRAND.textMuted);
-  para.setSpacingBefore(0);
-  para.setSpacingAfter(0);
-  para.setLineSpacing(1.3);
-
-  // Bold the heading portion
-  ts.setBold(0, heading.length - 1, true);
-  ts.setForegroundColor(0, heading.length - 1, BRAND.textDark);
+function noticeBox(heading, text) {
+  return '<table cellspacing="0" cellpadding="0" style="border:1px solid ' + BRAND.ruleLight + '"><tr>' +
+    '<td style="padding:8pt 10pt;background-color:' + BRAND.bgLight + '">' +
+    '<p style="' + textStyle(9.5, false, BRAND.textMuted) + 'margin:0;line-height:1.3">' +
+    '<span style="font-weight:bold;color:' + BRAND.textDark + '">' + esc(heading) + '</span>' +
+    esc(text) + '</p></td></tr></table>';
 }
 
 /**
  * Acknowledgment item: initials box + statement in a two-column table.
  */
-function addAckItem(body, initials, statement) {
-  var initVal = initials || '\u2014';
-
-  var table = body.appendTable([['', '']]);
-  table.setBorderWidth(0);
-
-  var row = table.getRow(0);
-
-  // Initials cell (narrow, with background)
-  var initCell = row.getCell(0);
-  initCell.setWidth(56);
-  initCell.setPaddingTop(6);
-  initCell.setPaddingBottom(6);
-  initCell.setPaddingLeft(4);
-  initCell.setPaddingRight(4);
-  initCell.setBackgroundColor(BRAND.bgLight);
-
-  var initLabelPara = initCell.getChild(0).asParagraph();
-  initLabelPara.setText('INITIALS');
-  styleText(initLabelPara, 'Times New Roman', 7, true, BRAND.labelGrey);
-  initLabelPara.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
-  initLabelPara.setSpacingBefore(0);
-  initLabelPara.setSpacingAfter(2);
-
-  var initValPara = initCell.appendParagraph(initVal);
-  styleText(initValPara, 'Times New Roman', 12, true, BRAND.primaryDark);
-  initValPara.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
-  initValPara.setSpacingBefore(0);
-  initValPara.setSpacingAfter(0);
-
-  // Statement cell
-  var stmtCell = row.getCell(1);
-  stmtCell.setPaddingTop(10);
-  stmtCell.setPaddingBottom(6);
-  stmtCell.setPaddingLeft(10);
-  stmtCell.setPaddingRight(0);
-
-  var stmtPara = stmtCell.getChild(0).asParagraph();
-  stmtPara.setText(statement);
-  styleText(stmtPara, 'Times New Roman', 10, false, BRAND.textDark);
-  stmtPara.setSpacingBefore(0);
-  stmtPara.setSpacingAfter(0);
-  stmtPara.setLineSpacing(1.2);
+function ackItem(initials, statement) {
+  return '<table cellspacing="0" cellpadding="0"><tr>' +
+    '<td style="width:56pt;padding:6pt 4pt;background-color:' + BRAND.bgLight + '">' +
+    para('INITIALS', 7, true, BRAND.labelGrey, 'center', 0, 2) +
+    para(initials || '\u2014', 12, true, BRAND.primaryDark, 'center', 0, 0) +
+    '</td>' +
+    '<td style="padding:10pt 0 6pt 10pt">' +
+    para(statement, 10, false, BRAND.textDark, 'left', 0, 0, 'line-height:1.2;') +
+    '</td></tr></table>';
 }
 
-/**
- * Vertical spacing.
- */
-function addSpacer(body, pts) {
-  var p = body.appendParagraph('');
-  p.editAsText().setFontSize(1);
-  p.setSpacingBefore(pts || 4);
-  p.setSpacingAfter(0);
+function spacer(pts) {
+  return '<p style="font-size:1pt;line-height:1pt;margin:' + (pts || 4) + 'pt 0 0 0">&nbsp;</p>';
 }
 
 
