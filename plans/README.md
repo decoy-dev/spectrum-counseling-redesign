@@ -23,7 +23,7 @@ rotation, Apps Script redeploy) that an executor agent cannot perform alone.
 | 009  | Intake outage incident & fixes — retrospective 2026-08-24 | P1 | S | — | DONE (merged at 9863c6f; Apps Script redeployed) — operator follow-ups listed in plan |
 | 010  | Intake PDF readability — darken light text (A2 palette) | P2 | S | — | DONE (merged to master at `81ebe92`) — operator follow-up: Apps Script redeploy + test submission |
 | 011  | Intake PDF: drop DocumentApp/Drive, render HTML → PDF in one call | P1 | S | 009 | DONE (code on master) — operator follow-up: Apps Script redeploy (may re-prompt for auth: scopes shrink) + one test submission to confirm Google's HTML→PDF fidelity |
-| 012  | SEO audit & reviewed action plan (legacy 301s, visible NAP, LPC credential, FAQ schema sync) | P2 | M | 007 | IN PROGRESS — in-repo hygiene + owner hours/GBP/title/testimonial decisions shipped; external inputs remain (reviews URL, Search Console, redirect map) |
+| 012  | SEO audit & reviewed action plan (legacy redirects, visible NAP, LPC credential, FAQ schema sync) | P2 | M | 007 | IN PROGRESS — in-repo hygiene + owner data + legacy redirect stubs shipped; GSC verified; remaining: GBP/citation NAP + optional Cloudflare 301 upgrade |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) |
 REJECTED (with one-line rationale).
