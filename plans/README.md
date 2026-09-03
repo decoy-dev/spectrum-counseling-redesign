@@ -24,6 +24,7 @@ rotation, Apps Script redeploy) that an executor agent cannot perform alone.
 | 010  | Intake PDF readability — darken light text (A2 palette) | P2 | S | — | DONE (merged to master at `81ebe92`) — operator follow-up: Apps Script redeploy + test submission |
 | 011  | Intake PDF: drop DocumentApp/Drive, render HTML → PDF in one call | P1 | S | 009 | DONE (code on master) — operator follow-up: Apps Script redeploy (may re-prompt for auth: scopes shrink) + one test submission to confirm Google's HTML→PDF fidelity |
 | 012  | SEO audit & reviewed action plan (legacy 301s, visible NAP, LPC credential, FAQ schema sync) | P2 | M | 007 | IN PROGRESS — in-repo hygiene + owner data + Cloudflare edge 301 redirects live; GSC verified; remaining: GBP/citation NAP reconciliation |
+| 013  | Intake PDF rendered by Cloudflare Browser Rendering (real Chrome) | P1 | S | 011 | DONE (code on master) — operator follow-up: set `CF_BROWSER_TOKEN` Script Property, redeploy Apps Script, one test submission |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) |
 REJECTED (with one-line rationale).

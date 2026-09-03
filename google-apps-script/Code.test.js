@@ -70,26 +70,33 @@ test('buildHtml renders an em dash for empty fields', () => {
   assert.ok((html.match(/\u2014/g) || []).length >= 9 + 7);
 });
 
-test('doPost converts the HTML to a PDF and emails it without Docs or Drive', () => {
+test('doPost renders the HTML via Cloudflare Browser Rendering and emails the PDF', () => {
   const sent = [];
-  let converted = null;
+  let cfCall = null;
 
   const stubs = {
-    PropertiesService: { getScriptProperties: () => ({ getProperty: () => 'secret' }) },
-    UrlFetchApp: { fetch: () => ({ getContentText: () => JSON.stringify({ success: true }) }) },
+    PropertiesService: { getScriptProperties: () => ({ getProperty: (k) => k === 'CF_BROWSER_TOKEN' ? 'cf-token' : 'secret' }) },
+    UrlFetchApp: {
+      fetch: (url, opts) => {
+        if (url.indexOf('challenges.cloudflare.com/turnstile') !== -1) {
+          return { getContentText: () => JSON.stringify({ success: true }) };
+        }
+        if (url.indexOf('/browser-rendering/pdf') !== -1) {
+          cfCall = { url, opts, payload: JSON.parse(opts.payload) };
+          let name = '';
+          return {
+            getResponseCode: () => 200,
+            getHeaders: () => ({ 'Content-Type': 'application/pdf' }),
+            getContentText: () => '',
+            getBlob: () => ({ setName: (n) => { name = n; }, getName: () => name })
+          };
+        }
+        throw new Error('unexpected fetch: ' + url);
+      }
+    },
     CacheService: { getScriptCache: () => ({ get: () => null, put: () => {} }) },
     Session: { getScriptTimeZone: () => 'America/Phoenix' },
-    Utilities: {
-      sleep: () => {},
-      formatDate: () => 'September 2, 2026',
-      newBlob: (content, mime) => ({
-        getAs: (target) => {
-          converted = { content, mime, target };
-          let name = '';
-          return { setName: (n) => { name = n; }, getName: () => name };
-        }
-      })
-    },
+    Utilities: { sleep: () => {}, formatDate: () => 'September 2, 2026' },
     GmailApp: { sendEmail: (to, subject, body, opts) => { sent.push({ to, subject, body, opts }); } },
     MailApp: { sendEmail: () => { throw new Error('MailApp should not be needed'); } },
     ContentService: {
@@ -100,7 +107,8 @@ test('doPost converts the HTML to a PDF and emails it without Docs or Drive', ()
     JSON,
     Math
   };
-  // Deliberately no DocumentApp / DriveApp: any remaining use must fail loudly.
+  // Deliberately no DocumentApp / DriveApp / Utilities.newBlob: any regression
+  // back to the Docs/Drive/built-in-converter path must fail loudly.
 
   const { doPost } = load(stubs);
   const params = {
@@ -118,7 +126,10 @@ test('doPost converts the HTML to a PDF and emails it without Docs or Drive', ()
   assert.equal(sent[0].subject, 'New Client Intake: Ann O\'Neil-Smith');
   assert.equal(sent[0].opts.attachments.length, 1);
   assert.equal(sent[0].opts.attachments[0].getName(), 'Intake_ONeilSmith_Ann.pdf');
-  assert.equal(converted.mime, 'text/html');
-  assert.equal(converted.target, 'application/pdf');
-  assert.ok(converted.content.includes('Anxiety &amp; stress'));
+  // Rendered via Cloudflare with backgrounds on and the built HTML as input.
+  assert.ok(cfCall, 'Browser Rendering endpoint was called');
+  assert.equal(cfCall.opts.headers.Authorization, 'Bearer cf-token');
+  assert.equal(cfCall.payload.pdfOptions.printBackground, true);
+  assert.equal(cfCall.payload.pdfOptions.preferCSSPageSize, true);
+  assert.ok(cfCall.payload.html.includes('Anxiety &amp; stress'));
 });

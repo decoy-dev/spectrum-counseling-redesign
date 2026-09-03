@@ -12,15 +12,19 @@
 //    as the form's action attribute
 // 5. Set Script Property TURNSTILE_SECRET (Project Settings > Script
 //    Properties) to the Cloudflare Turnstile secret key.
+// 6. Set Script Property CF_BROWSER_TOKEN to a Cloudflare API token with the
+//    "Browser Rendering — Edit" permission (used to render the intake PDF).
 //
-// NOTE: The intake PDF is rendered as HTML and converted with
-// Utilities.newBlob(html).getAs('application/pdf') — no Google Doc is
-// created, so DocumentApp and DriveApp are not used at all.
+// NOTE: The intake PDF is built as HTML (buildHtml) and rendered to PDF by
+// Cloudflare's Browser Rendering REST API (real headless Chrome), so the
+// branded layout — colors, divider rules, fills — renders faithfully. No
+// Google Doc is created; DocumentApp and DriveApp are not used at all.
 // ============================================================
 
 var CONFIG = {
   RECIPIENT_EMAIL: 'mhaddox@spectrumcounseling.net',
-  REDIRECT_URL: 'https://spectrumcounseling.net/new-client-form/?submitted=true'
+  REDIRECT_URL: 'https://spectrumcounseling.net/new-client-form/?submitted=true',
+  CF_ACCOUNT_ID: '92162a0f546c14e218e1e0eff7ee6197'
 };
 
 // ── Brand colors — "A2 Neutral (max contrast)" palette ────────
@@ -61,6 +65,35 @@ function retry(fn, maxAttempts, baseDelayMs) {
       Utilities.sleep(baseDelayMs * Math.pow(2, attempts - 1));
     }
   }
+}
+
+
+// Render an HTML string to a PDF blob via Cloudflare Browser Rendering (real
+// headless Chrome). printBackground keeps the colored divider rules and fills;
+// preferCSSPageSize honors the document's @page letter size and margins.
+// Throws on any non-200 so the caller's retry/fallback can handle it.
+function renderPdf(html) {
+  var token = PropertiesService.getScriptProperties().getProperty('CF_BROWSER_TOKEN');
+  if (!token) throw new Error('CF_BROWSER_TOKEN script property is not set');
+  var resp = UrlFetchApp.fetch(
+    'https://api.cloudflare.com/client/v4/accounts/' + CONFIG.CF_ACCOUNT_ID + '/browser-rendering/pdf',
+    {
+      method: 'post',
+      contentType: 'application/json',
+      headers: { Authorization: 'Bearer ' + token },
+      payload: JSON.stringify({
+        html: html,
+        pdfOptions: { printBackground: true, preferCSSPageSize: true }
+      }),
+      muteHttpExceptions: true
+    }
+  );
+  var code = resp.getResponseCode();
+  var ct = resp.getHeaders()['Content-Type'] || resp.getHeaders()['content-type'] || '';
+  if (code !== 200 || ct.indexOf('pdf') === -1) {
+    throw new Error('Browser Rendering PDF failed (HTTP ' + code + '): ' + resp.getContentText().substring(0, 300));
+  }
+  return resp.getBlob();
 }
 
 
@@ -196,13 +229,10 @@ function doPost(e) {
       submissionDate: submissionDate
     };
 
-    // Render the intake as HTML and convert it to a PDF in one call. This is a
-    // pure conversion — no Doc, no Drive file, nothing to clean up — so it is
-    // safe to retry (2s, 4s, 8s backoff).
-    var pdf = retry(function() {
-      return Utilities.newBlob(buildHtml(f), 'text/html', 'intake.html')
-                      .getAs('application/pdf');
-    }, 4, 2000);
+    // Render the intake HTML to a PDF via Cloudflare Browser Rendering (real
+    // Chrome). Idempotent, so it is safe to retry (2s, 4s, 8s backoff). On
+    // failure the catch below preserves the client's data by email.
+    var pdf = retry(function() { return renderPdf(buildHtml(f)); }, 4, 2000);
     var safeName = (f.clientLast || 'Unknown').replace(/[^a-zA-Z0-9]/g, '')
                  + '_'
                  + (f.clientFirst || '').replace(/[^a-zA-Z0-9]/g, '');

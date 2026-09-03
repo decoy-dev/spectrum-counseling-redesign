@@ -1,8 +1,11 @@
 # 011 — Intake PDF: remove the Google Docs dependency (2026-09-02)
 
-**Status: DONE** (code on master). Operator follow-ups pending: redeploy
-Apps Script (new version) + one test submission to eyeball Google's real
-HTML→PDF output.
+**Status: SUPERSEDED by `plans/013`** — the move OFF Google Docs stands, but the
+specific renderer here (`Utilities.newBlob(html).getAs('application/pdf')`)
+proved too low-fidelity (dropped background colors → no divider rules/fills;
+inconsistent text color). Rendering now goes through Cloudflare Browser
+Rendering (real Chrome). The reliability rationale below is still the reason
+DocumentApp was abandoned.
 
 Retrospective, written after the change.
 
