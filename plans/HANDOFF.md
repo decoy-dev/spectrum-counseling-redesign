@@ -1,4 +1,4 @@
-# HANDOFF — Spectrum Counseling (updated 2026-09-02)
+# HANDOFF — Spectrum Counseling (updated 2026-09-03)
 
 Living pointer for picking work back up in a fresh session. Read this first,
 then the numbered plans it references. Update it when state changes.
@@ -7,27 +7,26 @@ then the numbered plans it references. Update it when state changes.
 
 ## TL;DR
 
-Two threads were worked this session: (1) the **intake-form PDF pipeline** and
-(2) an **SEO pass**. Almost everything in-repo is done and deployed. What
-remains is **owner/dashboard work outside the repo** — most importantly, the
-intake PDF will not produce a styled PDF until a Cloudflare token is added to
-the Apps Script (step 1 below).
+Two threads were worked across sessions: (1) the **intake-form PDF pipeline** and
+(2) an **SEO pass**. Everything in-repo is done and deployed. The intake PDF
+pipeline is now **live** — the Cloudflare Browser Rendering renderer was
+deployed and verified with a real test submission (2026-09-03). What remains is
+**owner/dashboard SEO/citation work outside the repo** (items 2–4 below).
 
 ---
 
 ## ⚠️ Immediate action items (owner, outside the repo)
 
-1. **Finish the intake PDF renderer (blocks a working intake PDF).** See
-   `plans/013`. Do all three:
-   - Create a Cloudflare API token with **Browser Rendering → Edit**
-     (My Profile → API Tokens → Create Custom Token), account
-     `92162a0f546c14e218e1e0eff7ee6197`.
-   - Apps Script → Project Settings → Script Properties → add
-     `CF_BROWSER_TOKEN` = that token.
-   - Redeploy Apps Script (Manage deployments → New version, same URL) and
-     submit one test intake; confirm the PDF matches the branded layout.
-   - Until this is done, submissions still succeed and the client's data is
-     preserved via the "INTAKE FORM ERROR" email — but no styled PDF is made.
+1. ~~**Finish the intake PDF renderer.**~~ **DONE (2026-09-03).** The Cloudflare
+   Browser Rendering pipeline is live and verified:
+   - Created a Cloudflare API token with **Account → Browser Run → Edit**
+     (note: Cloudflare renamed "Browser Rendering" → "Browser Run"; the REST
+     endpoint is still `/browser-rendering/pdf`, so no code change was needed),
+     account `92162a0f546c14e218e1e0eff7ee6197`.
+   - Added it as Script Property `CF_BROWSER_TOKEN`, pasted the current `Code.gs`
+     (with `renderPdf`), and deployed a new version at the same `/exec` URL.
+   - A real test submission produced the branded 3-page PDF (all 7 sections,
+     notice box, and 5 initialed acknowledgments) — confirmed.
 
 2. **Revoke the temporary Dynamic-Redirect API token** created earlier for the
    301 setup (My Profile → API Tokens). The redirect rules are already live;
@@ -62,9 +61,10 @@ the Apps Script (step 1 below).
 - `plans/011` — moved rendering OFF Google Docs (two Docs-service outages had
   failed `saveAndClose`). **Superseded** by 013 for the renderer choice, but
   the "no DocumentApp/DriveApp" decision stands.
-- `plans/013` — **current renderer**: `buildHtml()` → Cloudflare Browser
-  Rendering REST `/pdf` (real Chrome, `printBackground`+`preferCSSPageSize`).
-  Proven pixel-faithful to the old DocumentApp PDF. Needs the token (action 1).
+- `plans/013` — **current renderer (LIVE)**: `buildHtml()` → Cloudflare Browser
+  Rendering REST `/browser-rendering/pdf` (real Chrome, `printBackground`+`preferCSSPageSize`).
+  Deployed and verified with a real test submission on 2026-09-03. Auth uses the
+  `CF_BROWSER_TOKEN` Script Property (an **Account → Browser Run → Edit** token).
 - `google-apps-script/Code.gs` is the source of truth; deploy is **manual**
   (paste into script.google.com → new deployment version). Not deployed by
   GitHub Actions.
